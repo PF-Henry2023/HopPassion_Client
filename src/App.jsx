@@ -1,16 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LogoColor from "./LogoColor.png"
+import './App.css';
+import NavBar from '../components/navbar/navbar';
+import Filters from '../components/filters/filters';
+import Carousel from "../components/carrousel/carrousel";
+import CardContainer from '../components/CardContainer/CardContainer';
+import CardP from "../components/Card/CardP";
+import Favorites from "../components/Favorites/Favorites"
+import Footer from '../components/Footer/Footer';
 
 function App() {
 
   return (
     <>
-      <h1>HOP PASSION</h1>
-      <img src={LogoColor} alt="Logo de color" width="100px" height="100px" />
-       
+      <NavBar />
+      <Filters />
+      <Carousel />
+      <CardContainer />
+      <CardP />
+      <Favorites />
+      <Footer />
     </>
   )
 }
