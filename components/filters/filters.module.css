@@ -1,0 +1,12 @@
+.container {
+    background-color: #6A7346;
+    width: 100%;
+}
+
+.content{
+    background-color: #6A7346;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 90px;
+}
