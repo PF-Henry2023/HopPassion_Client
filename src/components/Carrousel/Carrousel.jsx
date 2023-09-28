@@ -1,11 +1,13 @@
-import style from "./carrousel.module.css"
+import style from "./carrousel.module.css";
 //import Carousel from 'react-bootstrap/Carousel';
-import imageBackground from "../../src/assets/imageBackground.png"
+import imageBackground from "../../assets/imageBackground.png";
 
-export default function Carrousel () {
+const Carrousel = () => {
   return (
     <div>
-      <img src={imageBackground} className={style.image}/>
+      <img src={imageBackground} className={style.image} />
     </div>
   );
-}
+};
+
+export default Carrousel;

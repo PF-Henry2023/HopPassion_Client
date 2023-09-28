@@ -1,9 +1,9 @@
 import style from "./Card.module.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import ejemploImagen from "../../src/assets/ejemploImagen.png";
+import ejemploImagen from "../../assets/ejemploImagen.png";
 
-export default function Card() {
+const CardP = () => {
   return (
     <div className={`${style.container} d-flex justify-content-center`}>
       <Card style={{ width: "12rem", marginRight: "30px" }}>
@@ -59,4 +59,6 @@ export default function Card() {
       </Card>
     </div>
   );
-}
+};
+
+export default CardP;
