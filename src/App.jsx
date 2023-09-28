@@ -1,25 +1,17 @@
-import './App.css';
-import NavBar from '../components/navbar/navbar';
-import Filters from '../components/filters/filters';
-import Carousel from "../components/carrousel/carrousel";
-import CardContainer from '../components/CardContainer/CardContainer';
-import CardP from "../components/Card/CardP";
-import Favorites from "../components/Favorites/Favorites"
-import Footer from '../components/Footer/Footer';
+import "./App.css";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Create from "./components/Create/Create";
 
 function App() {
-
   return (
-    <>
-      <NavBar />
-      <Filters />
-      <Carousel />
-      <CardContainer />
-      <CardP />
-      <Favorites />
-      <Footer />
-    </>
-  )
+    <div className="app">
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/create" element={<Create />}></Route>
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

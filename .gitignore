@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+**/node_modules
+**/.env
+**/.vscode
