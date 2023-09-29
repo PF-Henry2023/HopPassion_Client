@@ -6,16 +6,18 @@ import Footer from "../Footer/Footer";
 import Carousel from "../Carrousel/Carrousel";
 import Filters from "../Filters/Filters";
 import Favorites from "../Favorites/Favorites";
+import Alert from "../Alert/Alert";
 
 const Home = () => {
   return (
     <div>
+      <Alert />
       <Navbar />
-      <Filters />
       <Carousel />
+      <Favorites />
+      <Filters />
       <CardContainer />
       <Card />
-      <Favorites />
       <Footer />
     </div>
   );
