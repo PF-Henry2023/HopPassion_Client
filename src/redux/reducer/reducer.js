@@ -1,5 +1,4 @@
-import { GET_PRODUCTS_BYID } from "../actions/actions-type";
-import { GET_PRODUCTS } from "../actions/actions";
+import { GET_PRODUCTS_BYID, GET_PRODUCTS } from "../actions/actions-type";
 
 const initialState = {
   productDetails: {},
