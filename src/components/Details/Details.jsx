@@ -1,12 +1,22 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
-import ejemploImagen from "../../assets/ejemploImagen.png";
 import styles from "./Details.module.css";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProductById } from "../../redux/actions/actions";
+
 import Footer from "../Footer/Footer";
 
 const Details = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const productDetails = useSelector((state) => state.productDetails);
+
+  useEffect(() => {
+    dispatch(getProductById(id));
+  }, [dispatch, id]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -17,7 +27,6 @@ const Details = () => {
       <div className={styles.mainContainer}>
         <Navbar />
         <div className={styles.container}>
-          {/* Primera columna */}
           <div className={styles.column}>
             <button className={styles.goBackButton} onClick={handleGoBack}>
               Volver
@@ -27,23 +36,21 @@ const Details = () => {
           <div className={styles.column}>
             <div className={styles.imageContainer}>
               <img
-                src={ejemploImagen}
+                src={productDetails.image}
                 className={styles.image}
-                alt="Cerveza IPA"
+                alt={`${productDetails.id}`}
               />
             </div>
-            <p className={styles.description}>
-              Una auténtica joya de la cervecería nacional, nuestra rubia te
-              sorprenderá con su frescura y sabor incomparables. ¡Agrega un
-              toque local a tu carrito!
-            </p>
+            <p className={styles.description}>{productDetails.description}</p>
           </div>
 
           <div className={styles.column}>
-            <h1 className={styles.title}>Cerveza IPA</h1>
-            <p className={styles.price}>$ 1200</p>
+            <h1 className={styles.title}>{productDetails.name}</h1>
+            <p className={styles.price}>$ {productDetails.price}</p>
             <p className={styles.quantity}>Cantidad: </p>
-            <p className={styles.quantity}>300 unidades disponibles</p>
+            <p className={styles.quantity}>
+              {productDetails.stock} unidades disponibles
+            </p>
             <button className={styles.addToCartButton}>
               + Agregar al carrito
             </button>
@@ -55,17 +62,21 @@ const Details = () => {
                 </div>
                 <div className={styles.row}>
                   <h6 className={styles.subTitle}>País de Origen:</h6>
-                  <p className={styles.subTitle}>Argentina</p>
+                  <p className={styles.subTitle}>{productDetails.country}</p>
                 </div>
               </div>
               <div className={styles.secondRow}>
                 <div className={styles.row}>
                   <h6 className={styles.subTitle}>Graduación alcohólica:</h6>
-                  <p className={styles.subTitle}>5%</p>
+                  <p className={styles.subTitle}>
+                    {productDetails.alcoholContent}%
+                  </p>
                 </div>
                 <div className={styles.row}>
                   <h6 className={styles.subTitle}>Volumen:</h6>
-                  <p className={styles.subTitle}>330 ml.</p>
+                  <p className={styles.subTitle}>
+                    {productDetails.amountMl} ml.
+                  </p>
                 </div>
               </div>
             </div>
