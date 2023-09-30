@@ -3,6 +3,7 @@ import { GET_PRODUCTS_BYID, GET_PRODUCTS } from "../actions/actions-type";
 const initialState = {
   productDetails: {},
   products: null,
+  isLoading: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -11,6 +12,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetails: action.payload,
+        isLoading: false,
       };
 
     case GET_PRODUCTS: {
