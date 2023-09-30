@@ -21,7 +21,7 @@ export default function CardContainer () {
             <div className={style.gridContainer}>
             {
                 products == null ? <></> : products.map((product) => {
-                    return <Card title={product.name} price={product.price} image={product.image}/>
+                    return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image}/>
                 })
             }
              </div>

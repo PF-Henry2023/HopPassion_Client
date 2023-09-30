@@ -1,9 +1,10 @@
 import axios from "axios";
-import { GET_PRODUCTS_BYID, GET_PRODUCTS } from "./actions-type";
+import { GET_PRODUCTS_BYID, GET_PRODUCTS, LOADING_PRODUCT } from "./actions-type";
 
 export function getProductById(id) {
   return async function (dispatch) {
     try {
+      dispatch({ type: LOADING_PRODUCT });
       const response = await axios.get(`http://localhost:3001/product/${id}`);
       const productData = response.data;
 
