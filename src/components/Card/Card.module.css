@@ -1,5 +1,4 @@
 .container {
-    margin: 40px;
     align-items: center;
 }
 .customTextColor {
@@ -12,4 +11,9 @@
     border: 0px;
     text-align: right !important;
     font-weight: bold;
+}
+.image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
 }
