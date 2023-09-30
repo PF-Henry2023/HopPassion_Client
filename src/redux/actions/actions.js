@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_PRODUCTS_BYID } from "./actions-type";
+import { GET_PRODUCTS_BYID, GET_PRODUCTS } from "./actions-type";
 
 export function getProductById(id) {
   return async function (dispatch) {
@@ -16,3 +16,14 @@ export function getProductById(id) {
     }
   };
 }
+
+export const getProducts = () => {
+  return async (dispatch) => {
+    try {
+      const result = await axios("http://localhost:3001/product/all");
+      dispatch({ type: GET_PRODUCTS, payload: result.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
