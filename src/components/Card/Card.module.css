@@ -14,7 +14,10 @@
   overflow: hidden;
 }
 
-
+.link {
+    text-decoration: none; 
+    color: #333; 
+  }
 
 .customTextColor {
   color: #97a663;
