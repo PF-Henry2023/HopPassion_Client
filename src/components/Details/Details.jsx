@@ -14,7 +14,7 @@ const Details = () => {
   const navigate = useNavigate();
   const productDetails = useSelector((state) => state.productDetails);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(productDetails);
   useEffect(() => {
     const fetchProductDetails = async () => {
       setIsLoading(true);
@@ -71,7 +71,9 @@ const Details = () => {
                   <div className={styles.firstrow}>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>Categoría:</h6>
-                      <p className={styles.subTitle}>American Ipa</p>
+                      <p className={styles.subTitle}>
+                        {productDetails.Categories[0].name}
+                      </p>
                     </div>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>País de Origen:</h6>
