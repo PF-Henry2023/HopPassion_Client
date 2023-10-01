@@ -14,7 +14,8 @@ const Details = () => {
   const navigate = useNavigate();
   const productDetails = useSelector((state) => state.productDetails);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(productDetails);
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       setIsLoading(true);
@@ -27,6 +28,29 @@ const Details = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const incrementQuantity = () => {
+    if (quantity < productDetails.stock) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (
+      !isNaN(newQuantity) &&
+      newQuantity >= 1 &&
+      newQuantity <= productDetails.stock
+    ) {
+      setQuantity(newQuantity);
+    }
   };
 
   return (
@@ -61,19 +85,30 @@ const Details = () => {
                 <h1 className={styles.title}>{productDetails.name}</h1>
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
+
+                <div className={styles.quantityButtonsContainer}>
+                <button className={styles.quantityButton} onClick={incrementQuantity}>+</button>
+                <input
+                  type="text"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  className={styles.quantityInput}
+                />
+                <button className={styles.quantityButton} onClick={decrementQuantity}>-</button>
+                </div>
+
                 <p className={styles.quantity}>
                   {productDetails.stock} unidades disponibles
                 </p>
                 <button className={styles.addToCartButton}>
                   <Cart /> + Agregar al carrito
                 </button>
+               
                 <div className={styles.box}>
                   <div className={styles.firstrow}>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>Categoría:</h6>
-                      <p className={styles.subTitle}>
-                        {productDetails.Categories[0].name}
-                      </p>
+                      <p className={styles.subTitle}>American Ipa</p>
                     </div>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>País de Origen:</h6>
