@@ -8,18 +8,19 @@ import Pagination from "../Pagination/Pagination";
 export default function CardContainer () {
     
     const dispatch = useDispatch()
-    const products = useSelector((state) => state.products)
+    const productsData = useSelector((state) => state.products)
 
     useEffect(()=> {
         dispatch(getProducts())
     }, [])
+    // console.log(productsData.products);
 
     const [currentPage, setCurrentPage] = useState(1);
     const cervezasPerPage = 12;
     
     const indexLast = currentPage * cervezasPerPage; //calcula el indice del ultimo pokemon.
     const indexFirst = indexLast - cervezasPerPage; //calcula el indice del primer pokemon.
-    const currentCervezas = products ? products.slice(indexFirst, indexLast) : [];
+    const currentCervezas = productsData && productsData.products ? productsData.products.slice(indexFirst, indexLast) : [];
 
     const paginado = (pageNumber) => {// funcion para cambiar la pagina actual.
         setCurrentPage(pageNumber);
@@ -41,7 +42,7 @@ export default function CardContainer () {
                 <Pagination
                     currentPage={currentPage}
                     cervezasPerPage={cervezasPerPage}
-                    allCervezas={products ? products.length : 0}
+                    allCervezas={productsData && productsData.products ? productsData.products.length : 0}
                     paginado={paginado}
                 ></Pagination>
             </div>
