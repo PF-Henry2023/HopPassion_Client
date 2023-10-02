@@ -10,11 +10,11 @@ export default function CardContainer () {
     const dispatch = useDispatch()
     const productsData = useSelector((state) => state.products)
     const filters = useSelector((state) => state.filters)
+    const searchQuery = useSelector((state) => state.query)
 
     useEffect(()=> {
-        console.log(filters)
-        dispatch(getProducts(filters))
-    }, [filters])
+        dispatch(getProducts(filters, searchQuery))
+    }, [filters, searchQuery])
     // console.log(productsData.products);
 
     const [currentPage, setCurrentPage] = useState(1);

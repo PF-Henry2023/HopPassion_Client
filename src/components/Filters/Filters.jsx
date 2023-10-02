@@ -55,7 +55,7 @@ export default function NavBar() {
                         }
                     </NavDropdown>
 
-                    <NavDropdown title={ selectedCategory ?? "Categoría" } id="basic-nav-dropdown">
+                    {/* <NavDropdown title={ selectedCategory ?? "Categoría" } id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={() => handleCategory(null)}>Todas</NavDropdown.Item>
                         {
                             (configuration.categories ?? []).map((category) => {
@@ -66,7 +66,7 @@ export default function NavBar() {
                                 </NavDropdown.Item>
                             })
                         }
-                    </NavDropdown>
+                    </NavDropdown> */}
 
                     <NavDropdown title={ selectedOrder ? selectedOrder.name : "Ordenar por" } id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={() => handleOrder(null)}>Defecto</NavDropdown.Item>

@@ -4,6 +4,7 @@ import {
   CREATE_PRODUCT,
   GET_CATEGORIES,
   SET_FILTERS,
+  SET_SEARCH_QUERY,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   products: null,
   isLoading: false,
   categories: {},
-  filters: {}
+  filters: {},
+  query: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -43,6 +45,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         filters: action.payload,
       };
+    case SET_SEARCH_QUERY:
+        return {
+          ...state,
+          query: action.payload,
+        };
     default:
       return { ...state };
   }
