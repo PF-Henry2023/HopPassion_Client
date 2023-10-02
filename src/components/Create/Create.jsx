@@ -70,8 +70,8 @@ const Create = () => {
         <Form.Group className="mb-3" controlId="image">
           <Form.Label>Imagen</Form.Label>
           <Form.Control
-            type="file"
-            onChange={(e) => handleChange("image", e.target.File[0])}
+            type="text"
+            onChange={(e) => handleChange("image", e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
