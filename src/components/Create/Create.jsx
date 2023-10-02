@@ -14,8 +14,6 @@ const Create = () => {
     dispatch(getCategories());
   }, []);
 
-  console.log(categories);
-
   const [productData, setData] = useState({
     name: "",
     image: null,
@@ -42,8 +40,6 @@ const Create = () => {
       })
     );
   };
-
-  console.log(productData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -75,7 +71,7 @@ const Create = () => {
           <Form.Label>Imagen</Form.Label>
           <Form.Control
             type="file"
-            onChange={(e) => handleChange("image", e.target.files[0])}
+            onChange={(e) => handleChange("image", e.target.File[0])}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
@@ -119,7 +115,7 @@ const Create = () => {
             }}
           >
             <option value="">Select a category</option>
-            {categories.data.map((category) => (
+            {categories.data?.map((category) => (
               <option key={category.id} value={category.name}>
                 {category.name}
               </option>

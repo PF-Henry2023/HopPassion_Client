@@ -57,6 +57,7 @@ export const createProduct = ({
   amountMl,
   alcoholContent,
 }) => {
+  console.log(image);
   return async function (dispatch) {
     try {
       const response = await axios.post(
