@@ -5,6 +5,7 @@ import {
   GET_CATEGORIES,
   SET_FILTERS,
   SET_SEARCH_QUERY,
+  GET_NEXT_PRODUCT_PAGE,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -50,6 +51,16 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           query: action.payload,
         };
+    case GET_NEXT_PRODUCT_PAGE: {
+      const list = (state.products ? state.products.products : []).concat(action.payload.products)
+      return {
+        ...state,
+        products: { 
+          ...action.payload,
+          products: list
+        }
+      }
+    }
     default:
       return { ...state };
   }

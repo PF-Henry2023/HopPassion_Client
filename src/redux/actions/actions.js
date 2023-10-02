@@ -7,6 +7,7 @@ import {
   GET_CATEGORIES,
   SET_FILTERS,
   SET_SEARCH_QUERY,
+  GET_NEXT_PRODUCT_PAGE,
 } from "./actions-type";
 
 export function getProductById(id) {
@@ -37,12 +38,24 @@ export const getProducts = (filters, query) => {
   };
 };
 
-export const buildGetProductsUrl = (filters, query) => {
+export const getNextProductPage = (filters, query, page) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios(buildGetProductsUrl(filters, query, page + 1));
+      dispatch({ type: GET_NEXT_PRODUCT_PAGE, payload: result.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const buildGetProductsUrl = (filters, query, page) => {
   let url = new URL("http://localhost:3001/product/all");
   safeSetParam(url, "country", filters.country)
   safeSetParam(url, "order", filters.order ? filters.order.id : null)
   safeSetParam(url, "category", filters.category)
   safeSetParam(url, "query", query)
+  safeSetParam(url, "page", page)
   return url.toString()
 }
 
