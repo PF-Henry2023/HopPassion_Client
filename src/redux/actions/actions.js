@@ -5,6 +5,7 @@ import {
   LOADING_PRODUCT,
   CREATE_PRODUCT,
   GET_CATEGORIES,
+  SET_FILTERS,
 } from "./actions-type";
 
 export function getProductById(id) {
@@ -24,16 +25,32 @@ export function getProductById(id) {
   };
 }
 
-export const getProducts = () => {
+export const getProducts = (filters) => {
   return async (dispatch) => {
     try {
-      const result = await axios("http://localhost:3001/product/all");
+      const result = await axios(buildGetProductsUrl(filters));
       dispatch({ type: GET_PRODUCTS, payload: result.data });
     } catch (error) {
       console.log(error);
     }
   };
 };
+
+export const buildGetProductsUrl = (filters) => {
+  let url = new URL("http://localhost:3001/product/all");
+  safeSetParam(url, "country", filters.country)
+  safeSetParam(url, "order", filters.order ? filters.order.id : null)
+  safeSetParam(url, "category", filters.category)
+  return url.toString()
+}
+
+function safeSetParam(url, key, value) {
+  if(value) {
+    url.searchParams.set(key, value)
+  } else {
+    url.searchParams.delete(key)
+  }
+}
 
 export const getCategories = () => {
   return async (dispatch) => {
@@ -45,6 +62,10 @@ export const getCategories = () => {
     }
   };
 };
+
+export const setFilters = (filters) => {
+  return { type: SET_FILTERS, payload: filters}
+}
 
 export const createProduct = ({
   name,

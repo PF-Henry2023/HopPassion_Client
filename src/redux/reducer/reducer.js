@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS,
   CREATE_PRODUCT,
   GET_CATEGORIES,
+  SET_FILTERS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   products: null,
   isLoading: false,
   categories: {},
+  filters: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -35,6 +37,11 @@ const rootReducer = (state = initialState, action) => {
     case CREATE_PRODUCT:
       return {
         ...state,
+      };
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: action.payload,
       };
     default:
       return { ...state };
