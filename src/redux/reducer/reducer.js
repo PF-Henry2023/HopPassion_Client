@@ -3,6 +3,9 @@ import {
   GET_PRODUCTS,
   CREATE_PRODUCT,
   GET_CATEGORIES,
+  SET_FILTERS,
+  SET_SEARCH_QUERY,
+  GET_NEXT_PRODUCT_PAGE,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -11,6 +14,8 @@ const initialState = {
   isLoading: false,
   quantity:1,
   categories: {},
+  filters: {},
+  query: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -38,6 +43,26 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: action.payload,
+      };
+    case SET_SEARCH_QUERY:
+        return {
+          ...state,
+          query: action.payload,
+        };
+    case GET_NEXT_PRODUCT_PAGE: {
+      const list = (state.products ? state.products.products : []).concat(action.payload.products)
+      return {
+        ...state,
+        products: { 
+          ...action.payload,
+          products: list
+        }
+      }
+    }
     default:
       return { ...state };
   }
