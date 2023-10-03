@@ -53,7 +53,7 @@ export const buildGetProductsUrl = (filters, query, page) => {
   let url = new URL("http://localhost:3001/product/all");
   safeSetParam(url, "country", filters.country)
   safeSetParam(url, "order", filters.order ? filters.order.id : null)
-  safeSetParam(url, "category", filters.category)
+  safeSetParam(url, "category", filters.category ? filters.category.id : null)
   safeSetParam(url, "query", query)
   safeSetParam(url, "page", page)
   return url.toString()
@@ -97,7 +97,7 @@ export const createProduct = ({
   amountMl,
   alcoholContent,
 }) => {
-  console.log(image);
+  
   return async function (dispatch) {
     try {
       const response = await axios.post(
@@ -114,8 +114,6 @@ export const createProduct = ({
           alcoholContent,
         }
       );
-      console.log(response);
-      alert("Producto creado exitosamente");
       return dispatch({
         type: CREATE_PRODUCT,
       });
