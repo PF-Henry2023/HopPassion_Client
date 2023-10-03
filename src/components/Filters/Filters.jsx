@@ -55,18 +55,18 @@ export default function NavBar() {
                         }
                     </NavDropdown>
 
-                    {/* <NavDropdown title={ selectedCategory ?? "Categoría" } id="basic-nav-dropdown">
+                    <NavDropdown title={ selectedCategory ? selectedCategory.name : "Categoría" } id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={() => handleCategory(null)}>Todas</NavDropdown.Item>
                         {
                             (configuration.categories ?? []).map((category) => {
                                return <NavDropdown.Item 
-                               key={category} 
+                               key={category.id} 
                                onClick={() => handleCategory(category)}>
-                                {category} { selectedCategory === category && "✔️" }
+                                {category.name} { selectedCategory === category && "✔️" }
                                 </NavDropdown.Item>
                             })
                         }
-                    </NavDropdown> */}
+                    </NavDropdown>
 
                     <NavDropdown title={ selectedOrder ? selectedOrder.name : "Ordenar por" } id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={() => handleOrder(null)}>Defecto</NavDropdown.Item>
