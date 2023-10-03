@@ -53,7 +53,7 @@ export const buildGetProductsUrl = (filters, query, page) => {
   let url = new URL("http://localhost:3001/product/all");
   safeSetParam(url, "country", filters.country)
   safeSetParam(url, "order", filters.order ? filters.order.id : null)
-  safeSetParam(url, "category", filters.category)
+  safeSetParam(url, "category", filters.category ? filters.category.id : null)
   safeSetParam(url, "query", query)
   safeSetParam(url, "page", page)
   return url.toString()

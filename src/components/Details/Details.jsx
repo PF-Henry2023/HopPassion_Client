@@ -71,7 +71,7 @@ const Details = () => {
                   <div className={styles.firstrow}>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>Categoría:</h6>
-                      <p className={styles.subTitle}>American Ipa</p>
+                      <p className={styles.subTitle}>{productDetails.categories.join(", ")}</p>
                     </div>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>País de Origen:</h6>
