@@ -5,7 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/actions";
 import { Cart } from "react-bootstrap-icons";
-
 import Footer from "../Footer/Footer";
 
 const Details = () => {
