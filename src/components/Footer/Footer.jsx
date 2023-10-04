@@ -6,8 +6,8 @@ export default function Footer() {
     <div className={style.container}>
       <div className={style.container__left}>
         <img src={logo_light} alt="" className={style.logoLight} />
-        <div className={style.subtitle}>Descubre, Saborea, Disfruta: </div>
-        <div className={style.subtitle}> El Arte de la Cerveza en un Clic.</div>
+        <div className={style.subtitle}>Descubrí, Saboreá, Disfrutá: </div>
+        <div className={style.subtitle}> El Arte de la Cerveza en un Click.</div>
       </div>
       <div className={style.container__right}>
         <div className={style.container_right__detail}>

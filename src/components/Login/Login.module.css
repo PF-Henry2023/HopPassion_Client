@@ -1,0 +1,37 @@
+.container {
+    background-color: white; 
+    padding: 0px !important; 
+    margin: 0px !important;
+    justify-content: center;
+}
+.col-md-6 img {
+    max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+    height: auto; /* Mantiene la proporción de aspecto */
+    margin-right: 0px !important;
+}
+.col-md-6 form {
+    background-color: #fff; /* Cambia el color de fondo del formulario */
+    padding: 0px; /* Agrega espacio alrededor del formulario */
+    border: 1px solid #ccc; /* Agrega un borde alrededor del formulario */
+    border-radius: 5px; /* Agrega bordes redondeados al formulario */
+}
+
+/* Estilos para los campos de entrada */
+.form-group {
+    margin-bottom: 0px; /* Agrega espacio entre los campos */
+}
+
+/* Estilos para los botones */
+.btn {
+/* Personaliza los estilos de tus botones según tus preferencias */
+    background-color: #97a663 !important;
+    color: #fff;
+    border: #97a663 !important;
+    margin-top: 10px;
+    align-items: center !important;
+}
+
+/* Estilos para el enlace de términos y condiciones */
+.form-check-label {
+    font-size: 12px; /* Ajusta el tamaño del texto */
+}
