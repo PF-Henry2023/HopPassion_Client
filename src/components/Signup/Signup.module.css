@@ -1,0 +1,41 @@
+.container {
+    background-color: white; 
+    padding: 0px !important; 
+    margin: 0px !important;
+    justify-content: center;
+    max-width: 100%;
+}
+.col-md-6 img {
+    max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+    height: auto; /* Mantiene la proporción de aspecto */
+    margin-right: 0px !important;
+}
+.col-md-6 form {
+    background-color: #fff; /* Cambia el color de fondo del formulario */
+    padding: 0px; /* Agrega espacio alrededor del formulario */
+    border: 1px solid #ccc; /* Agrega un borde alrededor del formulario */
+    border-radius: 5px; /* Agrega bordes redondeados al formulario */
+}
+
+/* Estilos para los campos de entrada */
+.form-group {
+    margin-bottom: 0px;
+    border: #97a663 1px solid; 
+}
+
+/* Estilos para los botones */
+.btn {
+    background-color: #97a663 !important;
+    color: #fff;
+    border: #97a663 !important;
+    margin-top: 10px;
+    align-items: center !important;
+}
+
+.form-control:valid + label {
+    color: white !important; 
+}
+.formControl:focus {
+     border-color: #97a663 !important;
+        box-shadow: 0 0 0 0.2rem rgba(151, 166, 99, 0.2) !important;
+  }
