@@ -12,6 +12,7 @@ const initialState = {
   productDetails: {},
   products: null,
   isLoading: false,
+  quantity:1,
   categories: {},
   filters: {},
   query: null,
@@ -24,6 +25,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetails: action.payload,
         isLoading: false,
+        quantity:1
       };
 
     case GET_PRODUCTS: {
