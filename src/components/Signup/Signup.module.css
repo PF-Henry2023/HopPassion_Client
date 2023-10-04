@@ -33,9 +33,9 @@
 }
 
 .form-control:valid + label {
-    color: white; 
+    color: white !important; 
 }
 .formControl:focus {
-    background-color: white !important; /* Cambia el color de fondo cuando está enfocado */
-     outline-color: #97a663 !important; /* Cambia el color del texto cuando está enfocado */
+     border-color: #97a663 !important;
+        box-shadow: 0 0 0 0.2rem rgba(151, 166, 99, 0.2) !important;
   }

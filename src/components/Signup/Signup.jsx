@@ -43,6 +43,7 @@ export default function SignUp() {
               <Form.Control
                 type="text"
                 placeholder="Ingresa tu apellido"
+                className={style.formControl}
               />
               <Form.Control.Feedback type="invalid">
                 <div>
@@ -57,6 +58,7 @@ export default function SignUp() {
               <Form.Control
                 type="email"
                 placeholder="Ingresa tu correo electrónico"
+                className={style.formControl}
               />
               <Form.Control.Feedback type="invalid">
                 Formato incorrecto de correo electrónico.
@@ -67,6 +69,7 @@ export default function SignUp() {
               <Form.Label>Fecha de Nacimiento:</Form.Label>
               <Form.Control
                 type="date"
+                className={style.formControl}
               />
 
               <Form.Control.Feedback type="invalid">
@@ -79,6 +82,7 @@ export default function SignUp() {
               <Form.Control
                 type="text"
                 placeholder="Ingresa tu domicilio"
+                className={style.formControl}
               />
               <Form.Control.Feedback type="invalid">
                 <div>Ingrese un domicilio válido</div>
@@ -89,7 +93,8 @@ export default function SignUp() {
               <Form.Label>País:</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingresa tu domicilio"
+                placeholder="Ingresa tu país"
+                className={style.formControl}
               />
             </Form.Group>
 
@@ -97,6 +102,7 @@ export default function SignUp() {
               <Form.Label>Código Postal:</Form.Label>
               <Form.Control
                 type="text"
+                className={style.formControl}
               />
             </Form.Group>
 
@@ -104,6 +110,7 @@ export default function SignUp() {
               <Form.Label>Ciudad:</Form.Label>
               <Form.Control
                 type="text"
+                className={style.formControl}
               />
             </Form.Group>
 
@@ -112,6 +119,7 @@ export default function SignUp() {
               <Form.Control
                 type="password"
                 placeholder="Crea tu contraseña"
+                className={style.formControl}
               />
               <Form.Control.Feedback type="invalid">
                 La contraseña debe contener 6 caracteres o más, una mayúscula y
