@@ -12,11 +12,8 @@
   "dependencies": {
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
-<<<<<<< HEAD
     "prop-types": "^15.8.1",
-=======
     "cloudinary": "^1.41.0",
->>>>>>> ae6c6f02f5a9e5c3d340fe411fc723dd0ea812ee
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
     "react-bootstrap-icons": "^1.10.3",

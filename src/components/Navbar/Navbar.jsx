@@ -10,7 +10,7 @@ import cart from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../redux/actions/actions";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+
 
 export default function NavBar() {
   const dispatch = useDispatch();
