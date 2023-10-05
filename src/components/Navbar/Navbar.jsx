@@ -1,4 +1,5 @@
 import style from "./navbar.module.css";
+import { Link } from "react-router-dom"; // Import Link
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -28,7 +29,11 @@ export default function NavBar() {
   return (
     <>
       <Navbar className={style.container}>
-        <img src={logo_light} alt="" className={style.logoLight} />
+        
+        <Link to="/" className={style.logoLink}>
+          <img src={logo_light} alt="" className={style.logoLight} />
+        </Link>
+
         <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
