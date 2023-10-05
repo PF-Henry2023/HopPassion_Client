@@ -1,0 +1,28 @@
+.quantityButtonsContainer {
+    width: 80px;
+    height: 40px;
+    border: 1px solid #97a663; /* Borde de color #97A663 */
+    background-color: transparent; /* Sin color de fondo */
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantityButton {
+    margin:auto;
+    background: none;
+    border: none;
+    font-size: 18pt;
+    color: #97a663;
+    font-family: Roboto, sans-serif;
+    cursor: pointer;
+  }
+  .quantityInput {
+    margin: auto;
+    background: none;
+    border: none;
+    font-size: 16pt;
+    color: black;
+    font-family: Roboto, sans-serif;
+    text-align: center;
+    width: 30px;
+  }

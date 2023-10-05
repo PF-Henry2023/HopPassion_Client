@@ -9,19 +9,20 @@ import cart from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../redux/actions/actions";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
-
   const dispatch = useDispatch();
-  const query = useSelector((state) => state.query)
-  const [ input, setInput ] = useState(null)
+  const query = useSelector((state) => state.query);
+  const [input, setInput] = useState(null);
+  const itemsInCart = useSelector((state) => state.items);
 
   function handleSearch(event) {
-    dispatch(setSearchQuery(input))
+    dispatch(setSearchQuery(input));
   }
 
   function handleInputChange(event) {
-    setInput(event.target.value)
+    setInput(event.target.value);
   }
 
   return (
@@ -42,14 +43,21 @@ export default function NavBar() {
                 defaultValue={query}
                 onChange={handleInputChange}
               />
-              <button className={style.searchButton} type="submit" onClick={handleSearch}>
+              <button
+                className={style.searchButton}
+                type="submit"
+                onClick={handleSearch}
+              >
                 Buscar
               </button>
             </Nav>
           </Navbar.Collapse>
         </Container>
         <img src={profile} alt="" className={style.cart} />
-        <img src={cart} alt="" className={style.profile} />
+        <span className={style.cartItemCount}>{itemsInCart.length}</span>
+        <Link to={"/cart"} className={style.link}>
+          <img src={cart} alt="" className={style.profile} />
+        </Link>
       </Navbar>
     </>
   );

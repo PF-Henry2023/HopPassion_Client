@@ -4,8 +4,10 @@ import styles from "./Details.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/actions";
-import { Cart } from "react-bootstrap-icons";
+import { CartPlus } from "react-bootstrap-icons";
 import Footer from "../Footer/Footer";
+import QuantityControl from "../QuantityControl/QuantityControl";
+import { addToCart } from "../../redux/actions/actions";
 
 const Details = () => {
   const { id } = useParams();
@@ -29,27 +31,8 @@ const Details = () => {
     navigate(-1);
   };
 
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const incrementQuantity = () => {
-    if (quantity < productDetails.stock) {
-      setQuantity(quantity + 1);
-    }
-  };
-
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    if (
-      !isNaN(newQuantity) &&
-      newQuantity >= 1 &&
-      newQuantity <= productDetails.stock
-    ) {
-      setQuantity(newQuantity);
-    }
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
   };
 
   return (
@@ -85,29 +68,37 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                <div className={styles.quantityButtonsContainer}>
-                <button className={styles.quantityButton} onClick={incrementQuantity}>+</button>
-                <input
-                  type="text"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  className={styles.quantityInput}
+                <QuantityControl
+                  initialQuantity={1}
+                  stock={productDetails.stock}
+                  onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
                 />
-                <button className={styles.quantityButton} onClick={decrementQuantity}>-</button>
-                </div>
 
                 <p className={styles.quantity}>
                   {productDetails.stock} unidades disponibles
                 </p>
-                <button className={styles.addToCartButton}>
-                  <Cart /> + Agregar al carrito
+                <button
+                  className={styles.addToCartButton}
+                  onClick={() =>
+                    handleAddToCart({
+                      id: productDetails.id,
+                      title: productDetails.name,
+                      price: productDetails.price,
+                      image: productDetails.image,
+                      quantity: quantity,
+                    })
+                  }
+                >
+                  <CartPlus /> Agregar al carrito
                 </button>
-               
+
                 <div className={styles.box}>
                   <div className={styles.firstrow}>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>Categoría:</h6>
-                      <p className={styles.subTitle}>{productDetails.categories.join(", ")}</p>
+                      <p className={styles.subTitle}>
+                        {productDetails.categories.join(", ")}
+                      </p>
                     </div>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>País de Origen:</h6>
