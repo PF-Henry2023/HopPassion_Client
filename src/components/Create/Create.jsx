@@ -9,13 +9,9 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
-<<<<<<< HEAD
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import imageProduct from "../../assets/imageProduct.png";
-=======
 import axios from "axios";
->>>>>>> 4e0963e15e7a00063adbb0d530d50117585d14c5
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -96,7 +92,7 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     if (!productData.image) {
-      productData.image = imageProduct;
+      productData.image = "https://res.cloudinary.com/dkwvnp3ut/image/upload/v1696480032/imageProduct_pk7rwy.png";
     }
     event.preventDefault();
     Swal.fire({
@@ -167,14 +163,8 @@ const Create = () => {
         <Form.Group className="mb-3" controlId="image">
           <Form.Label>Imagen</Form.Label>
           <Form.Control
-<<<<<<< HEAD
-            src={productData.image || imageProduct}
-            type="text"
-            onChange={(e) => handleChange("image", e.target.value)}
-=======
             type="file"
             onChange={(e) => handleImageUpload(e.target.files[0])}
->>>>>>> 4e0963e15e7a00063adbb0d530d50117585d14c5
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
