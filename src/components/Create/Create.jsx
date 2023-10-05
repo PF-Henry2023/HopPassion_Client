@@ -9,11 +9,11 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Create = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
-  const navigate = useNavigate();
   const countryoptions = useMemo(() => CountryList().getData(), []);
   const categoryOptions = useMemo(() => {
     return (
@@ -63,6 +63,30 @@ const Create = () => {
   };
 
   console.log(productData);
+
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default"); // Your Cloudinary upload preset
+
+      // Make a POST request to Cloudinary to upload the image
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dkwvnp3ut/image/upload", // Cloudinary upload API URL
+        formData
+      );
+
+      if (response.data.secure_url) {
+        // Set the Cloudinary image URL in the productData state
+        setData({
+          ...productData,
+          image: response.data.secure_url,
+        });
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -133,9 +157,8 @@ const Create = () => {
         <Form.Group className="mb-3" controlId="image">
           <Form.Label>Imagen</Form.Label>
           <Form.Control
-            value={productData.image}
-            type="text"
-            onChange={(e) => handleChange("image", e.target.value)}
+            type="file"
+            onChange={(e) => handleImageUpload(e.target.files[0])}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
