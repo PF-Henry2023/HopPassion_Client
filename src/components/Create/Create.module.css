@@ -1,4 +1,7 @@
 .container {
+  width: 100%;
+}
+.form {
   width: 600px;
   text-align: left;
   position: absolute;
@@ -14,7 +17,7 @@
 }
 
 .button {
-  width: 200px;
+  width: 300px;
   margin-left: auto;
   margin-top: 10px;
   background-color: #97A663 !important;

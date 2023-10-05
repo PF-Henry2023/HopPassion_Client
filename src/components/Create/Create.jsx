@@ -9,6 +9,8 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import NavBar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 import axios from "axios";
 
 const Create = () => {
@@ -89,6 +91,9 @@ const Create = () => {
   };
 
   const handleSubmit = (event) => {
+    if (!productData.image) {
+      productData.image = "https://res.cloudinary.com/dkwvnp3ut/image/upload/v1696480032/imageProduct_pk7rwy.png";
+    }
     event.preventDefault();
     Swal.fire({
       title: "Confirmar nuevo producto?",
@@ -134,7 +139,8 @@ const Create = () => {
 
   return (
     <div className={style.container}>
-      <h3 className={style.title}>Nuevo Producto</h3>
+      <NavBar />
+      <h3 className={style.title}>Agregar nuevo producto</h3>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nombre</Form.Label>
@@ -162,7 +168,7 @@ const Create = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Descripcion</Form.Label>
+          <Form.Label>Descripción</Form.Label>
           <Form.Control
             type="text"
             value={productData.description}
@@ -174,25 +180,25 @@ const Create = () => {
           />
           <Form.Control.Feedback type="invalid">
             <div>
-              La descripcion debe tener al menos 12 caracteres y un maximo de
-              256 caracteres
+              La descripción debe tener entre 12 y 256 caracteres.
             </div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="country">
-          <Form.Label>Pais de origen</Form.Label>
+          <Form.Label>País de origen</Form.Label>
           <Select
             options={countryoptions}
+            placeholder="Selecciona el país que corresponde"
             value={{ value: productData.country, label: productData.country }}
             onChange={(value) => handleChange("country", value)}
             name="country"
           />
           <Form.Control.Feedback type="invalid">
-            <div>Ingrese un pais valido</div>
+            <div>Ingrese un país válido</div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="category">
-          <Form.Label>Categoria</Form.Label>
+          <Form.Label>Categoría</Form.Label>
           <Select
             options={categoryOptions}
             value={categoryOptions.find(
@@ -235,12 +241,12 @@ const Create = () => {
           />
           <Form.Control.Feedback type="invalid">
             <div>
-              El stock debe ser un numero mayor a cero y menor o igual a diez
+              El stock debe ser un numero igual o mayor a 1.
             </div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="amountMl">
-          <Form.Label>Cantidad en Mililitros</Form.Label>
+          <Form.Label>Cantidad en ml.</Form.Label>
           <Form.Control
             type="text"
             value={productData.amountMl}
@@ -252,13 +258,12 @@ const Create = () => {
           />
           <Form.Control.Feedback type="invalid">
             <div>
-              La cantidad deber ser un numero mayor a cero y menor o igual a
-              10000
+              La cantidad deber ser un número entre 1 y 10000 ml.
             </div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="alcoholContent">
-          <Form.Label>Graduacion Alcoholica</Form.Label>
+          <Form.Label>Graduación Alcohólica</Form.Label>
           <Form.Control
             type="text"
             value={productData.alcoholContent}
@@ -270,8 +275,7 @@ const Create = () => {
           />
           <Form.Control.Feedback type="invalid">
             <div>
-              La graduacion deber ser un numero mayor a cero y menor o igual a
-              10000
+              Debe ser un número entre 1 y 20.
             </div>
           </Form.Control.Feedback>
         </Form.Group>
@@ -284,6 +288,7 @@ const Create = () => {
           Crear
         </Button>
       </Form>
+      <Footer/>
     </div>
   );
 };
