@@ -1,5 +1,9 @@
 import axios from "axios";
+import { handleUserLogin, getLoggedInUser } from "../../utils/UserUtils";
 import {
+  GET_USERS,
+  SIGNUP,
+  LOGIN,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
   LOADING_PRODUCT,
@@ -12,6 +16,64 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
 } from "./actions-type";
+
+export const getUsers = () => {
+  return async function (dispatch) {
+    const response = await axios(`http://localhost:3001/users/allUsers`);
+    return dispatch({
+      type: GET_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const signup = ({ name, lastName, address, email, phone, password }) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`http://localhost:3001/users/signup`, {
+        name,
+        lastName,
+        address,
+        email,
+        phone,
+        password,
+      });
+      const user = response.data;
+      console.log(response);
+      dispatch({
+        type: SIGNUP,
+        payload: user,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify(user));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const login = ({ email, password }) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`http://localhost:3001/users/signin`, {
+        email,
+        password,
+      });
+      if (response.data) {
+        handleUserLogin(response.data);
+      } else {
+        throw Error("Invalid Password");
+      }
+
+      dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
 
 export function getProductById(id) {
   return async function (dispatch) {

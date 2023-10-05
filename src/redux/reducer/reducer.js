@@ -1,4 +1,7 @@
 import {
+  GET_USERS,
+  SIGNUP,
+  LOGIN,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
   CREATE_PRODUCT,
@@ -12,6 +15,8 @@ import {
 } from "../actions/actions-type";
 
 const initialState = {
+  users: [],
+  user: null,
   productDetails: {},
   products: null,
   isLoading: false,
@@ -24,6 +29,22 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case SIGNUP:
+      return {
+        ...state,
+        users: action.payload,
+        user: action.payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case GET_PRODUCTS_BYID:
       return {
         ...state,

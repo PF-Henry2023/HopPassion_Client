@@ -5,33 +5,35 @@ const wordRegex = /^[A-Za-z\s]+$/;
 const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
 function validate(input) {
-    const errors = {};
-    
-  if ( input.name && (!wordRegex.test(input.name) || input.name.length < 2)) {
-    errors.name = true;
-  } 
+  const errors = {};
 
-  if (input.lastName && (!wordRegex.test(input.lastName) || input.lastName.length <2)) {
+  if (input.name && (!wordRegex.test(input.name) || input.name.length < 2)) {
+    errors.name = true;
+  }
+
+  if (
+    input.lastName &&
+    (!wordRegex.test(input.lastName) || input.lastName.length < 2)
+  ) {
     errors.lastName = true;
   }
 
-  if (input.email && (!emailRegex.test(input.email))) {
+  if (input.email && !emailRegex.test(input.email)) {
     errors.email = true;
   }
-    
-  if (input.phone && (!numberRegex.test(input.phone) || input.phone.length != 10)) {
+
+  if (
+    input.phone &&
+    (!numberRegex.test(input.phone) || input.phone.length != 10)
+  ) {
     errors.phone = true;
   }
-  
-  if (input.birthDate && (!dateRegex.test(input.birthDate))) {
-    errors.birthDate = true;
-  }
-    
-  if (input.password && (!passwordRegex.test(input.password))) {
+
+  if (input.password && !passwordRegex.test(input.password)) {
     errors.password = true;
   }
 
-  if (input.address && (input.address.length < 5)) {
+  if (input.address && input.address.length < 5) {
     errors.address = true;
   }
 
@@ -39,12 +41,15 @@ function validate(input) {
 }
 
 function isButtonDisabled(errors, input) {
- return Object.values(errors).some(value => value === true) || 
- !input.name || !input.lastName || !input.email ||  !input.password 
+  return (
+    Object.values(errors).some((value) => value === true) ||
+    !input.name ||
+    !input.lastName ||
+    !input.email ||
+    !input.address ||
+    !input.phone ||
+    !input.password
+  );
 }
 
-
-export {
-   validate, 
-   isButtonDisabled
-}
+export { validate, isButtonDisabled };

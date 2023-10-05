@@ -1,3 +1,6 @@
+export const GET_USERS = "GET_USERS";
+export const SIGNUP = "SIGNUP";
+export const LOGIN = "LOGIN";
 export const GET_PRODUCTS_BYID = "GET_PRODUCTS_BYID";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const LOADING_PRODUCT = "LOADING_PRODUCT";
