@@ -9,3 +9,6 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_FILTERS = "SET_FILTERS";
 export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 export const GET_NEXT_PRODUCT_PAGE = "GET_NEXT_PRODUCT_PAGE";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";

@@ -12,6 +12,9 @@ import {
   SET_FILTERS,
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -181,5 +184,25 @@ export const createProduct = ({
     } catch (error) {
       alert(error.message);
     }
+  };
+};
+
+export const addToCart = (product) => {
+  return {
+    type: ADD_TO_CART,
+    payload: product,
+  };
+};
+
+export const removeFromCart = (productId) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: productId,
+  };
+};
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
   };
 };
