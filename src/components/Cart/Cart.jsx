@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import QuantityControl from "../QuantityControl/QuantityControl";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import Return from "../Return/Return";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.items);
-  const navigate = useNavigate();
 
   const calculateCartItemTotal = (item) => {
     return item.price * item.quantity;
@@ -24,17 +23,11 @@ const Cart = () => {
     dispatch(clearCart());
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className={styles.cartContainer}>
       {/* Columna 1 */}
       <div className={styles.column}>
-        <button className={styles.goBackButton} onClick={handleGoBack}>
-          Volver
-        </button>
+        <Return />
       </div>
 
       {/* Columna 2 */}
@@ -48,7 +41,8 @@ const Cart = () => {
           <div className={styles.subtitle}>Producto</div>
           <div className={styles.subtitle}>Precio</div>
           <div className={styles.subtitle}>Cantidad</div>
-          <div className={styles.subtitle}></div> {/* Espacio para el botón de eliminar */}
+          <div className={styles.subtitle}></div>{" "}
+          {/* Espacio para el botón de eliminar */}
         </div>
 
         {/* Lista de productos */}
@@ -109,12 +103,12 @@ const Cart = () => {
           <div>
             $
             {(
-              cart
-                .reduce(
-                  (total, item) => total + calculateCartItemTotal(item),
-                  0
-                ) + 500 // Agrega los gastos de envío al total
-            ).toFixed(2)}
+              cart.reduce(
+                (total, item) => total + calculateCartItemTotal(item),
+                0
+              ) + 500
+            ) // Agrega los gastos de envío al total
+              .toFixed(2)}
           </div>
         </div>
         <div className={styles.buttons}>
