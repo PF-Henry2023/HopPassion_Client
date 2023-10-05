@@ -1,5 +1,9 @@
 import axios from "axios";
+import { handleUserLogin, getLoggedInUser } from "../../utils/UserUtils";
 import {
+  GET_USERS,
+  SIGNUP,
+  LOGIN,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
   LOADING_PRODUCT,
@@ -9,6 +13,64 @@ import {
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
 } from "./actions-type";
+
+export const getUsers = () => {
+  return async function (dispatch) {
+    const response = await axios(`http://localhost:3001/users/allUsers`);
+    return dispatch({
+      type: GET_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const signup = ({ name, lastName, address, email, phone, password }) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`http://localhost:3001/users/signup`, {
+        name,
+        lastName,
+        address,
+        email,
+        phone,
+        password,
+      });
+      const user = response.data;
+      console.log(response);
+      dispatch({
+        type: SIGNUP,
+        payload: user,
+      });
+
+      window.localStorage.setItem("user", JSON.stringify(user));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const login = ({ email, password }) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`http://localhost:3001/users/signin`, {
+        email,
+        password,
+      });
+      if (response.data) {
+        handleUserLogin(response.data);
+      } else {
+        throw Error("Invalid Password");
+      }
+
+      dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
 
 export function getProductById(id) {
   return async function (dispatch) {
@@ -51,19 +113,19 @@ export const getNextProductPage = (filters, query, page) => {
 
 export const buildGetProductsUrl = (filters, query, page) => {
   let url = new URL("http://localhost:3001/product/all");
-  safeSetParam(url, "country", filters.country)
-  safeSetParam(url, "order", filters.order ? filters.order.id : null)
-  safeSetParam(url, "category", filters.category ? filters.category.id : null)
-  safeSetParam(url, "query", query)
-  safeSetParam(url, "page", page)
-  return url.toString()
-}
+  safeSetParam(url, "country", filters.country);
+  safeSetParam(url, "order", filters.order ? filters.order.id : null);
+  safeSetParam(url, "category", filters.category ? filters.category.id : null);
+  safeSetParam(url, "query", query);
+  safeSetParam(url, "page", page);
+  return url.toString();
+};
 
 function safeSetParam(url, key, value) {
-  if(value) {
-    url.searchParams.set(key, value)
+  if (value) {
+    url.searchParams.set(key, value);
   } else {
-    url.searchParams.delete(key)
+    url.searchParams.delete(key);
   }
 }
 
@@ -79,12 +141,12 @@ export const getCategories = () => {
 };
 
 export const setFilters = (filters) => {
-  return { type: SET_FILTERS, payload: filters}
-}
+  return { type: SET_FILTERS, payload: filters };
+};
 
 export const setSearchQuery = (query) => {
-  return { type: SET_SEARCH_QUERY, payload: query }
-}
+  return { type: SET_SEARCH_QUERY, payload: query };
+};
 
 export const createProduct = ({
   name,
@@ -97,7 +159,6 @@ export const createProduct = ({
   amountMl,
   alcoholContent,
 }) => {
-  
   return async function (dispatch) {
     try {
       const response = await axios.post(

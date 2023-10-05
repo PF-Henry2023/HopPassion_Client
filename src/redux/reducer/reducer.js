@@ -1,4 +1,7 @@
 import {
+  GET_USERS,
+  SIGNUP,
+  LOGIN,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
   CREATE_PRODUCT,
@@ -9,10 +12,12 @@ import {
 } from "../actions/actions-type";
 
 const initialState = {
+  users: [],
+  user: null,
   productDetails: {},
   products: null,
   isLoading: false,
-  quantity:1,
+  quantity: 1,
   categories: {},
   filters: {},
   query: null,
@@ -20,12 +25,28 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case SIGNUP:
+      return {
+        ...state,
+        users: action.payload,
+        user: action.payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case GET_PRODUCTS_BYID:
       return {
         ...state,
         productDetails: action.payload,
         isLoading: false,
-        quantity:1
+        quantity: 1,
       };
 
     case GET_PRODUCTS: {
@@ -49,19 +70,21 @@ const rootReducer = (state = initialState, action) => {
         filters: action.payload,
       };
     case SET_SEARCH_QUERY:
-        return {
-          ...state,
-          query: action.payload,
-        };
-    case GET_NEXT_PRODUCT_PAGE: {
-      const list = (state.products ? state.products.products : []).concat(action.payload.products)
       return {
         ...state,
-        products: { 
+        query: action.payload,
+      };
+    case GET_NEXT_PRODUCT_PAGE: {
+      const list = (state.products ? state.products.products : []).concat(
+        action.payload.products
+      );
+      return {
+        ...state,
+        products: {
           ...action.payload,
-          products: list
-        }
-      }
+          products: list,
+        },
+      };
     }
     default:
       return { ...state };
