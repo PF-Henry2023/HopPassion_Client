@@ -9,14 +9,17 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
+<<<<<<< HEAD
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imageProduct from "../../assets/imageProduct.png";
+=======
+import axios from "axios";
+>>>>>>> 4e0963e15e7a00063adbb0d530d50117585d14c5
 
 const Create = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
-  const navigate = useNavigate();
   const countryoptions = useMemo(() => CountryList().getData(), []);
   const categoryOptions = useMemo(() => {
     return (
@@ -66,6 +69,30 @@ const Create = () => {
   };
 
   console.log(productData);
+
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default"); // Your Cloudinary upload preset
+
+      // Make a POST request to Cloudinary to upload the image
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dkwvnp3ut/image/upload", // Cloudinary upload API URL
+        formData
+      );
+
+      if (response.data.secure_url) {
+        // Set the Cloudinary image URL in the productData state
+        setData({
+          ...productData,
+          image: response.data.secure_url,
+        });
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   const handleSubmit = (event) => {
     if (!productData.image) {
@@ -140,9 +167,14 @@ const Create = () => {
         <Form.Group className="mb-3" controlId="image">
           <Form.Label>Imagen</Form.Label>
           <Form.Control
+<<<<<<< HEAD
             src={productData.image || imageProduct}
             type="text"
             onChange={(e) => handleChange("image", e.target.value)}
+=======
+            type="file"
+            onChange={(e) => handleImageUpload(e.target.files[0])}
+>>>>>>> 4e0963e15e7a00063adbb0d530d50117585d14c5
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
