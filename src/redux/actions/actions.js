@@ -8,6 +8,9 @@ import {
   SET_FILTERS,
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./actions-type";
 
 export function getProductById(id) {
@@ -51,19 +54,19 @@ export const getNextProductPage = (filters, query, page) => {
 
 export const buildGetProductsUrl = (filters, query, page) => {
   let url = new URL("http://localhost:3001/product/all");
-  safeSetParam(url, "country", filters.country)
-  safeSetParam(url, "order", filters.order ? filters.order.id : null)
-  safeSetParam(url, "category", filters.category ? filters.category.id : null)
-  safeSetParam(url, "query", query)
-  safeSetParam(url, "page", page)
-  return url.toString()
-}
+  safeSetParam(url, "country", filters.country);
+  safeSetParam(url, "order", filters.order ? filters.order.id : null);
+  safeSetParam(url, "category", filters.category ? filters.category.id : null);
+  safeSetParam(url, "query", query);
+  safeSetParam(url, "page", page);
+  return url.toString();
+};
 
 function safeSetParam(url, key, value) {
-  if(value) {
-    url.searchParams.set(key, value)
+  if (value) {
+    url.searchParams.set(key, value);
   } else {
-    url.searchParams.delete(key)
+    url.searchParams.delete(key);
   }
 }
 
@@ -79,12 +82,12 @@ export const getCategories = () => {
 };
 
 export const setFilters = (filters) => {
-  return { type: SET_FILTERS, payload: filters}
-}
+  return { type: SET_FILTERS, payload: filters };
+};
 
 export const setSearchQuery = (query) => {
-  return { type: SET_SEARCH_QUERY, payload: query }
-}
+  return { type: SET_SEARCH_QUERY, payload: query };
+};
 
 export const createProduct = ({
   name,
@@ -97,7 +100,6 @@ export const createProduct = ({
   amountMl,
   alcoholContent,
 }) => {
-  
   return async function (dispatch) {
     try {
       const response = await axios.post(
@@ -120,5 +122,25 @@ export const createProduct = ({
     } catch (error) {
       alert(error.message);
     }
+  };
+};
+
+export const addToCart = (product) => {
+  return {
+    type: ADD_TO_CART,
+    payload: product,
+  };
+};
+
+export const removeFromCart = (productId) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: productId,
+  };
+};
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
   };
 };
