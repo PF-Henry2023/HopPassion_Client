@@ -1,15 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../../redux/actions/actions";
+import {
+  removeFromCart,
+  clearCart,
+  updateCartItemQuantity,
+} from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import QuantityControl from "../QuantityControl/QuantityControl";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.items);
+  const cart = useSelector((state) => state.cart);
 
   const calculateCartItemTotal = (item) => {
     return item.price * item.quantity;
@@ -21,6 +23,10 @@ const Cart = () => {
 
   const handleClearCart = () => {
     dispatch(clearCart());
+  };
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    dispatch(updateCartItemQuantity(productId, newQuantity));
   };
 
   return (
@@ -63,10 +69,10 @@ const Cart = () => {
               <QuantityControl
                 initialQuantity={cartItem.quantity}
                 stock={cartItem.stock}
-                onQuantityChange={(newQuantity) => {
-                  // Debes implementar la lógica para actualizar la cantidad en el carrito aquí
-                  // Puedes dispatch una acción que actualice la cantidad en el carrito
-                }}
+                productId={cartItem.id}
+                onQuantityChange={(newQuantity) =>
+                  handleQuantityChange(cartItem.id, newQuantity)
+                }
               />
             </div>
             <div className={styles.cartItemButtons}>
@@ -114,6 +120,7 @@ const Cart = () => {
         <div className={styles.buttons}>
           <button>Proceder al pago</button>
           <button>Elegir más productos</button>
+          <button onClick={handleClearCart}>Vaciar Carrito</button>
         </div>
       </div>
     </div>

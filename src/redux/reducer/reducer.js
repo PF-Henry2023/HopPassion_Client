@@ -12,6 +12,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  UPDATE_CART_ITEM_QUANTITY,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -24,7 +25,7 @@ const initialState = {
   categories: {},
   filters: {},
   query: null,
-  items: [],
+  cart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -97,29 +98,45 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case ADD_TO_CART:
-      const existingProduct = state.items.find(
+      const existingProduct = state.cart.find(
         (item) => item.id === action.payload.id
       );
-
       if (existingProduct) {
-        return { ...state };
+        return {
+          ...state,
+          cart: state.cart.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        };
       } else {
         return {
           ...state,
-          items: [...state.items, action.payload],
+          cart: [...state.cart, { ...action.payload, quantity: 1 }],
         };
       }
 
     case REMOVE_FROM_CART:
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        cart: state.cart.filter((item) => item.id !== action.payload),
       };
 
     case CLEAR_CART:
       return {
         ...state,
-        items: [],
+        cart: [],
+      };
+
+    case UPDATE_CART_ITEM_QUANTITY:
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.id === action.payload.productId
+            ? { ...item, quantity: action.payload.newQuantity }
+            : item
+        ),
       };
 
     default:

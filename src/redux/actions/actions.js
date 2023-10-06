@@ -15,6 +15,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  UPDATE_CART_ITEM_QUANTITY,
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -204,5 +205,15 @@ export const removeFromCart = (productId) => {
 export const clearCart = () => {
   return {
     type: CLEAR_CART,
+  };
+};
+
+export const updateCartItemQuantity = (productId, newQuantity) => {
+  return {
+    type: UPDATE_CART_ITEM_QUANTITY,
+    payload: {
+      productId,
+      newQuantity,
+    },
   };
 };
