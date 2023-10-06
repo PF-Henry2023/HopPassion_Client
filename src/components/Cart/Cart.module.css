@@ -1,37 +1,28 @@
 .cartContainer {
   display: grid;
-  grid-template-columns: auto 1fr 1fr; /* Tres columnas */
+  grid-template-columns: auto 1fr 0.5fr; /* Tres columnas */
   gap: 10px; /* Espacio entre las columnas y filas */
   padding: 20px;
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-}
-
 .subtitles {
-  /* Estilos para los subtitulos en la segunda fila */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto; /* Tres columnas y espacio para el botón de eliminar */
+  display: flex; /* Usamos flexbox en lugar de grid */
+  flex-direction: row; /* Alineamos los elementos en una fila */
+  justify-content: space-between;
   font-weight: bold;
   margin-top: 10px;
 }
 
 .subtitle {
-  /* Estilos para cada uno de los subtitulos */
-  text-align: center;
+  text-align: left;
 }
 
-
-.goBackButton {
-  align-self: flex-start;
-  background-color: transparent;
-  border: none;
-  color: #6a7346;
-  font-size: 16px;
+.cartItem {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr 0.8fr 0.1fr;
+  justify-content: space-between;
   font-weight: bold;
-  cursor: pointer;
+  margin-top: 10px;
 }
 
 .cartTotal {
@@ -39,14 +30,6 @@
   text-align: center; /* Centra el texto horizontalmente */
   font-size: 24px; /* Ajusta el tamaño del título */
   margin-bottom: 20px; /* Espacio inferior */
-}
-
-.cartItem {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr; /* Cuatro columnas en cada fila de elementos */
-  gap: 10px; /* Espacio entre las columnas de elementos */
-  align-items: center; /* Centra verticalmente los elementos */
-  padding: 10px;
 }
 
 .cartItemImage {
@@ -61,12 +44,6 @@
   font-weight: bold; /* Texto del precio en negrita */
 }
 
-.cartItemButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .cartItemButton {
   background-color: red; /* Color de fondo del botón Eliminar (ajusta según sea necesario) */
   color: white; /* Color de texto del botón Eliminar (ajusta según sea necesario) */
@@ -76,16 +53,6 @@
   font-weight: bold;
 }
 
-.cartItemDetails {
-  display: grid;
-  grid-template-rows: auto auto auto; /* Tres filas en los detalles del producto */
-  gap: 5px;
-}
-
-.subtotal {
-  grid-column: 3 / 4; /* Tercera columna para subtotal */
-}
-
 .divider {
   grid-column: 2 / 4; /* Tercera columna para la línea divisoria */
   border-top: 1px solid #000; /* Línea divisoria */
@@ -93,14 +60,12 @@
 }
 
 .total {
-  grid-column: 3 / 4; /* Tercera columna para el total */
   font-size: 20px; /* Tamaño del total */
   font-weight: bold;
   margin-top: 10px; /* Espacio superior */
 }
 
 .buttons {
-  grid-column: 2 / 4; /* Tercera columna para los botones */
   display: flex;
   flex-direction: column;
   align-items: center;
