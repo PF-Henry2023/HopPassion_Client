@@ -3,12 +3,12 @@ import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../redux/actions/actions";
+import { getProductById, addToCart } from "../../redux/actions/actions";
 import { CartPlus } from "react-bootstrap-icons";
 import Footer from "../Footer/Footer";
 import QuantityControl from "../QuantityControl/QuantityControl";
-import { addToCart } from "../../redux/actions/actions";
 import Return from "../Return/Return";
+import Swal from "sweetalert2";
 
 const Details = () => {
   const { id } = useParams();
@@ -16,6 +16,7 @@ const Details = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -29,6 +30,13 @@ const Details = () => {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    setIsAddedToCart(true);
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
@@ -63,7 +71,7 @@ const Details = () => {
                 <p className={styles.quantity}>Cantidad: </p>
 
                 <QuantityControl
-                  initialQuantity={1}
+                  initialQuantity={quantity}
                   stock={productDetails.stock}
                   onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
                 />
@@ -82,8 +90,15 @@ const Details = () => {
                       quantity: quantity,
                     })
                   }
+                  disabled={isAddedToCart || productDetails.stock === 0}
                 >
-                  <CartPlus /> Agregar al carrito
+                  {isAddedToCart || productDetails.stock === 0 ? (
+                    "Stock Agotado"
+                  ) : (
+                    <>
+                      <CartPlus /> Agregar al carrito
+                    </>
+                  )}
                 </button>
 
                 <div className={styles.box}>

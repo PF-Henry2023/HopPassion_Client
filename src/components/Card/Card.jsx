@@ -5,20 +5,25 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/actions";
 import QuantityControl from "../QuantityControl/QuantityControl";
+import Swal from "sweetalert2";
 
 const CardP = ({ id, title, price, image, stock }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart); // Obtén el carrito del estado global
+  const cart = useSelector((state) => state.cart);
 
-  // Verifica si el producto ya está en el carrito y obtén su cantidad
   const cartItem = cart.find((item) => item.id === id);
   const cartQuantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddToCart = (product, quantity) => {
     if (cartQuantity + quantity <= stock) {
-      // Verifica si es posible agregar más unidades al carrito
       dispatch(addToCart({ ...product, quantity }));
     }
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
@@ -41,11 +46,11 @@ const CardP = ({ id, title, price, image, stock }) => {
               <div>
                 <QuantityControl
                   productId={id}
-                  initialQuantity={1}
-                  stock={stock - cartQuantity} // Resta las unidades en el carrito al stock disponible
-                  onQuantityChange={(newQuantity) =>
-                    handleQuantityChange(newQuantity)
-                  }
+                  initialQuantity={cartQuantity} 
+                  stock={stock - cartQuantity}
+                  onQuantityChange={(newQuantity) => {
+                    console.log("Nueva cantidad:", newQuantity);
+                  }}
                 />
               </div>
             </div>

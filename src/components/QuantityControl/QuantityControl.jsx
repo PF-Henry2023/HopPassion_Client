@@ -10,18 +10,20 @@ function QuantityControl({
   productId,
   onQuantityChange,
 }) {
-  const [quantity, setQuantity] = useState(initialQuantity);
+  
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setQuantity(initialQuantity);
-  }, [initialQuantity]);
-
+  const handleQuantityChange = (newQuantity) => {
+    dispatch(updateCartItemQuantity(productId, newQuantity));
+    onQuantityChange(newQuantity);
+  };
+  const [quantity, setQuantity] = useState(initialQuantity);
+  
   const incrementQuantity = () => {
     if (quantity < stock) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
-      updateQuantityInCart(newQuantity);
+      handleQuantityChange(newQuantity);
     }
   };
 
@@ -29,22 +31,13 @@ function QuantityControl({
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
-      updateQuantityInCart(newQuantity);
+      handleQuantityChange(newQuantity);
     }
   };
 
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= stock) {
-      setQuantity(newQuantity);
-      updateQuantityInCart(newQuantity);
-    }
-  };
-
-  const updateQuantityInCart = (newQuantity) => {
-    dispatch(updateCartItemQuantity(productId, newQuantity));
-    onQuantityChange(newQuantity);
-  };
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [initialQuantity]);
 
   return (
     <div className={styles.quantityButtonsContainer}>
@@ -55,7 +48,7 @@ function QuantityControl({
         type="number"
         className={styles.quantity}
         value={quantity}
-        onChange={handleQuantityChange}
+        onChange={(e) => handleQuantityChange(parseInt(e.target.value, 10))}
         min="1"
         max={stock}
       />
