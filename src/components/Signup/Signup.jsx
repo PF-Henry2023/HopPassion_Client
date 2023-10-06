@@ -36,8 +36,6 @@ export default function SignUp() {
   });
   const [errors, setErrors] = useState(validate(userData));
 
-  console.log(userData);
-
   const handleChange = (field, value) => {
     setData({
       ...userData,
