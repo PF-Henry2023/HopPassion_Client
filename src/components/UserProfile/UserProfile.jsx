@@ -14,7 +14,6 @@ const UserProfile = () => {
     telefono: "00-000-0000-0000",
   });
 
-  // Estado para los campos de dirección
   const [addressData, setAddressData] = useState({
     calle: "Nombre de la calle",
     numeracion: "111",
@@ -34,7 +33,6 @@ const UserProfile = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Verificamos si la opción activa es "Perfil" o "Dirección"
     if (activeOption === "Perfil") {
       setProfileData({
         ...profileData,

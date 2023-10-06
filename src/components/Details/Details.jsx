@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/actions";
 import { CartPlus } from "react-bootstrap-icons";
 import Footer from "../Footer/Footer";
 import QuantityControl from "../QuantityControl/QuantityControl";
 import { addToCart } from "../../redux/actions/actions";
+import Return from "../Return/Return";
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const productDetails = useSelector((state) => state.productDetails);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -27,10 +27,6 @@ const Details = () => {
     fetchProductDetails();
   }, [dispatch, id]);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
   };
@@ -41,9 +37,7 @@ const Details = () => {
         <Navbar />
         <div className={styles.container}>
           <div className={styles.column}>
-            <button className={styles.goBackButton} onClick={handleGoBack}>
-              Volver
-            </button>
+            <Return />
           </div>
 
           {isLoading ? (
