@@ -41,7 +41,6 @@ const rootReducer = (state = initialState, action) => {
     case SIGNUP:
       return {
         ...state,
-        users: action.payload,
         user: action.payload,
       };
     case LOGIN:

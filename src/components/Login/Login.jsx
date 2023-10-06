@@ -19,10 +19,20 @@ export default function Login() {
   const navigate = useNavigate();
 
   const users = useSelector((state) => state.users);
+  const user = useSelector((state) => state.user);
+
+  console.log(user);
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user == null) {
+      return;
+    }
+    navigate("/");
+  }, [user]);
 
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
@@ -44,20 +54,25 @@ export default function Login() {
     );
   };
 
-  const handleSubmit = (event) => {
+  function handleLoginError(error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Contraseña incorrecta",
+    });
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const userExists = users.find((user) => user.email === userData.email);
+
     if (userExists) {
-      dispatch(login(userData)).then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Inicio de sesion exitoso!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      });
+      // Perform your login action here
+      try {
+        dispatch(login(userData, handleLoginError));
+      } catch (error) {
+        alert(error.message);
+      }
     } else {
       Swal.fire({
         icon: "error",
@@ -68,7 +83,6 @@ export default function Login() {
         email: "",
         password: "",
       });
-      return;
     }
   };
 
