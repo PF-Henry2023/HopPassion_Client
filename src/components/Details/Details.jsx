@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById, addToCart } from "../../redux/actions/actions";
 import { CartPlus } from "react-bootstrap-icons";
 import Footer from "../Footer/Footer";
-import QuantityControl from "../QuantityControl/QuantityControl";
+import Counter from "../Counter/Counter";
 import Return from "../Return/Return";
 import Swal from "sweetalert2";
 
@@ -15,8 +15,14 @@ const Details = () => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const [isLoading, setIsLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const cartQuantity = useSelector((state) => state.cartQuantity);
+  const initialQuantity = productDetails.stock > 0 ? 1 : 0;
+  const maxQuantity =
+    isNaN(productDetails.stock) || isNaN(cartQuantity)
+      ? 0
+      : productDetails.stock - cartQuantity;
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -70,10 +76,13 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                <QuantityControl
-                  initialQuantity={quantity}
-                  stock={productDetails.stock}
-                  onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
+                <Counter
+                  productId={productDetails.id}
+                  initialQuantity={initialQuantity}
+                  stock={maxQuantity}
+                  onQuantityChange={(newQuantity) => {
+                    // Manejo de cambio de cantidad aquí
+                  }}
                 />
 
                 <p className={styles.quantity}>

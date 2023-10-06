@@ -10,9 +10,11 @@ import {
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
   ADD_TO_CART,
-  REMOVE_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  REMOVE_ALL_FROM_CART,
   CLEAR_CART,
-  UPDATE_CART_ITEM_QUANTITY,
+  INCREMENT,
+  DECREMENT,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -26,6 +28,7 @@ const initialState = {
   filters: {},
   query: null,
   cart: [],
+  counter: 0,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -99,15 +102,15 @@ const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART:
       const existingProduct = state.cart.find(
-        (item) => item.id === action.payload.id
+        (product) => product.id === action.payload.id
       );
       if (existingProduct) {
         return {
           ...state,
-          cart: state.cart.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
+          cart: state.cart.map((product) =>
+            product.id === action.payload.id
+              ? { ...product, quantity: product.quantity + 1 }
+              : product
           ),
         };
       } else {
@@ -117,10 +120,23 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-    case REMOVE_FROM_CART:
+    case REMOVE_ONE_FROM_CART:
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
+        cart: state.cart.map((product) =>
+          product.id === action.payload
+            ? {
+                ...product,
+                quantity: Math.max(product.quantity - 1, 0),
+              }
+            : product
+        ),
+      };
+
+    case REMOVE_ALL_FROM_CART:
+      return {
+        ...state,
+        cart: state.cart.filter((product) => product.id !== action.payload),
       };
 
     case CLEAR_CART:
@@ -129,14 +145,16 @@ const rootReducer = (state = initialState, action) => {
         cart: [],
       };
 
-    case UPDATE_CART_ITEM_QUANTITY:
+    case INCREMENT:
       return {
         ...state,
-        cart: state.cart.map((item) =>
-          item.id === action.payload.productId
-            ? { ...item, quantity: action.payload.newQuantity }
-            : item
-        ),
+        counter: state.counter + 1,
+      };
+
+    case DECREMENT:
+      return {
+        ...state,
+        counter: state.counter - 1,
       };
 
     default:

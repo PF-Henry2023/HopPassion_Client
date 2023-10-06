@@ -1,12 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  removeFromCart,
-  clearCart,
-  updateCartItemQuantity,
-} from "../../redux/actions/actions";
+import { removeFromCart, clearCart } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
-import QuantityControl from "../QuantityControl/QuantityControl";
+import Counter from "../Counter/Counter";
 import Return from "../Return/Return";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -25,10 +21,6 @@ const Cart = () => {
 
   const handleClearCart = () => {
     dispatch(clearCart());
-  };
-
-  const handleQuantityChange = (productId, newQuantity) => {
-    dispatch(updateCartItemQuantity(productId, newQuantity));
   };
 
   return (
@@ -69,13 +61,13 @@ const Cart = () => {
               <p className={styles.cartItemPrice}>
                 Precio por unidad: ${cartItem.price.toFixed(2)}
               </p>
-              <QuantityControl
-                initialQuantity={cartItem.quantity}
-                stock={cartItem.stock}
-                productId={cartItem.id}
-                onQuantityChange={(newQuantity) =>
-                  handleQuantityChange(cartItem.id, newQuantity)
-                }
+              <Counter
+                productId="someProductId"
+                initialQuantity={initialQuantity}
+                stock={stock - cartQuantity}
+                onQuantityChange={(newQuantity) => {
+                  setCartQuantity(newQuantity);
+                }}
               />
               <button
                 className={styles.cartItemButton}

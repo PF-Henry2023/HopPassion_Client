@@ -1,22 +1,24 @@
+import React, { useState } from "react";
 import style from "./Card.module.css";
 import Card from "react-bootstrap/Card";
 import { CartPlus } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/actions";
-import QuantityControl from "../QuantityControl/QuantityControl";
+import Counter from "../Counter/Counter";
 import Swal from "sweetalert2";
 
 const CardP = ({ id, title, price, image, stock }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const initialQuantity = 0;
 
-  const cartItem = cart.find((item) => item.id === id);
-  const cartQuantity = cartItem ? cartItem.quantity : 0;
+  const [cartQuantity, setCartQuantity] = useState(0);
 
   const handleAddToCart = (product, quantity) => {
     if (cartQuantity + quantity <= stock) {
       dispatch(addToCart({ ...product, quantity }));
+      setCartQuantity(cartQuantity + quantity);
     }
     Swal.fire({
       icon: "success",
@@ -44,12 +46,12 @@ const CardP = ({ id, title, price, image, stock }) => {
                 </Card.Text>
               </div>
               <div>
-                <QuantityControl
-                  productId={id}
-                  initialQuantity={cartQuantity} 
+                <Counter
+                  productId="someProductId"
+                  initialQuantity={initialQuantity}
                   stock={stock - cartQuantity}
                   onQuantityChange={(newQuantity) => {
-                    console.log("Nueva cantidad:", newQuantity);
+                    setCartQuantity(newQuantity);
                   }}
                 />
               </div>
