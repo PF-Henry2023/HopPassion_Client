@@ -47,11 +47,11 @@ const CardP = ({ id, title, price, image, stock }) => {
               </div>
               <div>
                 <Counter
-                  productId="someProductId"
+                  productId={id} // Usar la propiedad 'id' del producto
                   initialQuantity={initialQuantity}
                   stock={stock - cartQuantity}
                   onQuantityChange={(newQuantity) => {
-                    setCartQuantity(newQuantity);
+                    console.log("Nueva cantidad:", newQuantity);
                   }}
                 />
               </div>
