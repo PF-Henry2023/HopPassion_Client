@@ -16,7 +16,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const query = useSelector((state) => state.query);
   const [input, setInput] = useState(null);
-  const itemsInCart = useSelector((state) => state.items);
+  const itemsInCart = useSelector((state) => state.cart);
 
   function handleSearch(event) {
     dispatch(setSearchQuery(input));

@@ -10,8 +10,11 @@ import {
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
   ADD_TO_CART,
-  REMOVE_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  REMOVE_ALL_FROM_CART,
   CLEAR_CART,
+  INCREMENT,
+  DECREMENT,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -24,7 +27,8 @@ const initialState = {
   categories: {},
   filters: {},
   query: null,
-  items: [],
+  cart: [],
+  counter: 0,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -96,29 +100,48 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case ADD_TO_CART:
-      const existingProduct = state.items.find(
-        (item) => item.id === action.payload.id
+      const existingProduct = state.cart.find(
+        (product) => product.id === action.payload.id
       );
-
       if (existingProduct) {
-        return { ...state };
+        return {
+          ...state,
+          cart: state.cart.map((product) =>
+            product.id === action.payload.id
+              ? { ...product, quantity: product.quantity + 1 }
+              : product
+          ),
+        };
       } else {
         return {
           ...state,
-          items: [...state.items, action.payload],
+          cart: [...state.cart, { ...action.payload, quantity: 1 }],
         };
       }
 
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
-      };
+      case REMOVE_ONE_FROM_CART:
+        return {
+          ...state,
+          cart: state.cart.filter((product) => product.id !== action.payload),
+        };
+
 
     case CLEAR_CART:
       return {
         ...state,
-        items: [],
+        cart: [],
+      };
+
+    case INCREMENT:
+      return {
+        ...state,
+        counter: state.counter + 1,
+      };
+
+    case DECREMENT:
+      return {
+        ...state,
+        counter: state.counter - 1,
       };
 
     default:
