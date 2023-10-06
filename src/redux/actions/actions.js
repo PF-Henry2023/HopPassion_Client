@@ -38,39 +38,36 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
         phone,
         password,
       });
-      const user = response.data;
-      console.log(response);
+      if (response.data) {
+        handleUserLogin(response.data);
+      }
+
       dispatch({
         type: SIGNUP,
-        payload: user,
+        payload: getLoggedInUser(),
       });
-
-      window.localStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
       alert(error.message);
     }
   };
 };
 
-export const login = ({ email, password }) => {
+export const login = (userData, handleLoginError) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`http://localhost:3001/users/signin`, {
-        email,
-        password,
-      });
-      if (response.data) {
-        handleUserLogin(response.data);
-      } else {
-        throw Error("Invalid Password");
-      }
-
+      const response = await axios.post(
+        `http://localhost:3001/users/signin`,
+        userData
+      );
+      console.log(response);
+      handleUserLogin(response.data);
       dispatch({
         type: LOGIN,
         payload: getLoggedInUser(),
       });
     } catch (error) {
-      alert(error.message);
+      // Instead of alert, return an error action
+      handleLoginError(error);
     }
   };
 };

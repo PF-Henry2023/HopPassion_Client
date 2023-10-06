@@ -8,6 +8,18 @@ import Filters from "../Filters/Filters";
 import Favorites from "../Favorites/Favorites";
 
 const Home = () => {
+  const storedId = window.localStorage.getItem("id");
+  const user = window.localStorage.getItem("user");
+  console.log("user", user);
+
+  if (storedId !== null) {
+    // Use the retrieved value as needed
+    console.log("Stored Id:", storedId);
+  } else {
+    // Handle the case where the "id" item doesn't exist in local storage
+    console.log("No 'id' item found in local storage.");
+  }
+
   return (
     <div>
       <Navbar />

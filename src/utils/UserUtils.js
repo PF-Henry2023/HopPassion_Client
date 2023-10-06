@@ -3,16 +3,21 @@ import jwtDecode from "jwt-decode";
 export function handleUserLogin(token) {
   const decoded = jwtDecode(token);
 
-  console.log(decoded);
-
   const user = {
     id: decoded.id,
-    // name: decoded.name,
-    // lastName: decoded.lastName,
+    name: decoded.name,
+    lastName: decoded.lastName,
+    address: decoded.address,
+    email: decoded.email,
+    phone: decoded.phone,
+    role: decoded.role,
+    password: decoded.password,
   };
 
-  // window.localStorage.setItem("token", token);
-  // window.localStorage.setItem("user", JSON.stringify(user));
+  console.log("este es el user: ", user);
+
+  window.localStorage.setItem("token", token);
+  window.localStorage.setItem("user", JSON.stringify(user));
   window.localStorage.setItem("id", user.id);
 }
 
