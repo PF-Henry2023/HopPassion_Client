@@ -119,24 +119,12 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-    case REMOVE_ONE_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.map((product) =>
-          product.id === action.payload
-            ? {
-                ...product,
-                quantity: Math.max(product.quantity - 1, 0),
-              }
-            : product
-        ),
-      };
+      case REMOVE_ONE_FROM_CART:
+        return {
+          ...state,
+          cart: state.cart.filter((product) => product.id !== action.payload),
+        };
 
-    case REMOVE_ALL_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
-      };
 
     case CLEAR_CART:
       return {

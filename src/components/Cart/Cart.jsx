@@ -62,12 +62,10 @@ const Cart = () => {
                 Precio por unidad: ${cartItem.price.toFixed(2)}
               </p>
               <Counter
-                productId="someProductId"
-                initialQuantity={initialQuantity}
-                stock={stock - cartQuantity}
-                onQuantityChange={(newQuantity) => {
-                  setCartQuantity(newQuantity);
-                }}
+                productId={cartItem.id}
+                initialQuantity={cartItem.quantity}
+                stock={cartItem.stock}
+                onQuantityChange={(newQuantity) => {}}
               />
               <button
                 className={styles.cartItemButton}
