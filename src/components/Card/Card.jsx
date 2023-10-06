@@ -1,16 +1,31 @@
+import React, { useState } from "react";
 import style from "./Card.module.css";
 import Card from "react-bootstrap/Card";
 import { CartPlus } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/actions";
-import QuantityControl from "../QuantityControl/QuantityControl";
+import Counter from "../Counter/Counter";
+import Swal from "sweetalert2";
 
 const CardP = ({ id, title, price, image, stock }) => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const initialQuantity = 0;
+
+  const [cartQuantity, setCartQuantity] = useState(0);
 
   const handleAddToCart = (product, quantity) => {
-    dispatch(addToCart({ ...product, quantity }));
+    if (cartQuantity + quantity <= stock) {
+      dispatch(addToCart({ ...product, quantity }));
+      setCartQuantity(cartQuantity + quantity);
+    }
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
@@ -31,15 +46,13 @@ const CardP = ({ id, title, price, image, stock }) => {
                 </Card.Text>
               </div>
               <div>
-                <QuantityControl
-                  initialQuantity={1}
-                  stock={stock}
-                  onQuantityChange={(newQuantity) =>
-                    handleAddToCart(
-                      { id, title, price, image, stock },
-                      newQuantity
-                    )
-                  }
+                <Counter
+                  productId="someProductId"
+                  initialQuantity={initialQuantity}
+                  stock={stock - cartQuantity}
+                  onQuantityChange={(newQuantity) => {
+                    setCartQuantity(newQuantity);
+                  }}
                 />
               </div>
             </div>
@@ -48,8 +61,15 @@ const CardP = ({ id, title, price, image, stock }) => {
         <button
           className={style.button}
           onClick={() => handleAddToCart({ id, title, price, image, stock }, 1)}
+          disabled={cartQuantity >= stock}
         >
-          <CartPlus /> Agregar
+          {cartQuantity >= stock ? (
+            "Stock Agotado"
+          ) : (
+            <>
+              <CartPlus /> Agregar
+            </>
+          )}
         </button>
       </Card>
     </div>

@@ -13,8 +13,11 @@ import {
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
   ADD_TO_CART,
-  REMOVE_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+  REMOVE_ALL_FROM_CART,
   CLEAR_CART,
+  INCREMENT,
+  DECREMENT,
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -193,7 +196,7 @@ export const addToCart = (product) => {
 
 export const removeFromCart = (productId) => {
   return {
-    type: REMOVE_FROM_CART,
+    type: REMOVE_ONE_FROM_CART,
     payload: productId,
   };
 };
@@ -201,5 +204,17 @@ export const removeFromCart = (productId) => {
 export const clearCart = () => {
   return {
     type: CLEAR_CART,
+  };
+};
+
+export const increment = () => {
+  return {
+    type: INCREMENT,
+  };
+};
+
+export const decrement = () => {
+  return {
+    type: DECREMENT,
   };
 };
