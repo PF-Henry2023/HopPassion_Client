@@ -3,30 +3,39 @@ import style from "./Card.module.css";
 import Card from "react-bootstrap/Card";
 import { CartPlus } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/actions";
-import Counter from "../Counter/Counter";
-import Swal from "sweetalert2";
+import Spinner from 'react-bootstrap/Spinner';
+import axios from "axios";
 
-const CardP = ({ id, title, price, image, stock }) => {
+const CardP = ({ id, title, price, image, stock, quantity }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-  const initialQuantity = 0;
+  const [ isLoading, setIsLoading ] = useState(false);
 
-  const [cartQuantity, setCartQuantity] = useState(0);
-
-  const handleAddToCart = (product, quantity) => {
-    if (cartQuantity + quantity <= stock) {
-      dispatch(addToCart({ ...product, quantity }));
-      setCartQuantity(cartQuantity + quantity);
-    }
-    Swal.fire({
-      icon: "success",
-      title: "Producto agregado con éxito",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+  const handleAddToCart = () => {
+    setIsLoading(true)
+    axios.put(
+      "http://localhost:3001/cart/set",
+      { productId: id, quantity: quantity + 1 },
+      { headers: { 'x-access-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkNpbnRpYSIsImxhc3ROYW1lIjoiQ28iLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NjYzODU2NCwiZXhwIjoxNjk2NzI0OTY0fQ.8yoKgOevCCZyzTiIaiMO4LrHYWshnwv9lVuGbwYhcU4'}}
+    ).then(response => {
+      dispatch(addToCart(response.data))
+      setIsLoading(false)
+    }).catch(error => {
+      console.log(error)
+      setIsLoading(false)
+    }) 
   };
+
+  function buttonContent() {
+    if(isLoading) {
+      return <Spinner animation="border" role="status"></Spinner>
+    } else if(quantity >= stock) {
+      return "Stock agotado"
+    } else {
+      return <><CartPlus /> Agregar</>
+    }
+  }
 
   return (
     <div className={style.container}>
@@ -40,36 +49,18 @@ const CardP = ({ id, title, price, image, stock }) => {
           <div className={style.infoWrapper}>
             <Card.Title>{title}</Card.Title>
             <div className={style.row}>
-              <div>
                 <Card.Text className={style.customTextColor}>
                   ${price}
                 </Card.Text>
-              </div>
-              <div>
-                <Counter
-                  productId={id} // Usar la propiedad 'id' del producto
-                  initialQuantity={initialQuantity}
-                  stock={stock - cartQuantity}
-                  onQuantityChange={(newQuantity) => {
-                    console.log("Nueva cantidad:", newQuantity);
-                  }}
-                />
-              </div>
             </div>
           </div>
         </Card.Body>
         <button
           className={style.button}
-          onClick={() => handleAddToCart({ id, title, price, image, stock }, 1)}
-          disabled={cartQuantity >= stock}
+          onClick={() => handleAddToCart()}
+          disabled={quantity >= stock}
         >
-          {cartQuantity >= stock ? (
-            "Stock Agotado"
-          ) : (
-            <>
-              <CartPlus /> Agregar
-            </>
-          )}
+          { buttonContent() }
         </button>
       </Card>
     </div>

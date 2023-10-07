@@ -27,8 +27,9 @@ const initialState = {
   categories: {},
   filters: {},
   query: null,
-  cart: [],
+  cart: {},
   counter: 0,
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -94,36 +95,24 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: {
           ...action.payload,
-          products: list,
+          products: list
         },
       };
     }
 
     case ADD_TO_CART:
-      const existingProduct = state.cart.find(
-        (product) => product.id === action.payload.id
-      );
-      if (existingProduct) {
-        return {
-          ...state,
-          cart: state.cart.map((product) =>
-            product.id === action.payload.id
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          cart: [...state.cart, { ...action.payload, quantity: 1 }],
-        };
+      const cart = { ...state.cart }
+      cart[action.payload.id] = action.payload.quantity
+      return {
+        ...state,
+        cart
       }
-
-      case REMOVE_ONE_FROM_CART:
-        return {
-          ...state,
-          cart: state.cart.filter((product) => product.id !== action.payload),
-        };
+     
+    case REMOVE_ONE_FROM_CART:
+      return {
+        ...state,
+        cart: state.cart.filter((product) => product.id !== action.payload),
+      };
 
 
     case CLEAR_CART:
