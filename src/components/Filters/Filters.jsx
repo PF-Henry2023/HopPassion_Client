@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect, useState } from "react";
-import axios from "axios";
+import HopPassionClient from "../../utils/NetworkingUtils";
 import { setFilters } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,7 +17,7 @@ export default function NavBar() {
     const selectedCategory = useSelector((state) => state.filters.category);
 
     useEffect(() => {
-        axios("http://localhost:3001/filters/configuration")
+        HopPassionClient.get("/filters/configuration")
         .then((result) => {
             setConfiguration(result.data)
         })

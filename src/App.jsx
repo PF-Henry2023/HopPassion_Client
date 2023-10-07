@@ -7,12 +7,14 @@ import Login from "./components/Login/Login";
 import UserProfile from "./components/UserProfile/UserProfile";
 import SignUp from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart";
-import CartProvider from "./components/CartProvider/CartProvider"
+import UserSessionManager from "./components/UserSessionManager/UserSessionManager"
+import CartSessionManager from "./components/CartSessionManager/CartSessionManager";
 
 function App() {
   return (
     <div className="app">
-      <CartProvider>
+      <CartSessionManager />
+      <UserSessionManager />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>
@@ -22,7 +24,6 @@ function App() {
         <Route path="/user/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
       </Routes>
-      </CartProvider>
     </div>
   );
 }

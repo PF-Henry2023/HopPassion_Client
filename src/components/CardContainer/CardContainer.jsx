@@ -13,7 +13,6 @@ export default function CardContainer () {
     const page = useSelector((state) => state.products ? state.products.page : { page: 1, hasMore: true })
     const filters = useSelector((state) => state.filters)
     const searchQuery = useSelector((state) => state.query)
-    const cart = useSelector((state) => state.cart)
 
     useEffect(()=> {
         dispatch(getProducts(filters, searchQuery))
@@ -31,7 +30,7 @@ export default function CardContainer () {
                 <div className={style.gridContainer}>
                 {
                     products.map((product) => {
-                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image} stock={product.stock} quantity={cart[product.id] ?? 0} />
+                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image} stock={product.stock} />
                     })
                 }
                 </div>
