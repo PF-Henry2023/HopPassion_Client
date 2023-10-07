@@ -1,0 +1,32 @@
+import axios from 'axios';
+
+const HopPassionClient = axios.create({
+  baseURL: 'http://localhost:3001',
+});
+
+HopPassionClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['x-access-token'] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+HopPassionClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // handle logout logic
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default HopPassionClient;

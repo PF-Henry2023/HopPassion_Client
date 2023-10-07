@@ -3,26 +3,17 @@ import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById, addToCart } from "../../redux/actions/actions";
-import { CartPlus } from "react-bootstrap-icons";
+import { getProductById } from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
-import Counter from "../Counter/Counter";
 import Return from "../Return/Return";
-import Swal from "sweetalert2";
+import AddToCartButton from "../AddToCartButton/AddToCartButton"
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
+  const quantities = useSelector((state) => state.cart.quantities)
   const [isLoading, setIsLoading] = useState(true);
-  const [quantity, setQuantity] = useState(0);
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-  const cartQuantity = useSelector((state) => state.cartQuantity);
-  const initialQuantity = productDetails.stock > 0 ? 1 : 0;
-  const maxQuantity =
-    isNaN(productDetails.stock) || isNaN(cartQuantity)
-      ? 0
-      : productDetails.stock - cartQuantity;
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -34,17 +25,10 @@ const Details = () => {
     fetchProductDetails();
   }, [dispatch, id]);
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    setIsAddedToCart(true);
-    Swal.fire({
-      icon: "success",
-      title: "Producto agregado con éxito",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-
+  function quantity() {
+    return quantities[productDetails.id] ?? 0
+  }
+ 
   return (
     <div>
       <div className={styles.mainContainer}>
@@ -76,39 +60,20 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                <Counter
+                {/* <Counter
                   productId={productDetails.id}
                   initialQuantity={initialQuantity}
                   stock={maxQuantity}
                   onQuantityChange={(newQuantity) => {
                     // Manejo de cambio de cantidad aquí
                   }}
-                />
+                /> */}
 
                 <p className={styles.quantity}>
-                  {productDetails.stock} unidades disponibles
+                  {productDetails.stock} unidades disponibles { quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
                 </p>
-                <button
-                  className={styles.addToCartButton}
-                  onClick={() =>
-                    handleAddToCart({
-                      id: productDetails.id,
-                      title: productDetails.name,
-                      price: productDetails.price,
-                      image: productDetails.image,
-                      quantity: quantity,
-                    })
-                  }
-                  disabled={isAddedToCart || productDetails.stock === 0}
-                >
-                  {isAddedToCart || productDetails.stock === 0 ? (
-                    "Stock Agotado"
-                  ) : (
-                    <>
-                      <CartPlus /> Agregar al carrito
-                    </>
-                  )}
-                </button>
+
+                <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
 
                 <div className={styles.box}>
                   <div className={styles.firstrow}>

@@ -1,7 +1,9 @@
+import { emptyCart, mergeCart, setCart, startSyncing, stopSyncing } from "../../utils/CartUtils";
 import {
-  GET_USERS,
   SIGNUP,
   LOGIN,
+  LOGOUT,
+  SYNC_AUTH_STATE,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
   CREATE_PRODUCT,
@@ -9,16 +11,14 @@ import {
   SET_FILTERS,
   SET_SEARCH_QUERY,
   GET_NEXT_PRODUCT_PAGE,
+  GET_CART,
+  GET_CART_REQUEST,
   ADD_TO_CART,
-  REMOVE_ONE_FROM_CART,
-  REMOVE_ALL_FROM_CART,
+  REMOVE_FROM_CART,
   CLEAR_CART,
-  INCREMENT,
-  DECREMENT,
 } from "../actions/actions-type";
 
 const initialState = {
-  users: [],
   user: null,
   productDetails: {},
   products: null,
@@ -27,17 +27,11 @@ const initialState = {
   categories: {},
   filters: {},
   query: null,
-  cart: [],
-  counter: 0,
+  cart: emptyCart()
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS:
-      return {
-        ...state,
-        users: action.payload,
-      };
     case SIGNUP:
       return {
         ...state,
@@ -48,6 +42,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null
+      }
+    case SYNC_AUTH_STATE:
+      return {
+        ...state,
+        user: action.payload
+      }
     case GET_PRODUCTS_BYID:
       return {
         ...state,
@@ -94,55 +98,40 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: {
           ...action.payload,
-          products: list,
+          products: list
         },
       };
     }
 
-    case ADD_TO_CART:
-      const existingProduct = state.cart.find(
-        (product) => product.id === action.payload.id
-      );
-      if (existingProduct) {
-        return {
-          ...state,
-          cart: state.cart.map((product) =>
-            product.id === action.payload.id
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          cart: [...state.cart, { ...action.payload, quantity: 1 }],
-        };
+    case GET_CART:
+      return {
+        ...state,
+        cart: setCart(state.cart, action.payload)
       }
 
-      case REMOVE_ONE_FROM_CART:
-        return {
-          ...state,
-          cart: state.cart.filter((product) => product.id !== action.payload),
-        };
-
+    case GET_CART_REQUEST:
+      return {
+        ...state,
+        cart: startSyncing(state.cart)
+      }
 
     case CLEAR_CART:
       return {
         ...state,
-        cart: [],
+        cart: emptyCart(),
       };
 
-    case INCREMENT:
+    case ADD_TO_CART:
       return {
         ...state,
-        counter: state.counter + 1,
-      };
-
-    case DECREMENT:
+        cart: mergeCart(state.cart, action.payload)
+      }
+      
+    case REMOVE_FROM_CART:
       return {
         ...state,
-        counter: state.counter - 1,
-      };
+        cart: mergeCart(state.cart, action.payload)
+      }
 
     default:
       return { ...state };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
 import { Link, useNavigate } from "react-router-dom";
-import { signup, getUsers } from "../../redux/actions/actions";
+import { signup } from "../../redux/actions/actions";
 import style from "./Signup.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -12,19 +12,10 @@ import Col from "react-bootstrap/Col";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imagenRegistro from "../../assets/imagenRegistro.png";
-import Swal from "sweetalert2";
 
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const users = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
-
-  console.log(users);
 
   const [userData, setData] = useState({
     name: "",
@@ -52,26 +43,7 @@ export default function SignUp() {
 
   const handleSignup = async (event) => {
     event.preventDefault();
-    const emailExists = users.some((user) => user.email === userData.email);
-    if (emailExists) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Este e-mail ya esta registrado!",
-      });
-      setData({
-        name: "",
-        lastName: "",
-        address: "",
-        email: "",
-        phone: "",
-        password: "",
-      });
-      return;
-    } else {
-      dispatch(signup(userData));
-      navigate("/");
-    }
+    dispatch(signup(userData));
   };
 
   return (
