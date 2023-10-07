@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios"
+import HopPassionClient from "../../utils/NetworkingUtils";
 
 export default function Auth0() {
     const {
@@ -14,7 +14,7 @@ export default function Auth0() {
     const callProtectedApi = async() => {
         try {
             const token = await getAccessTokenSilently();
-            const response = await axios.get(`http://localhost:3001/protected`,{
+            const response = await HopPassionClient.get('/protected',{
                 headers: {
                     authorization: `Bearer ${token}`,
                 },

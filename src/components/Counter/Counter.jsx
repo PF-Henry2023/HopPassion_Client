@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Counter.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement } from "../../redux/actions/actions";
+// import { increment, decrement } from "../../redux/actions/actions";
 
 function Counter({ initialQuantity, stock, productId, onQuantityChange }) {
   const dispatch = useDispatch();

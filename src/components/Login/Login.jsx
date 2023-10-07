@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { validate, isButtonDisabled } from "./validate";
-import { getUsers, login } from "../../redux/actions/actions";
-import { useNavigate } from "react-router";
+import { validate } from "./validate";
+import { login } from "../../redux/actions/actions";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -16,29 +15,22 @@ import Swal from "sweetalert2";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
-
-  console.log(user);
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (user == null) {
-      return;
-    }
-    navigate("/");
-  }, [user]);
-
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
     email: "",
     password: "",
   });
+
+  /*
+    const navigate = useNavigate();
+    useEffect(() => {
+    if (user == null) {
+      return;
+    }
+    navigate("/");
+  }, [user]);*/
 
   const handleChange = (field, value) => {
     setData({
@@ -58,32 +50,17 @@ export default function Login() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Contraseña incorrecta",
+      text: "Error iniciando sesión",
+    });
+    setData({
+      email: "",
+      password: "",
     });
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userExists = users.find((user) => user.email === userData.email);
-
-    if (userExists) {
-      // Perform your login action here
-      try {
-        dispatch(login(userData, handleLoginError));
-      } catch (error) {
-        alert(error.message);
-      }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No existen usuarios registrados con ese email!",
-      });
-      setData({
-        email: "",
-        password: "",
-      });
-    }
+    dispatch(login(userData, handleLoginError));
   };
 
   return (

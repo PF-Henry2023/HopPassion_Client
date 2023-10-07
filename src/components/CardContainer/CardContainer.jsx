@@ -30,7 +30,7 @@ export default function CardContainer () {
                 <div className={style.gridContainer}>
                 {
                     products.map((product) => {
-                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image} stock={product.stock}/>
+                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image} stock={product.stock} />
                     })
                 }
                 </div>

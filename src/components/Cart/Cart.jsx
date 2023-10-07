@@ -1,31 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../../redux/actions/actions";
+import { removeFromCart, getCart, getCartRequest } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import Counter from "../Counter/Counter";
 import Return from "../Return/Return";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import Loading from "../Loading/Loading";
+import { Spinner } from "react-bootstrap";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const [ isDeleting, setDeleting ] = useState([]);
+  const syncing = useSelector((state) => state.cart.syncing)
 
-  const calculateCartItemTotal = (item) => {
-    return item.price * item.quantity;
-  };
+  useEffect(() => {
+    dispatch(getCartRequest())
+    dispatch(getCart())
+  }, [])
 
   const handleRemoveFromCart = (productId) => {
-    dispatch(removeFromCart(productId));
+    const deleting = [
+      ...isDeleting
+    ]
+    deleting.push(productId)
+    setDeleting(deleting)
+    dispatch(removeFromCart(productId, (result) => {
+
+    }));
   };
 
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
+  const isLoading = (productId) => {
+    return isDeleting.includes(productId) || syncing
+  }
+
+  function deleteButtonContent(productId) {
+    if(isLoading(productId)) {
+      return <Spinner animation="border" role="status"></Spinner>
+    } else {
+      return "Eliminar"
+    }
+  }
 
   return (
     <>
       <Navbar />
+      <div className={styles.cartTotal}>
+          <h1>Mi carrito</h1>
+      </div>
+      { syncing ? <Loading /> :
       <div className={styles.cartContainer}>
         {/* Columna 1 */}
         <div className={styles.column}>
@@ -34,44 +58,42 @@ const Cart = () => {
 
         {/* Columna 2 */}
         <div className={styles.column}>
-          <div className={styles.cartTotal}>
-            <h1>Mi carrito</h1>
-          </div>
 
           {/* Subtítulos en la segunda fila */}
           <div className={styles.subtitles}>
             <div className={styles.subtitle}>Producto</div>
-            <div className={styles.subtitle}>Precio</div>
+            <div className={styles.subtitle}>Precio unitario</div>
             <div className={styles.subtitle}>Cantidad</div>
             <div className={styles.subtitle}></div>{" "}
             {/* Espacio para el botón de eliminar */}
           </div>
 
           {/* Lista de productos */}
-          {cart.map((cartItem) => (
-            <div key={cartItem.id} className={styles.cartItem}>
+          {(cart.products ?? []).map((product) => (
+            <div key={product.id} className={styles.cartItem}>
               <div>
                 <img
-                  src={cartItem.image}
+                  src={product.image}
                   className={styles.cartItemImage}
-                  alt={`${cartItem.id}`}
+                  alt={`${product.id}`}
                 />
-                <div className={styles.cartItemName}>{cartItem.title}</div>
+                <div className={styles.cartItemName}>{product.name}</div>
               </div>
               <p className={styles.cartItemPrice}>
-                Precio por unidad: ${cartItem.price.toFixed(2)}
+                $ {product.price}
               </p>
-              <Counter
-                productId={cartItem.id}
-                initialQuantity={cartItem.quantity}
-                stock={cartItem.stock}
+              {/* <Counter
+                productId={product.id}
+                initialQuantity={product.quantity}
+                stock={product.stock}
                 onQuantityChange={(newQuantity) => {}}
-              />
+              /> */}
+              { cart.quantities[product.id] }
               <button
                 className={styles.cartItemButton}
-                onClick={() => handleRemoveFromCart(cartItem.id)}
+                onClick={() => handleRemoveFromCart(product.id)}
               >
-                Eliminar
+                { deleteButtonContent(product.id) }
               </button>
             </div>
           ))}
@@ -82,41 +104,31 @@ const Cart = () => {
           <div className={styles.subtotal}>
             <div>Subtotal</div>
             <div>
-              $
-              {cart
-                .reduce(
-                  (total, item) => total + calculateCartItemTotal(item),
-                  0
-                )
-                .toFixed(2)}
+              $ {cart.total}
             </div>
           </div>
           <div className={styles.divider}></div>
-          <div className={styles.gastosEnvio}>
+
+          {/* <div className={styles.gastosEnvio}>
             <div>Gastos de envío</div>
             <div>$500</div>
           </div>
-          <div className={styles.divider}></div>
+          <div className={styles.divider}></div>*/}
+
           <div className={styles.total}>
             <div>Total</div>
             <div>
-              $
-              {(
-                cart.reduce(
-                  (total, item) => total + calculateCartItemTotal(item),
-                  0
-                ) + 500
-              ) // Agrega los gastos de envío al total
-                .toFixed(2)}
+              $ { cart.total }
             </div>
           </div>
           <div className={styles.buttons}>
             <button>Proceder al pago</button>
             <button>Elegir más productos</button>
-            <button onClick={handleClearCart}>Vaciar Carrito</button>
+            {/* <button onClick={handleClearCart}>Vaciar Carrito</button> */}
           </div>
         </div>
       </div>
+      }
       <Footer />
     </>
   );
