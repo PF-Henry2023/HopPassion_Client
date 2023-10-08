@@ -1,14 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
 const HopPassionClient = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: "https://hoppassionserver-production.up.railway.app",
 });
+
+//otra forma mas corta seria:
+//axios.defaults.BaseURL = "https://hoppassionserver-production.up.railway.app";
 
 HopPassionClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers['x-access-token'] = token;
+      config.headers["x-access-token"] = token;
     }
     return config;
   },
