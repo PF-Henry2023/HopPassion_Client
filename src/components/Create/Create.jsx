@@ -92,7 +92,8 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     if (!productData.image) {
-      productData.image = "https://res.cloudinary.com/dkwvnp3ut/image/upload/v1696480032/imageProduct_pk7rwy.png";
+      productData.image =
+        "https://res.cloudinary.com/dkwvnp3ut/image/upload/v1696480032/imageProduct_pk7rwy.png";
     }
     event.preventDefault();
     Swal.fire({
@@ -179,9 +180,7 @@ const Create = () => {
             isValid={productData.description && !errors.description}
           />
           <Form.Control.Feedback type="invalid">
-            <div>
-              La descripción debe tener entre 12 y 256 caracteres.
-            </div>
+            <div>La descripción debe tener entre 12 y 256 caracteres.</div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="country">
@@ -240,9 +239,7 @@ const Create = () => {
             isValid={productData.stock && !errors.stock}
           />
           <Form.Control.Feedback type="invalid">
-            <div>
-              El stock debe ser un numero igual o mayor a 1.
-            </div>
+            <div>El stock debe ser mayor a cero y menor o igual que mil.</div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="amountMl">
@@ -257,9 +254,7 @@ const Create = () => {
             isValid={productData.amountMl && !errors.amountMl}
           />
           <Form.Control.Feedback type="invalid">
-            <div>
-              La cantidad deber ser un número entre 1 y 10000 ml.
-            </div>
+            <div>La cantidad deber ser un número entre 1 y 10000 ml.</div>
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="alcoholContent">
@@ -274,9 +269,7 @@ const Create = () => {
             isValid={productData.alcoholContent && !errors.alcoholContent}
           />
           <Form.Control.Feedback type="invalid">
-            <div>
-              Debe ser un número entre 1 y 20.
-            </div>
+            <div>Debe ser un número entre 1 y 20.</div>
           </Form.Control.Feedback>
         </Form.Group>
         <Button
@@ -288,7 +281,7 @@ const Create = () => {
           Crear
         </Button>
       </Form>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
