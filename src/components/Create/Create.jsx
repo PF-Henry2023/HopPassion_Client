@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import style from "./Create.module.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -9,9 +8,10 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
-import NavBar from "../Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import Return from "../Return/Return";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -63,8 +63,6 @@ const Create = () => {
       })
     );
   };
-
-  console.log(productData);
 
   const handleImageUpload = async (file) => {
     try {

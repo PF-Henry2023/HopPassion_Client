@@ -1,12 +1,26 @@
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{6,}$/;
-const wordRegex = /^[A-Za-z\s]+$/;
 
-export default function Validate(input) {
-    const errors = {};
-    if (input.user === "") errors.user = true;
-    else if (!wordRegex.test(input.user)) errors.user1 = true;      
+const validate = (input) => {
+  let errors = {};
 
-    if (!passwordRegex.test(input.password)) errors.password = true;
-    
-    return errors;
-} 
+  if (input.email && !emailRegex.test(input.email)) {
+    errors.email = true;
+  }
+
+  if (input.password && !passwordRegex.test(input.password)) {
+    errors.password = true;
+  }
+
+  return errors;
+};
+
+function isButtonDisabled(errors, input) {
+  return (
+    Object.values(errors).some((value) => value === true) ||
+    !input.email ||
+    !input.password
+  );
+}
+
+export { validate, isButtonDisabled };

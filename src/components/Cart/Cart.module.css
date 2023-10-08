@@ -1,0 +1,73 @@
+.cartContainer {
+  display: grid;
+  grid-template-columns: auto 1fr 0.5fr; /* Tres columnas */
+  gap: 10px; /* Espacio entre las columnas y filas */
+  padding: 20px;
+}
+
+.subtitles {
+  display: flex; /* Usamos flexbox en lugar de grid */
+  flex-direction: row; /* Alineamos los elementos en una fila */
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.subtitle {
+  text-align: left;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr 0.8fr 0.1fr;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.cartTotal {
+  grid-column: 2 / 4; /* Título Mi Carrito en las columnas 2 y 3 */
+  text-align: center; /* Centra el texto horizontalmente */
+  font-size: 24px; /* Ajusta el tamaño del título */
+  margin-bottom: 20px; /* Espacio inferior */
+}
+
+.cartItemImage {
+  height: 77px;
+}
+
+.cartItemName {
+  font-size: 18px; /* Tamaño del nombre del producto */
+}
+
+.cartItemPrice {
+  font-weight: bold; /* Texto del precio en negrita */
+}
+
+.cartItemButton {
+  background-color: red; /* Color de fondo del botón Eliminar (ajusta según sea necesario) */
+  color: white; /* Color de texto del botón Eliminar (ajusta según sea necesario) */
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.divider {
+  grid-column: 2 / 4; /* Tercera columna para la línea divisoria */
+  border-top: 1px solid #000; /* Línea divisoria */
+  margin: 10px 0; /* Espacio superior e inferior */
+}
+
+.total {
+  font-size: 20px; /* Tamaño del total */
+  font-weight: bold;
+  margin-top: 10px; /* Espacio superior */
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Espacio entre botones */
+}

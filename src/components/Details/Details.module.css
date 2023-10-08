@@ -13,17 +13,6 @@
   padding: 100px;
 }
 
-/* Go back button styles */
-.goBackButton {
-  align-self: flex-start;
-  background-color: transparent;
-  border: none;
-  color: #6a7346;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .goBackButton:hover {
   color: #97a663;
 }
@@ -35,19 +24,16 @@
   margin: 10px 36px 10px 36px;
 }
 
-/* Image container styles */
 .imageContainer {
   background-color: #f7f8fa;
   width: 540px;
 }
 
-/* Image styles */
 .image {
   width: 100%;
   height: auto;
 }
 
-/* Description styles */
 .description {
   font-family: "Poppins", sans-serif;
   font-size: 22px;
@@ -59,7 +45,6 @@
   margin-top: 20px;
 }
 
-/* Title styles */
 .title {
   font-family: "Poppins", sans-serif;
   font-size: 26px;
@@ -71,7 +56,6 @@
   margin-top: 20px;
 }
 
-/* Price styles */
 .price {
   font-family: "Poppins", sans-serif;
   font-size: 26px;
@@ -83,7 +67,6 @@
   margin-top: 10px;
 }
 
-/* Quantity styles */
 .quantity {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
@@ -91,11 +74,10 @@
   line-height: 27.6px;
   letter-spacing: 0.1px;
   text-align: left;
-  color: #b1b5a4;
+  color: #6a7346;
   margin-top: 10px;
 }
 
-/* Add to cart button styles */
 .addToCartButton {
   width: 264px;
   height: 42px;
@@ -111,7 +93,6 @@
   cursor: pointer;
 }
 
-/* Estilo para la caja (div) */
 .box {
   margin-top: 40px;
   border: 1px solid #b1b5a4;
@@ -124,12 +105,10 @@
   padding: 10px;
 }
 
-/* Estilo para las filas (div.row) */
 .row {
   display: flex;
   justify-content: flex-start;
-
-  margin-bottom: 10px; /* Espacio vertical entre filas */
+  margin-bottom: 10px;
 }
 
 .row h6 {
@@ -144,34 +123,4 @@
   text-align: left;
   color: #b1b5a4;
   margin-right: 10px;
-}
-
-.quantityButtonsContainer {
-  width: 80px;
-  height: 40px;
-  border: 1px solid #97a663; /* Borde de color #97A663 */
-  background-color: transparent; /* Sin color de fondo */
-  display: flex;
-  align-items: center;
-}
-
-.quantityButton {
-  margin:auto;
-  background: none;
-  border: none;
-  font-size: 18pt;
-  color: #97a663;
-  font-family: Roboto, sans-serif;
-  cursor: pointer;
-}
-
-.quantityInput {
-  margin: auto;
-  background: none;
-  border: none;
-  font-size: 18pt;
-  color: black;
-  font-family: Roboto, sans-serif;
-  text-align: center;
-  width: 30px;
 }

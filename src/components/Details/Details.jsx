@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/actions";
-import { Cart } from "react-bootstrap-icons";
 import Footer from "../Footer/Footer";
+import Return from "../Return/Return";
+import AddToCartButton from "../AddToCartButton/AddToCartButton"
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const productDetails = useSelector((state) => state.productDetails);
+  const quantities = useSelector((state) => state.cart.quantities)
   const [isLoading, setIsLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -25,42 +25,17 @@ const Details = () => {
     fetchProductDetails();
   }, [dispatch, id]);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const incrementQuantity = () => {
-    if (quantity < productDetails.stock) {
-      setQuantity(quantity + 1);
-    }
-  };
-
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    if (
-      !isNaN(newQuantity) &&
-      newQuantity >= 1 &&
-      newQuantity <= productDetails.stock
-    ) {
-      setQuantity(newQuantity);
-    }
-  };
-
+  function quantity() {
+    return quantities[productDetails.id] ?? 0
+  }
+ 
   return (
     <div>
       <div className={styles.mainContainer}>
         <Navbar />
         <div className={styles.container}>
           <div className={styles.column}>
-            <button className={styles.goBackButton} onClick={handleGoBack}>
-              Volver
-            </button>
+            <Return />
           </div>
 
           {isLoading ? (
@@ -85,29 +60,28 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                <div className={styles.quantityButtonsContainer}>
-                <button className={styles.quantityButton} onClick={incrementQuantity}>+</button>
-                <input
-                  type="text"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  className={styles.quantityInput}
-                />
-                <button className={styles.quantityButton} onClick={decrementQuantity}>-</button>
-                </div>
+                {/* <Counter
+                  productId={productDetails.id}
+                  initialQuantity={initialQuantity}
+                  stock={maxQuantity}
+                  onQuantityChange={(newQuantity) => {
+                    // Manejo de cambio de cantidad aquí
+                  }}
+                /> */}
 
                 <p className={styles.quantity}>
-                  {productDetails.stock} unidades disponibles
+                  {productDetails.stock} unidades disponibles { quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
                 </p>
-                <button className={styles.addToCartButton}>
-                  <Cart /> + Agregar al carrito
-                </button>
-               
+
+                <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
+
                 <div className={styles.box}>
                   <div className={styles.firstrow}>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>Categoría:</h6>
-                      <p className={styles.subTitle}>{productDetails.categories.join(", ")}</p>
+                      <p className={styles.subTitle}>
+                        {productDetails.categories.join(", ")}
+                      </p>
                     </div>
                     <div className={styles.row}>
                       <h6 className={styles.subTitle}>País de Origen:</h6>

@@ -6,23 +6,54 @@ import Navbar from "react-bootstrap/Navbar";
 import FormControl from "react-bootstrap/FormControl";
 import logo_light from "../../assets/logo_light.png";
 import profile from "../../assets/profile.png";
-import cart from "../../assets/cart.png";
+import cartIcon from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery } from "../../redux/actions/actions";
+import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
 
-export default function NavBar() {
 
+export default function NavBar() {
   const dispatch = useDispatch();
-  const query = useSelector((state) => state.query)
-  const [ input, setInput ] = useState(null)
+
+  const user = useSelector((state) => state.user)
+  const query = useSelector((state) => state.query);
+  const cart = useSelector((state) => state.cart);
+
+  const [input, setInput] = useState(null);
 
   function handleSearch(event) {
-    dispatch(setSearchQuery(input))
+    dispatch(setSearchQuery(input));
   }
 
   function handleInputChange(event) {
-    setInput(event.target.value)
+    setInput(event.target.value);
+  }
+
+  function handleLogout() {
+    dispatch(logout())
+  }
+
+  function drawUserSection() {
+    if (user) {
+      return <>
+          <button onClick={handleLogout}>Logout</button>
+          <span className={style.cartItemCount}>{user.name} </span>
+          <img src={profile} alt="" className={style.cart} />
+          <span className={style.cartItemCount}>{cart.products ? cart.products.length : null} </span>
+          <Link to={"/cart"} className={style.link}>
+            <img src={cartIcon} alt="" className={style.profile} />
+          </Link>
+      </>
+    } else {
+      return <>
+        <Link to={"/login"}>
+          Login 
+        </Link>
+        <Link to={"/signup"}>
+          Signup
+        </Link>
+      </>
+    }
   }
 
   return (
@@ -47,14 +78,17 @@ export default function NavBar() {
                 defaultValue={query}
                 onChange={handleInputChange}
               />
-              <button className={style.searchButton} type="submit" onClick={handleSearch}>
+              <button
+                className={style.searchButton}
+                type="submit"
+                onClick={handleSearch}
+              >
                 Buscar
               </button>
             </Nav>
           </Navbar.Collapse>
         </Container>
-        <img src={profile} alt="" className={style.cart} />
-        <img src={cart} alt="" className={style.profile} />
+        { drawUserSection() }
       </Navbar>
     </>
   );

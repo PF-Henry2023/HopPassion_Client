@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import style from "../CardContainer/CardContainer.module.css"
 import {useDispatch, useSelector } from "react-redux";
 import { getProducts, getNextProductPage } from "../../redux/actions/actions";
@@ -30,7 +30,7 @@ export default function CardContainer () {
                 <div className={style.gridContainer}>
                 {
                     products.map((product) => {
-                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image}/>
+                        return <Card key={product.id} id={product.id} title={product.name} price={product.price} image={product.image} stock={product.stock} />
                     })
                 }
                 </div>
