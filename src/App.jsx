@@ -26,10 +26,10 @@ function App() {
         <Route path="/user/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route
-          path="/mercadoPago/process_payment/:orderId"
+          path="/mercadoPago/process_payment/:payment_id"
           element={<PaymentGateway />}
         ></Route>
-        <Route path="/status/:idPayment" element={<PaymentStatus />}></Route>
+        <Route path="/status/:payment_id" element={<PaymentStatus />}></Route>
       </Routes>
     </div>
   );

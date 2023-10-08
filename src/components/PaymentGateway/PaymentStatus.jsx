@@ -1,9 +1,13 @@
 import { StatusScreen } from "@mercadopago/sdk-react";
+import { useParams } from "react-router";
 
 export default function StatusPayment(props) {
+  const { payment_id } = useParams();
+
   const initialization = {
-    paymentId: props.idPayment, // id de pago para mostrar
+    paymentId: payment_id, // id de pago para mostrar
   };
+  console.log(initialization);
   const onError = async (error) => {
     console.log(error);
   };
