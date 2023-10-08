@@ -1,5 +1,10 @@
 import HopPassionClient from "../../utils/NetworkingUtils";
-import { handleUserLogin, getLoggedInUser, handleUserLogout } from "../../utils/UserUtils";
+import {
+  handleUserLogin,
+  getLoggedInUser,
+  handleUserLogout,
+} from "../../utils/UserUtils";
+import axios from "axios";
 import {
   SIGNUP,
   LOGIN,
@@ -17,13 +22,15 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   GET_CART,
-  GET_CART_REQUEST
+  GET_CART_REQUEST,
+  MERCADOPAGO,
+  GET_USER_INFO,
 } from "./actions-type";
 
 export const signup = ({ name, lastName, address, email, phone, password }) => {
   return async function (dispatch) {
     try {
-      const response = await HopPassionClient.post('/users/signup', {
+      const response = await HopPassionClient.post("/users/signup", {
         name,
         lastName,
         address,
@@ -47,8 +54,8 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
 export const login = (userData, handleLoginError) => {
   return async function (dispatch) {
     try {
-      const response = await HopPassionClient.post('/users/signin', userData);
-      handleUserLogin(response.data)
+      const response = await HopPassionClient.post("/users/signin", userData);
+      handleUserLogin(response.data);
       dispatch({
         type: LOGIN,
         payload: getLoggedInUser(),
@@ -60,19 +67,19 @@ export const login = (userData, handleLoginError) => {
 };
 
 export const logout = () => {
-  handleUserLogout()
-  return { type: LOGOUT }
-}
+  handleUserLogout();
+  return { type: LOGOUT };
+};
 
 export const syncAuthState = () => {
-  return { type: SYNC_AUTH_STATE, payload: getLoggedInUser() }
-}
+  return { type: SYNC_AUTH_STATE, payload: getLoggedInUser() };
+};
 
 export function getProductById(id) {
   return async function (dispatch) {
     try {
       dispatch({ type: LOADING_PRODUCT });
-      const response = await HopPassionClient.get('/product/' + id);
+      const response = await HopPassionClient.get("/product/" + id);
       const productData = response.data;
 
       dispatch({
@@ -88,7 +95,9 @@ export function getProductById(id) {
 export const getProducts = (filters, query) => {
   return async (dispatch) => {
     try {
-      const result = await HopPassionClient.get(buildGetProductsUrl(filters, query));
+      const result = await HopPassionClient.get(
+        buildGetProductsUrl(filters, query)
+      );
       dispatch({ type: GET_PRODUCTS, payload: result.data });
     } catch (error) {
       console.log(error);
@@ -99,7 +108,9 @@ export const getProducts = (filters, query) => {
 export const getNextProductPage = (filters, query, page) => {
   return async (dispatch) => {
     try {
-      const result = await HopPassionClient.get(buildGetProductsUrl(filters, query, page + 1));
+      const result = await HopPassionClient.get(
+        buildGetProductsUrl(filters, query, page + 1)
+      );
       dispatch({ type: GET_NEXT_PRODUCT_PAGE, payload: result.data });
     } catch (error) {
       console.log(error);
@@ -158,19 +169,17 @@ export const createProduct = ({
 }) => {
   return async function (dispatch) {
     try {
-      const response = await HopPassionClient.post('/product/create',
-        {
-          name,
-          image,
-          description,
-          country,
-          category,
-          price,
-          stock,
-          amountMl,
-          alcoholContent,
-        }
-      );
+      const response = await HopPassionClient.post("/product/create", {
+        name,
+        image,
+        description,
+        country,
+        category,
+        price,
+        stock,
+        amountMl,
+        alcoholContent,
+      });
       return dispatch({
         type: CREATE_PRODUCT,
       });
@@ -189,40 +198,40 @@ export const getCart = () => {
       console.log(error.message);
     }
   };
-}
+};
 
 export const getCartRequest = () => {
-  return { type: GET_CART_REQUEST }
-}
+  return { type: GET_CART_REQUEST };
+};
 
 export const addToCart = (id, quantity, callback) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.put(
-        "/cart/set",
-        { productId: id, quantity: quantity }
-      )
-      dispatch({ type: ADD_TO_CART, payload: response.data })
-      callback(true)
+      const response = await HopPassionClient.put("/cart/set", {
+        productId: id,
+        quantity: quantity,
+      });
+      dispatch({ type: ADD_TO_CART, payload: response.data });
+      callback(true);
     } catch (error) {
-      console.log(error)
-      callback(false)
+      console.log(error);
+      callback(false);
     }
   };
-}
+};
 
 export const removeFromCart = (id, callback) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.put(
-        "/cart/set",
-        { productId: id, quantity: 0 }
-      )
-      dispatch({ type: REMOVE_FROM_CART, payload: response.data })
-      callback(true)
+      const response = await HopPassionClient.put("/cart/set", {
+        productId: id,
+        quantity: 0,
+      });
+      dispatch({ type: REMOVE_FROM_CART, payload: response.data });
+      callback(true);
     } catch (error) {
-      console.log(error)
-      callback(false)
+      console.log(error);
+      callback(false);
     }
   };
 };
@@ -232,3 +241,36 @@ export const clearCart = () => {
     type: CLEAR_CART,
   };
 };
+
+export const getUserInfo = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await HopPassionClient.get(`/users/${id}`);
+      dispatch({ type: GET_USER_INFO, payload: response.data });
+    } catch (error) {
+      console.error("Error al obtener la información del usuario:", error);
+    }
+  };
+};
+
+export const processPayment = async (formData) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3001/mercadoPago/process_payment",
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+    throw error;
+  }
+};
+
+
