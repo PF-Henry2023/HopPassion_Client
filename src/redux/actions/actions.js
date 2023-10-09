@@ -256,7 +256,7 @@ export const getUserInfo = (id) => {
 export const processPayment = async (formData) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/mercadoPago/process_payment",
+      "/process_payment",
       formData,
       {
         headers: {
