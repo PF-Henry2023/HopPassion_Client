@@ -12,6 +12,8 @@ import Col from "react-bootstrap/Col";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imagenRegistro from "../../assets/imagenRegistro.png";
+import GoogleSingUp from "./GoogleSingUp/GoogleSingUp";
+import { gapi } from "gapi-script";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState(validate(userData));
+  const clientId = "659206981480-kto0rcmeb3puh10fht8626diq6176m1q.apps.googleusercontent.com";
 
   const handleChange = (field, value) => {
     setData({
@@ -46,6 +49,12 @@ export default function SignUp() {
     dispatch(signup(userData));
   };
 
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({clientId: clientId})
+    })
+  },[])
+
   return (
     <Container className={style.container} fluid={true}>
       <NavBar />
@@ -56,7 +65,15 @@ export default function SignUp() {
 
         <Col md={6}>
           <h2 className="mb-4">Registro</h2>
-
+          {/* <GoogleLogin
+            clientId="659206981480-dpv28b5to1u20p6oncccfrl2pkgmei5b.apps.googleusercontent.com"
+            buttonText="Registrarse con Google"
+            onSuccess={onSuccessLogin}
+            onFailure={onFailureLogin}
+            cookiePolicy={"single_host_origin"}
+            scope="https://www.googleapis.com/auth/calendar"
+          /> */}
+          <GoogleSingUp clientId={clientId}/>
           <Form onSubmit={handleSignup}>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre:</Form.Label>

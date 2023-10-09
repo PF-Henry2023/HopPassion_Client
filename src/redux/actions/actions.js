@@ -1,3 +1,4 @@
+import axios from "axios";
 import HopPassionClient from "../../utils/NetworkingUtils";
 import {
   handleUserLogin,
@@ -241,6 +242,45 @@ export const clearCart = () => {
     type: CLEAR_CART,
   };
 };
+
+export const signupOauth2 = (userGoogleToken, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(
+        "/users/signup/oauth2.0",
+        { tokenId: userGoogleToken}
+      )
+        
+      handleUserLogin(response.data.message);
+
+        return dispatch({
+          type: LOGIN,
+          payload: getLoggedInUser()
+        })
+    } catch (error) {
+      errorHandler(error)
+    }
+  }
+}
+
+export const loginOauth = (userCredentials, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(
+        "/users/login/oauth2.0", 
+        { tokenId: userCredentials.tokenId});
+
+        handleUserLogin(response.data.token)
+
+        return dispatch({
+          type: LOGIN,
+          payload: getLoggedInUser()
+        })
+    } catch (error) {
+      errorHandler(error)
+    }
+  }
+}
 
 export const getUserInfo = (id) => {
   return async (dispatch) => {

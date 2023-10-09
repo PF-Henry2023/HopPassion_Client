@@ -1,3 +1,4 @@
+import { getLoggedInUser } from "./../../utils/UserUtils";
 import {
   emptyCart,
   mergeCart,
@@ -27,7 +28,7 @@ import {
 } from "../actions/actions-type";
 
 const initialState = {
-  user: null,
+  user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
