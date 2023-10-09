@@ -12,6 +12,8 @@ import cervezaEspumosaLogin from "../../assets/cervezaEspumosaLogin.png";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
+import GoogleLogin from "./GoogleLogin/GoogleLogin";
+const clientId = "659206981480-kto0rcmeb3puh10fht8626diq6176m1q.apps.googleusercontent.com";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -109,10 +111,9 @@ export default function Login() {
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-end">
-              {/* <GoogleLogin
+              <GoogleLogin
                 clientId={clientId}
-                isNutritionist={userCredentialsOauth}
-              /> */}
+              />
               <Button className={style.btn} variant="primary" type="submit">
                 INGRESAR
               </Button>

@@ -1,3 +1,4 @@
+import { getLoggedInUser } from "./../../utils/UserUtils";
 import { emptyCart, mergeCart, setCart, startSyncing, stopSyncing } from "../../utils/CartUtils";
 import {
   SIGNUP,
@@ -19,7 +20,7 @@ import {
 } from "../actions/actions-type";
 
 const initialState = {
-  user: null,
+  user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
