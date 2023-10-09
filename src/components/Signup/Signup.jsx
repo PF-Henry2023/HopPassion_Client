@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signup, getUsers } from "../../redux/actions/actions";
 import style from "./Signup.module.css";
 import Form from "react-bootstrap/Form";
@@ -11,6 +11,8 @@ import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imagenRegistro from "../../assets/imagenRegistro.png";
 import Swal from "sweetalert2";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -33,8 +35,6 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState(validate(userData));
-
-  console.log(userData);
 
   const handleChange = (field, value) => {
     setData({
@@ -70,7 +70,14 @@ export default function SignUp() {
       return;
     } else {
       dispatch(signup(userData));
-      navigate("/");
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate("/");
+      });
     }
   };
 
