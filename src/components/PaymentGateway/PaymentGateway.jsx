@@ -70,7 +70,7 @@ const PaymentGateway = () => {
   const onSubmit = async ({ selectedPaymentMethod, formData }) => {
     // callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
-      fetch("https://hoppassionserver-production.up.railway.app/process_payment", {
+      fetch("https://hoppassionserver-production.up.railway.app/mercadoPago/process_payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
