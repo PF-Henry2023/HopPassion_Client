@@ -1,14 +1,15 @@
 import HopPassionClient from "../../utils/NetworkingUtils";
+import axios from "axios";
 import {
   handleUserLogin,
   getLoggedInUser,
   handleUserLogout,
 } from "../../utils/UserUtils";
-import axios from "axios";
 import {
   SIGNUP,
   LOGIN,
   LOGOUT,
+  GET_USERS,
   SYNC_AUTH_STATE,
   GET_PRODUCTS_BYID,
   GET_PRODUCTS,
@@ -27,6 +28,20 @@ import {
   GET_USER_INFO,
 } from "./actions-type";
 
+export const getUsers = () => {
+  try {
+    return async function (dispatch) {
+      const response = await HopPassionClient.get(`/users/allUsers`);
+      return dispatch({
+        type: GET_USERS,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const signup = ({ name, lastName, address, email, phone, password }) => {
   return async function (dispatch) {
     try {
@@ -38,9 +53,7 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
         phone,
         password,
       });
-      if (response.data) {
-        handleUserLogin(response.data);
-      }
+      handleUserLogin(response.data);
       dispatch({
         type: SIGNUP,
         payload: getLoggedInUser(),
@@ -255,15 +268,11 @@ export const getUserInfo = (id) => {
 
 export const processPayment = async (formData) => {
   try {
-    const response = await axios.post(
-      "/process_payment",
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post("/process_payment", formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -272,5 +281,3 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
-
-
