@@ -5,7 +5,6 @@ import {
   getLoggedInUser,
   handleUserLogout,
 } from "../../utils/UserUtils";
-import axios from "axios";
 import {
   SIGNUP,
   LOGIN,

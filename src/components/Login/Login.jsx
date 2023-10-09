@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate } from "./validate";
 import { login } from "../../redux/actions/actions";
@@ -12,12 +12,12 @@ import cervezaEspumosaLogin from "../../assets/cervezaEspumosaLogin.png";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
-import GoogleLogin from "./GoogleLogin/GoogleLogin";
-const clientId = "659206981480-kto0rcmeb3puh10fht8626diq6176m1q.apps.googleusercontent.com";
+import GoogleLoginOatuh2 from "./GoogleLogin/GoogleLogin";
+import { gapi } from "gapi-script";
 
 export default function Login() {
+  const clientId = "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user);
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
@@ -33,6 +33,12 @@ export default function Login() {
     }
     navigate("/");
   }, [user]);*/
+
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({clientId: clientId})
+    })
+  },[])
 
   const handleChange = (field, value) => {
     setData({
@@ -111,7 +117,7 @@ export default function Login() {
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-end">
-              <GoogleLogin
+              <GoogleLoginOatuh2
                 clientId={clientId}
               />
               <Button className={style.btn} variant="primary" type="submit">
