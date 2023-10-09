@@ -4,6 +4,12 @@ import {
   getLoggedInUser,
   handleUserLogout,
 } from "../../utils/UserUtils";
+import axios from "axios";
+import {
+  handleUserLogin,
+  getLoggedInUser,
+  handleUserLogout,
+} from "../../utils/UserUtils";
 import {
   SIGNUP,
   LOGIN,
@@ -22,6 +28,8 @@ import {
   CLEAR_CART,
   GET_CART,
   GET_CART_REQUEST,
+  MERCADOPAGO,
+  GET_USER_INFO,
 } from "./actions-type";
 
 export const signup = ({ name, lastName, address, email, phone, password }) => {
@@ -237,4 +245,31 @@ export const clearCart = () => {
   return {
     type: CLEAR_CART,
   };
+};
+
+export const getUserInfo = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await HopPassionClient.get(`/users/${id}`);
+      dispatch({ type: GET_USER_INFO, payload: response.data });
+    } catch (error) {
+      console.error("Error al obtener la información del usuario:", error);
+    }
+  };
+};
+
+export const processPayment = async (formData) => {
+  try {
+    const response = await axios.post("/process_payment", formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+    throw error;
+  }
 };
