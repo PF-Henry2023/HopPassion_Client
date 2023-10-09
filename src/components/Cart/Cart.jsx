@@ -127,7 +127,7 @@ const Cart = () => {
             <div className={styles.buttons}>
               <button
                 onClick={() =>
-                  navigate("/mercadoPago/process_payment")
+                  navigate("/mercadoPago/process_payment/*")
                 }
               >
                 Proceder al pago

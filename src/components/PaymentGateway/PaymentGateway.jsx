@@ -7,6 +7,10 @@ initMercadoPago("TEST-806f20f0-c9b7-4160-a09c-60b784d4852d");
 import { getCart, getCartRequest } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+// import image from "../../assets/imageBackground.png";
+import styles from "./PaymentGateway.module.css";
 
 const PaymentGateway = () => {
   const dispatch = useDispatch();
@@ -21,6 +25,8 @@ const PaymentGateway = () => {
 
   console.log(cart);
 
+  
+
   useEffect(() => {
     dispatch(getCartRequest());
 
@@ -32,13 +38,15 @@ const PaymentGateway = () => {
       (accumulator, value) => accumulator + value,
       0
     );
-
+  
     setInitialization({
       amount: Number(total),
       preferenceId: "<PREFERENCE_ID>",
       quantity: quantity,
     });
-  }, [dispatch, paymentId]);
+  
+  }, [paymentId]);
+
 
   // const initialization = {
   //   amount: 100,
@@ -93,6 +101,11 @@ const PaymentGateway = () => {
   };
   return (
     <>
+    <div>
+     <Navbar />
+     {/* </div>
+     <img className={styles.image} src={image}/>
+     <div> */}
       <Routes>
         <Route
           path="/status"
@@ -106,6 +119,10 @@ const PaymentGateway = () => {
         onReady={onReady}
         onError={onError}
       />
+      </div>
+      <div>
+      <Footer />
+      </div>
     </>
   );
 };

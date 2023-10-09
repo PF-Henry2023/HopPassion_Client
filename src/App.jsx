@@ -26,7 +26,7 @@ function App() {
         <Route path="/user/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route
-          path="/mercadoPago/process_payment"
+          path="/mercadoPago/process_payment/*"
           element={<PaymentGateway />}
         ></Route>
         <Route path="/status/:payment_id" element={<PaymentStatus />}></Route>
