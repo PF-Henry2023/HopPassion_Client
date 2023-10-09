@@ -7,11 +7,16 @@ export function handleUserLogin(token) {
     id: decoded.id,
     name: decoded.name,
     lastName: decoded.lastName,
+    address: decoded.address,
+    email: decoded.email,
+    phone: decoded.phone,
     role: decoded.role,
+    password: decoded.password,
   };
 
   window.localStorage.setItem("token", token);
   window.localStorage.setItem("user", JSON.stringify(user));
+  window.localStorage.setItem("id", user.id);
 }
 
 export function handleUserLogout() {
