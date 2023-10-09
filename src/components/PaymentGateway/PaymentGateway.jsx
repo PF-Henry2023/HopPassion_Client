@@ -4,21 +4,48 @@ import PaymentStatus from "./PaymentStatus";
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 initMercadoPago("TEST-806f20f0-c9b7-4160-a09c-60b784d4852d");
-import { processPayment } from "../../redux/actions/actions";
+import { getCart, getCartRequest } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
 const PaymentGateway = () => {
+  const dispatch = useDispatch();
   const [paymentId, setPaymentId] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(paymentId);
-  }, [paymentId]);
-
-  const initialization = {
-    amount: 100,
+  const cart = useSelector((state) => state.cart);
+  const [initialization, setInitialization] = useState({
+    amount: 0,
     preferenceId: "<PREFERENCE_ID>",
     quantity: 1,
-  };
+  });
+
+  console.log(cart);
+
+  useEffect(() => {
+    dispatch(getCartRequest());
+
+    dispatch(getCart());
+    const cartData = cart;
+    const total = cartData.total;
+    const quantities = cart.quantities;
+    const quantity = Object.values(quantities).reduce(
+      (accumulator, value) => accumulator + value,
+      0
+    );
+
+    setInitialization({
+      amount: Number(total),
+      preferenceId: "<PREFERENCE_ID>",
+      quantity: quantity,
+    });
+  }, [dispatch, paymentId]);
+
+  // const initialization = {
+  //   amount: 100,
+  //   preferenceId: "<PREFERENCE_ID>",
+  //   quantity: 1,
+  // };
+
   const customization = {
     paymentMethods: {
       creditCard: "all",
@@ -31,17 +58,6 @@ const PaymentGateway = () => {
       maxInstallments: 1,
     },
   };
-  // const onSubmit = async ({ selectedPaymentMethod, formData }) => {
-  //   try {
-  //     const response = await processPayment(formData);
-
-  //     setPaymentId(response.data.payment_id);
-
-  //     navigate(`/status/${paymentId}`);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const onSubmit = async ({ selectedPaymentMethod, formData }) => {
     // callback llamado al hacer clic en el botón enviar datos
@@ -59,13 +75,11 @@ const PaymentGateway = () => {
           setPaymentId(response.payment_id);
           // Utiliza la función de devolución de llamada para realizar acciones después de la actualización del estado.
           setPaymentId((prevPaymentId) => {
-            console.log(prevPaymentId); // Esto mostrará el valor actualizado del paymentId.
             navigate(`/status/${prevPaymentId}`);
             resolve();
           });
         })
         .catch((error) => {
-          // manejar la respuesta de error al intentar crear el pago
           reject();
         });
     });
@@ -96,3 +110,5 @@ const PaymentGateway = () => {
   );
 };
 export default PaymentGateway;
+
+//redigir
