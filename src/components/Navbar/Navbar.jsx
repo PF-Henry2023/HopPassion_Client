@@ -1,4 +1,4 @@
-import style from "./navbar.module.css";
+import style from "./Navbar.module.css";
 import { Link } from "react-router-dom"; // Import Link
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -11,11 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
 
-
 export default function NavBar() {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
 
@@ -30,36 +29,37 @@ export default function NavBar() {
   }
 
   function handleLogout() {
-    dispatch(logout())
+    dispatch(logout());
   }
 
   function drawUserSection() {
     if (user) {
-      return <>
+      return (
+        <>
           <button onClick={handleLogout}>Logout</button>
           <span className={style.cartItemCount}>{user.name} </span>
           <img src={profile} alt="" className={style.cart} />
-          <span className={style.cartItemCount}>{cart.products ? cart.products.length : null} </span>
+          <span className={style.cartItemCount}>
+            {cart.products ? cart.products.length : null}{" "}
+          </span>
           <Link to={"/cart"} className={style.link}>
             <img src={cartIcon} alt="" className={style.profile} />
           </Link>
-      </>
+        </>
+      );
     } else {
-      return <>
-        <Link to={"/login"}>
-          Login 
-        </Link>
-        <Link to={"/signup"}>
-          Signup
-        </Link>
-      </>
+      return (
+        <>
+          <Link to={"/login"}>Login</Link>
+          <Link to={"/signup"}>Signup</Link>
+        </>
+      );
     }
   }
 
   return (
     <>
       <Navbar className={style.container}>
-        
         <Link to="/" className={style.logoLink}>
           <img src={logo_light} alt="" className={style.logoLight} />
         </Link>
@@ -88,7 +88,7 @@ export default function NavBar() {
             </Nav>
           </Navbar.Collapse>
         </Container>
-        { drawUserSection() }
+        {drawUserSection()}
       </Navbar>
     </>
   );
