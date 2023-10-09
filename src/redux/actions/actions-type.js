@@ -19,4 +19,4 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const GET_CART_REQUEST = "GET_CART_REQUEST";
 export const MERCADOPAGO = "MERCADOPAGO";
 export const GET_USER_INFO = "GET_USER_INFO";
-
+export const GET_USERS = "GET_USERS";

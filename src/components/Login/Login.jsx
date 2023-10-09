@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { validate } from "./validate";
-import { login } from "../../redux/actions/actions";
+import { validate, isButtonDisabled } from "./validate";
+import { getUsers, login } from "../../redux/actions/actions";
+import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,22 +16,27 @@ import Swal from "sweetalert2";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
+
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
     email: "",
     password: "",
   });
 
-  /*
-    const navigate = useNavigate();
-    useEffect(() => {
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (user == null) {
       return;
     }
     navigate("/");
-  }, [user]);*/
+  }, [user]);
 
   const handleChange = (field, value) => {
     setData({
@@ -50,7 +56,7 @@ export default function Login() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Error iniciando sesión",
+      text: "Error iniciando sesión, verifica tus credenciales.",
     });
     setData({
       email: "",
@@ -60,7 +66,17 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(login(userData, handleLoginError));
+    const userExists = users.find((user) => user.email === userData.email);
+
+    if (userExists) {
+      try {
+        dispatch(login(userData, handleLoginError));
+      } catch (error) {
+        alert(error.message);
+      }
+    } else {
+      handleLoginError();
+    }
   };
 
   return (
@@ -113,7 +129,12 @@ export default function Login() {
                 clientId={clientId}
                 isNutritionist={userCredentialsOauth}
               /> */}
-              <Button className={style.btn} variant="primary" type="submit">
+              <Button
+                className={style.btn}
+                variant="primary"
+                type="submit"
+                disabled={isButtonDisabled(errors, userData)}
+              >
                 INGRESAR
               </Button>
             </div>
