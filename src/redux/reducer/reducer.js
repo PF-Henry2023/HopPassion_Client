@@ -25,10 +25,13 @@ import {
   CLEAR_CART,
   MERCADOPAGO,
   GET_USER_INFO,
+  GET_USERS,
 } from "../actions/actions-type";
 
 const initialState = {
-  user: getLoggedInUser(),
+  users: [],
+  user: null,
+  //user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
@@ -58,6 +61,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
       };
     case SYNC_AUTH_STATE:
       return {

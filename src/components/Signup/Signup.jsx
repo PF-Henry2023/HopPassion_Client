@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../../redux/actions/actions";
+import { useNavigate } from "react-router-dom";
+import { signup, getUsers } from "../../redux/actions/actions";
 import style from "./Signup.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imagenRegistro from "../../assets/imagenRegistro.png";
 import GoogleSingUp from "./GoogleSingUp/GoogleSingUp";
 import { gapi } from "gapi-script";
+import Swal from "sweetalert2";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const users = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  console.log(users);
 
   const [userData, setData] = useState({
     name: "",
