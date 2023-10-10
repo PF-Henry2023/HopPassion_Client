@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
 import { getUsers, login } from "../../redux/actions/actions";
@@ -22,7 +22,6 @@ export default function Login() {
   const navigate = useNavigate();
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
-
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
     email: "",

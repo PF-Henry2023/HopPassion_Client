@@ -29,6 +29,7 @@ import {
 } from "../actions/actions-type";
 
 const initialState = {
+  //user: getLoggedInUser(),
   users: [],
   user: null,
   //user: getLoggedInUser(),
