@@ -134,7 +134,6 @@ export default function Login() {
             <div className="d-flex justify-content-end">
               <GoogleLoginOatuh2
                 clientId={clientId}
-                isNutritionist={userCredentialsOauth}
               /> 
               <Button
                 className={style.btn}

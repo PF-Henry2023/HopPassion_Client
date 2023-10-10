@@ -1,6 +1,5 @@
 import axios from "axios";
 import HopPassionClient from "../../utils/NetworkingUtils";
-import axios from "axios";
 import {
   handleUserLogin,
   getLoggedInUser,
