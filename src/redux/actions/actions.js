@@ -245,7 +245,7 @@ export const clearCart = () => {
 export const signupOauth2 = (userGoogleToken, errorHandler) => {
   return async function(dispatch) {
     try {
-      const response = await axios.post(
+      const response = await HopPassionClient.post(
         "/users/signup/oauth2.0",
         { tokenId: userGoogleToken}
       )
@@ -265,9 +265,9 @@ export const signupOauth2 = (userGoogleToken, errorHandler) => {
 export const loginOauth = (userCredentials, errorHandler) => {
   return async function(dispatch) {
     try {
-      const response = await axios.post(
+      const response = await HopPassionClient.post(
         "/users/login/oauth2.0", 
-        { tokenId: userCredentials.tokenId});
+        { tokenId: userCredentials});
 
         handleUserLogin(response.data.token)
 

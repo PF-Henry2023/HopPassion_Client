@@ -1,14 +1,11 @@
 import { GoogleLogin } from "react-google-login";
 import { useState } from "react";
 import { loginOauth } from "../../../redux/actions/actions";
+import { useDispatch } from "react-redux";
 
 const GoogleLoginOatuh2 = (props) => {
   const { clientId } = props;
-
-  const [userCredentialsOauth, setUserCredentialsOauth] = useState({
-    tokenId: "",
-    email: "",
-  });
+  const dispatch = useDispatch();
 
   /*  const { signIn } = useGoogleLogin({
     onSuccess: (response) => {
@@ -24,17 +21,18 @@ const GoogleLoginOatuh2 = (props) => {
     clientId: clientId,
     cookiePolicy: "single_host_origin",
   });
-
+*/
   function handleLoginError(error) {
     alert("Error al iniciar sesión");
-  } */
-
+  }
   const onSuccess = (response) => {
     console.log(response);
-  }
+    const { tokenId } = response;
+    dispatch(loginOauth(tokenId, handleLoginError));
+  };
   const onFailure = (error) => {
-    console.log(error)
-  }
+    console.log(error);
+  };
 
   return (
     <GoogleLogin

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const HopPassionClient = axios.create({
-  baseURL: "https://hoppassionserver-production.up.railway.app",
+  baseURL: "https://hop-passion-server.1.sg-1.fl0.io",
 });
 
 //otra forma mas corta seria:
