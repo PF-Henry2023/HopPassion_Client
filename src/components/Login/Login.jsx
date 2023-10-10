@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { validate } from "./validate";
-import { login } from "../../redux/actions/actions";
+import { validate, isButtonDisabled } from "./validate";
+import { getUsers, login } from "../../redux/actions/actions";
+import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -18,6 +19,8 @@ import { gapi } from "gapi-script";
 export default function Login() {
   const clientId = "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
@@ -25,14 +28,16 @@ export default function Login() {
     password: "",
   });
 
-  /*
-    const navigate = useNavigate();
-    useEffect(() => {
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (user == null) {
       return;
     }
     navigate("/");
-  }, [user]);*/
+  }, [user]);
 
   useEffect(() => {
     gapi.load("client:auth2", () => {
@@ -58,7 +63,7 @@ export default function Login() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Error iniciando sesión",
+      text: "Error iniciando sesión, verifica tus credenciales.",
     });
     setData({
       email: "",
@@ -68,7 +73,17 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(login(userData, handleLoginError));
+    const userExists = users.find((user) => user.email === userData.email);
+
+    if (userExists) {
+      try {
+        dispatch(login(userData, handleLoginError));
+      } catch (error) {
+        alert(error.message);
+      }
+    } else {
+      handleLoginError();
+    }
   };
 
   return (
