@@ -26,6 +26,7 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   GET_USERS,
+  UPDATE_CART_TOTAL,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -164,6 +165,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    case UPDATE_CART_TOTAL:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          total: action.payload,
+        },
       };
 
     default:
