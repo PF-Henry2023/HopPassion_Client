@@ -26,7 +26,8 @@ import {
   GET_CART_REQUEST,
   MERCADOPAGO,
   GET_USER_INFO,
-  UPDATE_CART_TOTAL
+  UPDATE_CART_TOTAL,
+  DELETE_PRODUCTS
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -109,10 +110,15 @@ export function getProductById(id) {
 export const getProducts = (filters, query) => {
   return async (dispatch) => {
     try {
-      const result = await HopPassionClient.get(
-        buildGetProductsUrl(filters, query)
-      );
-      dispatch({ type: GET_PRODUCTS, payload: result.data });
+      console.log(buildGetProductsUrl(filters, query));
+      try {
+        const result = await HopPassionClient.get(
+          buildGetProductsUrl(filters, query)
+        );
+        dispatch({ type: GET_PRODUCTS, payload: result.data });
+      } catch (error) {
+        console.log("no se encontraron coincidencias");
+      } 
     } catch (error) {
       console.log(error);
     }

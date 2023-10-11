@@ -12,9 +12,11 @@ import Return from "../Return/Return";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
+import MercadoPagoComponent from "./MercadoPagoButtom/Buttom"
 import { Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { createSelector } from "reselect";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,7 +29,6 @@ const Cart = () => {
   const selectCartMemoized = createSelector([selectCart], (cart) => cart);
 
   const cart = useSelector(selectCartMemoized);
-
   useEffect(() => {
     dispatch(getCartRequest());
     dispatch(getCart());
@@ -137,13 +138,10 @@ const Cart = () => {
               <div>$ {cart.total}</div>
             </div>
             <div className={styles.buttons}>
-              <button
-                onClick={() =>
-                  navigate("/mercadoPago/process_payment/*")
-                }
-              >
-                Proceder al pago
-              </button>
+            <Link to="/mercadoPago/process_payment/*">
+              <MercadoPagoComponent total={cart.total}
+              />
+            </Link>
               <button>Elegir más productos</button>
               {/* <button onClick={handleClearCart}>Vaciar Carrito</button> */}
             </div>
