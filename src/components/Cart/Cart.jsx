@@ -4,6 +4,7 @@ import {
   removeFromCart,
   getCart,
   getCartRequest,
+  updateCartTotal,
 } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import Counter from "../Counter/Counter";
@@ -37,6 +38,17 @@ const Cart = () => {
     const deleting = [...isDeleting];
     deleting.push(productId);
     setDeleting(deleting);
+    const productToRemove = cart.products.find((product) => product.id === productId);
+    if (!productToRemove) {
+        alert("El producto no se encuentra en el carrito");
+      return;
+    }
+    const productPrice = productToRemove.price;
+    // Realiza el cálculo para actualizar el valor total del carrito
+    const updatedTotal = cart.total - productPrice;
+    // Actualiza el valor total en el estado del carrito
+    dispatch(updateCartTotal(updatedTotal));
+    // Luego, elimina el producto del carrito
     dispatch(removeFromCart(productId, (result) => {}));
   };
 
