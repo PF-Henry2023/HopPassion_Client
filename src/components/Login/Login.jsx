@@ -37,14 +37,7 @@ export default function Login() {
     if (user == null) {
       return;
     }
-    Swal.fire({
-      icon: "success",
-      title: "Usuario creado correctamente",
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => {
-      navigate("/");
-    });
+    navigate("/");
   }, [user]);
 
   useEffect(() => {
