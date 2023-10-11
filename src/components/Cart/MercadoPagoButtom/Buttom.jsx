@@ -4,7 +4,7 @@ const MercadoPagoComponent = (props) => {
   const { total } = props;
   return (
     <>
-      <div data-tooltip={`Price:-$${total}`} class="button">
+      <div data-tooltip={`Price:-$${total}`} className="button">
         <div className="button-wrapper">
           <div className="text">
             <img
@@ -16,7 +16,7 @@ const MercadoPagoComponent = (props) => {
               Paga con Mercado Pago
               </span>
           </div>
-          <span class="icon">
+          <span className="icon">
             <svg
               viewBox="0 0 16 16"
               className="bi bi-cart2"
