@@ -252,7 +252,7 @@ const UserProfile = () => {
                         />
                       </div>
                     </div>
-                    <input type="submit" value="Crear" />
+                    <input type="submit" value="Guardar" />
                   </form>
                 </>
               ) : (
@@ -336,6 +336,7 @@ const UserProfile = () => {
                     {/* <button className={styles.saveButton} onClick={handleSave}>
                     Guardar
                   </button> */}
+                   <input type="submit" value="Guardar" />
                   </form>
                 </>
               ) : (
