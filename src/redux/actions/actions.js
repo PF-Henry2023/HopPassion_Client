@@ -1,5 +1,5 @@
-import HopPassionClient from "../../utils/NetworkingUtils";
 import axios from "axios";
+import HopPassionClient from "../../utils/NetworkingUtils";
 import {
   handleUserLogin,
   getLoggedInUser,
@@ -26,6 +26,7 @@ import {
   GET_CART_REQUEST,
   MERCADOPAGO,
   GET_USER_INFO,
+  UPDATE_CART_TOTAL
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -68,7 +69,7 @@ export const login = (userData, handleLoginError) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signin", userData);
-      handleUserLogin(response.data);
+      handleUserLogin(response.data.token);
       dispatch({
         type: LOGIN,
         payload: getLoggedInUser(),
@@ -255,6 +256,44 @@ export const clearCart = () => {
   };
 };
 
+export const signupOauth2 = (userGoogleToken, handleSignupError) => {
+  return async function (dispatch) {
+    try {
+      const response = await HopPassionClient.post("/users/signup/oauth2.0", {
+        tokenId: userGoogleToken,
+      });
+
+      handleUserLogin(response.data.message);
+
+      return dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
+    } catch (error) {
+      handleSignupError(error);
+    }
+  };
+};
+
+export const loginOauth = (userCredentials, handleLoginError) => {
+  return async function (dispatch) {
+    try {
+      const response = await HopPassionClient.post("/users/login/oauth2.0", {
+        tokenId: userCredentials,
+      });
+
+      handleUserLogin(response.data.token);
+
+      return dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
+    } catch (error) {
+      handleLoginError();
+    }
+  };
+};
+
 export const getUserInfo = (id) => {
   return async (dispatch) => {
     try {
@@ -281,3 +320,11 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
+
+export const updateCartTotal = (newTotal) => {
+  return {
+    type: UPDATE_CART_TOTAL,
+    payload: newTotal,
+  };
+};
+

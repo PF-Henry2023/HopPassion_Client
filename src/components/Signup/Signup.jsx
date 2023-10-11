@@ -10,6 +10,8 @@ import Col from "react-bootstrap/Col";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import imagenRegistro from "../../assets/imagenRegistro.png";
+import GoogleSingUp from "./GoogleSingUp/GoogleSingUp";
+import { gapi } from "gapi-script";
 import Swal from "sweetalert2";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -35,6 +37,8 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState(validate(userData));
+  const clientId =
+    "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
 
   const handleChange = (field, value) => {
     setData({
@@ -81,6 +85,12 @@ export default function SignUp() {
     }
   };
 
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({ clientId: clientId });
+    });
+  }, []);
+
   return (
     <Container className={style.container} fluid={true}>
       <NavBar />
@@ -91,7 +101,7 @@ export default function SignUp() {
 
         <Col md={6}>
           <h2 className="mb-4">Registro</h2>
-
+          <GoogleSingUp clientId={clientId} />
           <Form onSubmit={handleSignup}>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre:</Form.Label>

@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
 
 export function handleUserLogin(token) {
+  console.log(token);
   const decoded = jwtDecode(token);
 
   const user = {
