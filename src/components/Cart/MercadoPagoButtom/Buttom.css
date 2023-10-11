@@ -16,6 +16,7 @@
   border-radius: 0.45em;
   font-family: "Arial";
   transition: background 0.3s;
+  border: 2px solid #2DAEF3;
 }
 
 .button::before {

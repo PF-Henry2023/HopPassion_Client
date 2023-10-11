@@ -20,4 +20,8 @@ export const GET_CART_REQUEST = "GET_CART_REQUEST";
 export const MERCADOPAGO = "MERCADOPAGO";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const GET_USERS = "GET_USERS";
+<<<<<<< HEAD
 export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
+=======
+export const UPDATE_CART_TOTAL = 'UPDATE_CART_TOTAL';
+>>>>>>> 7445ea5d34b17c85cff815a8bdaad31c88307653
