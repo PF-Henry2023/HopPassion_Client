@@ -1,24 +1,42 @@
 import GoogleLogin from "react-google-login";
 import { signupOauth2 } from "../../../redux/actions/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import "./GoogleSingUp.css";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const GoogleSingUp = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user == null) {
+      return;
+    }
+    navigate("/");
+  }, [user]);
+
   const { clientId } = props;
 
   function handleSignupError() {
-    alert("Error al crear el usuario.");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Error iniciando sesión, email ya registrado.",
+    });
   }
-  
+
+  const onFailure = (error) => {
+    handleSignupError();
+  };
+
   const onSuccess = (response) => {
     const { tokenId } = response;
-    dispatch(signupOauth2(tokenId, handleSignupError));
-    console.log(response);
-  }
-  const onFailure = (error) => {
-    console.log(error);
-  }
+    dispatch(signupOauth2(tokenId, () => handleSignupError()));
+  };
 
   return (
     <>
