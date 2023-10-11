@@ -27,7 +27,7 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   UPDATE_CART_TOTAL,
-  DELETE_PRODUCTS
+  DELETE_PRODUCTS,
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -118,7 +118,7 @@ export const getProducts = (filters, query) => {
         dispatch({ type: GET_PRODUCTS, payload: result.data });
       } catch (error) {
         console.log("no se encontraron coincidencias");
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
@@ -300,17 +300,43 @@ export const loginOauth = (userCredentials, handleLoginError) => {
   };
 };
 
-export const getUserInfo = (id) => {
+export const getUserInfo = (id, token, navigate) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.get(`/users/${id}`);
-      dispatch({ type: GET_USER_INFO, payload: response.data });
+      const response = await HopPassionClient.get(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        const userData = {
+          name: response.data.name || "",
+          lastName: response.data.lastName || "",
+          email: response.data.email || "",
+          phone: response.data.phone || "",
+          address: response.data.address || "",
+          city: response.data.city || "",
+          country: response.data.country || "",
+          postalCode: response.data.postalCode || "",
+          password: response.data.password || "",
+        };
+
+        dispatch({
+          type: GET_USER_INFO,
+          payload: userData,
+        });
+
+        return userData;
+      } else if (response.status === 401) {
+        navigate("/login");
+      } else if (response.status === 403) {
+        navigate(`/profile/${id}`);
+      }
     } catch (error) {
-      console.error("Error al obtener la información del usuario:", error);
+      console.error("Error al obtener los datos del usuario", error);
     }
   };
 };
-
 
 export const updateUser = (id, userData) => {
   return async (dispatch) => {
@@ -322,7 +348,10 @@ export const updateUser = (id, userData) => {
 
       console.log("Datos a enviar:", userData);
 
-      const response = await HopPassionClient.put(`/users/update/${id}`, userData);
+      const response = await HopPassionClient.put(
+        `/users/update/${id}`,
+        userData
+      );
       console.log("Respuesta del servidor:", response.data);
 
       if (response.status === 200) {
@@ -346,7 +375,7 @@ export const updateUser = (id, userData) => {
 //         },
 //       });
 //       if (response.status === 200) {
-        
+
 //         dispatch({
 //           type: GET_USER_ORDERS,
 //           payload: response,
@@ -386,5 +415,3 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
-
-
