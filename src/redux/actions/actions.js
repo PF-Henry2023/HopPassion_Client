@@ -311,6 +311,66 @@ export const getUserInfo = (id) => {
   };
 };
 
+
+export const updateUser = (id, userData) => {
+  return async (dispatch) => {
+    try {
+      if (!userData) {
+        console.error("Los datos del usuario son inválidos.");
+        return;
+      }
+
+      console.log("Datos a enviar:", userData);
+
+      const response = await HopPassionClient.put(`/users/update/${id}`, userData);
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.status === 200) {
+        dispatch({ type: UPDATE_USER, payload: response.data });
+        return response.data;
+      } else {
+        console.error("Error al actualizar el usuario:", response);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+    }
+  };
+};
+
+// export const getUserOrders = (id, token, navigate) => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await HopPassionClient.get("/cart/", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       if (response.status === 200) {
+        
+//         dispatch({
+//           type: GET_USER_ORDERS,
+//           payload: response,
+//         });
+
+//         return response.data;
+//       } else if (response.status === 401) {
+//         navigate("/login");
+//       } else if (response.status === 403) {
+//         navigate(`/profile/${id}`);
+//       }
+//     } catch (error) {
+//       console.error("Error al obtener las ordenes del usuario", error);
+//     }
+//   };
+// };
+
+export const updateCartTotal = (newTotal) => {
+  return {
+    type: UPDATE_CART_TOTAL,
+    payload: newTotal,
+  };
+};
+
 export const processPayment = async (formData) => {
   try {
     const response = await axios.post("/process_payment", formData, {
@@ -327,10 +387,4 @@ export const processPayment = async (formData) => {
   }
 };
 
-export const updateCartTotal = (newTotal) => {
-  return {
-    type: UPDATE_CART_TOTAL,
-    payload: newTotal,
-  };
-};
 
