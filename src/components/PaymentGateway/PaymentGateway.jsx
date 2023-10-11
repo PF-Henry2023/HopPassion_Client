@@ -1,58 +1,27 @@
 import { Payment } from "@mercadopago/sdk-react";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import PaymentStatus from "./PaymentStatus";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 initMercadoPago("TEST-806f20f0-c9b7-4160-a09c-60b784d4852d");
-import { getCart, getCartRequest } from "../../redux/actions/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { createSelector } from "reselect";
+import { useSelector } from "react-redux";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-// import image from "../../assets/imageBackground.png";
+import { totalQuantities } from "../../utils/CartUtils";
 import styles from "./PaymentGateway.module.css";
+// import image from "../../assets/imageBackground.png";
 
 const PaymentGateway = () => {
-  const dispatch = useDispatch();
+  /* const { amountTotal, quantities } = props; */
   const [paymentId, setPaymentId] = useState(null);
+  const cart = useSelector(e => e.cart);
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart);
-  const [initialization, setInitialization] = useState({
-    amount: 0,
+
+  const initialization = {
+    amount: cart.total,
     preferenceId: "<PREFERENCE_ID>",
-    quantity: 1,
-  });
-
-  console.log(cart);
-
-  
-
-  useEffect(() => {
-    dispatch(getCartRequest());
-
-    dispatch(getCart());
-    const cartData = cart;
-    const total = cartData.total;
-    const quantities = cart.quantities;
-    const quantity = Object.values(quantities).reduce(
-      (accumulator, value) => accumulator + value,
-      0
-    );
-  
-    setInitialization({
-      amount: Number(total),
-      preferenceId: "<PREFERENCE_ID>",
-      quantity: quantity,
-    });
-  
-  }, [paymentId]);
-
-
-  // const initialization = {
-  //   amount: 100,
-  //   preferenceId: "<PREFERENCE_ID>",
-  //   quantity: 1,
-  // };
+    quantity: totalQuantities(cart.quantities),
+  };
 
   const customization = {
     paymentMethods: {
@@ -70,13 +39,16 @@ const PaymentGateway = () => {
   const onSubmit = async ({ selectedPaymentMethod, formData }) => {
     // callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
-      fetch("https://hoppassionserver-production.up.railway.app/mercadoPago/process_payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      fetch(
+        "https://hoppassionserver-production.up.railway.app/mercadoPago/process_payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      )
         .then((response) => response.json())
         .then((response) => {
           console.log(response);
@@ -101,27 +73,27 @@ const PaymentGateway = () => {
   };
   return (
     <>
-    <div>
-     <Navbar />
-     {/* </div>
+      <div>
+        <Navbar />
+        {/* </div>
      <img className={styles.image} src={image}/>
      <div> */}
-      <Routes>
-        <Route
-          path="/status"
-          element={<PaymentStatus idPayment={paymentId} />}
-        ></Route>
-      </Routes>
-      <Payment
-        initialization={initialization}
-        customization={customization}
-        onSubmit={onSubmit}
-        onReady={onReady}
-        onError={onError}
-      />
+        <Routes>
+          <Route
+            path="/status"
+            element={<PaymentStatus idPayment={paymentId} />}
+          ></Route>
+        </Routes>
+        <Payment
+          initialization={initialization}
+          customization={customization}
+          onSubmit={onSubmit}
+          onReady={onReady}
+          onError={onError}
+        />
       </div>
       <div>
-      <Footer />
+        <Footer />
       </div>
     </>
   );

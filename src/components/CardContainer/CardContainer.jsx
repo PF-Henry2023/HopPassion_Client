@@ -45,7 +45,7 @@ export default function CardContainer() {
       <div className={style.title}>Cervezas</div>
       <div className={style.subtitle}>Selección de las mejores cervezas</div>
       <InfiniteScroll
-        dataLength={products.length}
+        dataLength={products?.length}
         next={handleNextPage}
         hasMore={page.hasMore}
         loader={<Loading />}

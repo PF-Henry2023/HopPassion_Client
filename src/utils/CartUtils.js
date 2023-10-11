@@ -40,6 +40,14 @@ export function emptyCart() {
     }
 }
 
+export function totalQuantities (quantities) {
+    let total = 0
+    for (const key in quantities) {
+        total = total + quantities[key] 
+    }
+    return total;
+} 
+
 function buildQuantitiesObject(products) {
     if (products == null) {
         return {}
