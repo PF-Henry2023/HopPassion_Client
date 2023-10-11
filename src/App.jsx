@@ -23,7 +23,7 @@ function App() {
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/user/:id" element={<UserProfile />}></Route>
+        <Route path="/profile/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route
           path="/mercadoPago/process_payment/*"

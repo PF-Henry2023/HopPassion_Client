@@ -24,10 +24,9 @@ import {
   CLEAR_CART,
   GET_CART,
   GET_CART_REQUEST,
-  MERCADOPAGO,
   GET_USER_INFO,
   UPDATE_CART_TOTAL,
-  DELETE_PRODUCTS,
+  UPDATE_USER,
 } from "./actions-type";
 
 export const getUsers = () => {
