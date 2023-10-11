@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate } from "./validate";
 import { login } from "../../redux/actions/actions";
@@ -12,6 +12,7 @@ import cervezaEspumosaLogin from "../../assets/cervezaEspumosaLogin.png";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -23,14 +24,14 @@ export default function Login() {
     password: "",
   });
 
-  /*
+
     const navigate = useNavigate();
     useEffect(() => {
     if (user == null) {
       return;
     }
     navigate("/");
-  }, [user]);*/
+  }, [user])
 
   const handleChange = (field, value) => {
     setData({
