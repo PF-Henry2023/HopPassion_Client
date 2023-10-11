@@ -35,6 +35,9 @@ export default function SignUp() {
     email: "",
     phone: "",
     password: "",
+    postalCode: "",
+    city: "",
+    country: "",
   });
   const [errors, setErrors] = useState(validate(userData));
   const clientId =
@@ -70,6 +73,9 @@ export default function SignUp() {
         email: "",
         phone: "",
         password: "",
+        postalCode: "",
+        city: "",
+        country: "",
       });
       return;
     } else {
@@ -163,6 +169,42 @@ export default function SignUp() {
               </Form.Control.Feedback>
             </Form.Group>
 
+            <Form.Group className="mb-3" controlId="country">
+              <Form.Label>Pais:</Form.Label>
+              <Form.Control
+                value={userData.country}
+                type="text"
+                placeholder="Ingresa tu pais de residencia"
+                className={style.formControl}
+                onChange={(event) => {
+                  handleChange("country", event.target.value);
+                }}
+                isInvalid={errors.country}
+                isValid={userData.country && !errors.country}
+              />
+              <Form.Control.Feedback type="invalid">
+                <div>Ingrese un pais</div>
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="city">
+              <Form.Label>Ciudad:</Form.Label>
+              <Form.Control
+                value={userData.city}
+                type="text"
+                placeholder="Ingresa tu ciudad"
+                className={style.formControl}
+                onChange={(event) => {
+                  handleChange("city", event.target.value);
+                }}
+                isInvalid={errors.city}
+                isValid={userData.city && !errors.city}
+              />
+              <Form.Control.Feedback type="invalid">
+                <div>Ingrese una ciudad</div>
+              </Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group className="mb-3" controlId="address">
               <Form.Label>Domicilio:</Form.Label>
               <Form.Control
@@ -178,6 +220,24 @@ export default function SignUp() {
               />
               <Form.Control.Feedback type="invalid">
                 <div>Ingrese un domicilio válido</div>
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="postalCode">
+              <Form.Label>Codigo postal:</Form.Label>
+              <Form.Control
+                value={userData.postalCode}
+                type="text"
+                placeholder="Ingresa tu postalCode"
+                className={style.formControl}
+                onChange={(event) => {
+                  handleChange("postalCode", event.target.value);
+                }}
+                isInvalid={errors.postalCode}
+                isValid={userData.postalCode && !errors.postalCode}
+              />
+              <Form.Control.Feedback type="invalid">
+                <div>Ingrese un postalCode válido</div>
               </Form.Control.Feedback>
             </Form.Group>
 
