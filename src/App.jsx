@@ -9,13 +9,21 @@ import SignUp from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart";
 import UserSessionManager from "./components/UserSessionManager/UserSessionManager"
 import CartSessionManager from "./components/CartSessionManager/CartSessionManager";
+import Alert18 from "./components/Alerts/Alert18";
+import { useState } from "react";
+import { Alert } from "react-bootstrap";
+
 
 function App() {
+  const [alert18, setAlert18] = useState(true);
+  
   return (
     <div className="app">
+      {alert18 && <Alert18 />}
       <CartSessionManager />
       <UserSessionManager />
       <Routes>
+        <Route path="/confirmacion" component={Alert18} />
         <Route path="/" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>
         <Route path="/product/:id" element={<Details />}></Route>
