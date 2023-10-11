@@ -212,6 +212,7 @@ export const getCart = () => {
   return async (dispatch) => {
     try {
       const response = await HopPassionClient.get("/cart");
+      console.log(response)
       dispatch({ type: GET_CART, payload: response.data });
     } catch (error) {
       console.log(error.message);

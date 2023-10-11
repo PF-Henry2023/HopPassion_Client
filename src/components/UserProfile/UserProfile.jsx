@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import { getUserInfo, updateUser } from "../../redux/actions/actions";
-import { useDispatch } from "react-redux";
+import { getUserInfo, updateUser, getCart, getCartRequest } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getLoggedInUser } from "../../utils/UserUtils";
-import { Link } from "react-router-dom";
+import { createSelector } from "reselect";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -18,6 +18,9 @@ const UserProfile = () => {
   const token = localStorage.getItem("authToken");
   const navigate = useNavigate();
   const user = getLoggedInUser();
+  // const [userOrders, setUserOrders] = useState({});
+  const selectCart = (state) => state.cart;
+  const selectCartMemoized = createSelector([selectCart], (cart) => cart);
 
   const [userData, setUserData] = useState({
     name: "",
@@ -31,12 +34,19 @@ const UserProfile = () => {
     password: "",
   });
 
+  const pendingOrder = useSelector(selectCartMemoized);
+
   useEffect(() => {
-    // Verificar si el usuario está autenticado y tiene el rol correcto
-    // if (user.id !== Number(id)) {
-    //   navigate("/");
-    //   return;
-    // }
+    dispatch(getCartRequest());
+    dispatch(getCart());
+  }, []);
+
+  useEffect(() => {
+    //   Verificar si el usuario está autenticado y tiene el rol correcto
+    if (user.id !== Number(id)) {
+      navigate("/");
+      return;
+    }
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
@@ -52,6 +62,15 @@ const UserProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
+
+  // useEffect(() => {
+  //   if (user.id !== Number(id)) {
+  //     navigate("/");
+  //     return;
+  //   }
+  //   const response = dispatch(getCart());
+  //   setUserOrders(response.data);
+  // }, [dispatch]);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -103,7 +122,30 @@ const UserProfile = () => {
       });
   };
 
-  console.log(userData);
+  const handleMyOrders = async () => {
+    try {
+      const response = await dispatch(getCart());
+      console.log(response);
+      // Verifica si 'data' y 'data.products' existen en la respuesta
+      if (response.data && response.data.products) {
+        setUserOrders({
+          id: response.data.id,
+          products: {
+            name: response.data.products[0].name, // Puedes ajustar el índice si tienes varios productos
+            quantity: response.data.products[0].quantity, // Puedes ajustar el índice si tienes varios productos
+          },
+          total: response.data.total,
+        });
+      } else {
+        console.error("La respuesta no contiene datos válidos.");
+      }
+    } catch (error) {
+      console.error("Error al obtener las órdenes:", error);
+    }
+
+    setActiveOption("Mis compras");
+  };
+
 
   return (
     <>
@@ -150,7 +192,7 @@ const UserProfile = () => {
                     activeOption === "Mis compras" ? "active" : ""
                   }`}
                   href="#"
-                  onClick={() => setActiveOption("Mis compras")}
+                  onClick={handleMyOrders}
                 >
                   Mis compras
                 </a>
@@ -320,6 +362,16 @@ const UserProfile = () => {
                     Editar
                   </button>
                 </>
+              ))}
+            {activeOption === "Mis compras" &&
+              (pendingOrder.products ?? []).map((orderDetail, index) => (
+                <div key={orderDetail.id}>
+                  {/* Renderizar detalles de la orden, por ejemplo: */}
+                  <p>Número de orden: {orderDetail.id}</p>
+                  <p>Producto: {orderDetail.name}</p>
+                  <p>Cantidad: {orderDetail.quantity}</p>
+                  <p>Total: {pendingOrder.total}</p>
+                </div>
               ))}
           </div>
         </div>
