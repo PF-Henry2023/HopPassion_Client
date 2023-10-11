@@ -26,6 +26,7 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   GET_USERS,
+  DELETE_PRODUCTS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -110,6 +111,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         query: action.payload,
       };
+
+    case DELETE_PRODUCTS:
+      return {
+        ...state,
+        products:[]
+      }
 
     case GET_NEXT_PRODUCT_PAGE: {
       const list = (state.products ? state.products.products : []).concat(
