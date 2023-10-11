@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { validate } from "./validate";
-import { login } from "../../redux/actions/actions";
+import { validate, isButtonDisabled } from "./validate";
+import { getUsers, login } from "../../redux/actions/actions";
+import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -12,11 +13,15 @@ import cervezaEspumosaLogin from "../../assets/cervezaEspumosaLogin.png";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import GoogleLoginOatuh2 from "./GoogleLogin/GoogleLogin";
+import { gapi } from "gapi-script";
 
 export default function Login() {
+  const clientId =
+    "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
@@ -24,14 +29,22 @@ export default function Login() {
     password: "",
   });
 
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
-    const navigate = useNavigate();
-    useEffect(() => {
+  useEffect(() => {
     if (user == null) {
       return;
     }
     navigate("/");
-  }, [user])
+  }, [user]);
+
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({ clientId: clientId });
+    });
+  }, []);
 
   const handleChange = (field, value) => {
     setData({
@@ -51,7 +64,7 @@ export default function Login() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Error iniciando sesión",
+      text: "Error iniciando sesión, verifica tus credenciales.",
     });
     setData({
       email: "",
@@ -61,7 +74,13 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(login(userData, handleLoginError));
+    const userExists = users.find((user) => user.email === userData.email);
+
+    if (userExists) {
+      dispatch(login(userData, () => handleLoginError()));
+    } else {
+      handleLoginError();
+    }
   };
 
   return (
@@ -110,25 +129,19 @@ export default function Login() {
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-end">
-              {/* <GoogleLogin
+              <GoogleLoginOatuh2
                 clientId={clientId}
-                isNutritionist={userCredentialsOauth}
-              /> */}
-              <Button className={style.btn} variant="primary" type="submit">
+                handleLoginError={handleLoginError}
+              />
+              <Button
+                className={style.btn}
+                variant="primary"
+                type="submit"
+                disabled={isButtonDisabled(errors, userData)}
+              >
                 INGRESAR
               </Button>
             </div>
-            {/* <div className="d-flex justify-content-end">
-                <Button
-                  className="my-2"
-                  variant="primary"
-                  type="submit"
-                  onClick={googleLogin}
-                >
-                  INGRESA CON GOOGLE
-                </Button>
-              </div>
-                */}
           </Form>
         </Col>
       </Row>

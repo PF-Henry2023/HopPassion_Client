@@ -1,4 +1,10 @@
-import { emptyCart, mergeCart, setCart, startSyncing, stopSyncing } from "../../utils/CartUtils";
+import { getLoggedInUser } from "./../../utils/UserUtils";
+import {
+  emptyCart,
+  mergeCart,
+  setCart,
+  startSyncing
+} from "../../utils/CartUtils";
 import {
   SIGNUP,
   LOGIN,
@@ -16,10 +22,17 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  MERCADOPAGO,
+  GET_USER_INFO,
+  GET_USERS,
+  DELETE_PRODUCTS
 } from "../actions/actions-type";
 
 const initialState = {
+  //user: getLoggedInUser(),
+  users: [],
   user: null,
+  //user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
@@ -27,7 +40,10 @@ const initialState = {
   categories: {},
   filters: {},
   query: null,
-  cart: emptyCart()
+  cart: emptyCart(),
+  paymentStatus: null,
+  userInfo: {},
+  orderDetails: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,13 +61,18 @@ const rootReducer = (state = initialState, action) => {
     case LOGOUT:
       return {
         ...state,
-        user: null
-      }
+        user: null,
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
     case SYNC_AUTH_STATE:
       return {
         ...state,
-        user: action.payload
-      }
+        user: action.payload,
+      };
     case GET_PRODUCTS_BYID:
       return {
         ...state,
@@ -90,6 +111,12 @@ const rootReducer = (state = initialState, action) => {
         query: action.payload,
       };
 
+    case DELETE_PRODUCTS:
+      return {
+        ...state,
+        products:[]
+      }
+
     case GET_NEXT_PRODUCT_PAGE: {
       const list = (state.products ? state.products.products : []).concat(
         action.payload.products
@@ -98,7 +125,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: {
           ...action.payload,
-          products: list
+          products: list,
         },
       };
     }
@@ -106,14 +133,14 @@ const rootReducer = (state = initialState, action) => {
     case GET_CART:
       return {
         ...state,
-        cart: setCart(state.cart, action.payload)
-      }
+        cart: setCart(state.cart, action.payload),
+      };
 
     case GET_CART_REQUEST:
       return {
         ...state,
-        cart: startSyncing(state.cart)
-      }
+        cart: startSyncing(state.cart),
+      };
 
     case CLEAR_CART:
       return {
@@ -124,15 +151,27 @@ const rootReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        cart: mergeCart(state.cart, action.payload)
-      }
-      
+        cart: mergeCart(state.cart, action.payload),
+      };
+
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: mergeCart(state.cart, action.payload)
-      }
+        cart: mergeCart(state.cart, action.payload),
+      };
 
+    case MERCADOPAGO:
+      return {
+        ...state,
+        paymentStatus: "Pago completado",
+      };
+
+    case GET_USER_INFO:
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+      
     default:
       return { ...state };
   }

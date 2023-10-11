@@ -1,5 +1,5 @@
 const numberRegex = /^(?:[0-9]|[1-9][0-9]{1,2}|1000)/;
-const wordRegex = /^[A-Za-z\s]+$/;
+const wordRegex = /^[A-Za-z\u00C0-\u024F\s]+$/;
 
 function validation(input) {
   let errors = {};
@@ -33,7 +33,7 @@ function validation(input) {
 
   if (
     input.stock &&
-    (!numberRegex.test(input.stock) || input.stock <= 0 || input.stock > 10)
+    (!numberRegex.test(input.stock) || input.stock <= 0 || input.stock > 1000)
   ) {
     errors.stock = true;
   }

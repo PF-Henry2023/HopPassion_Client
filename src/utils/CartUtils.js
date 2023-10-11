@@ -24,11 +24,11 @@ export function setCart(local, remote) {
 
 export function mergeCart(local, row) {
     const products = addOrUpdateProduct(local.products, row)
-    return {
+    return updateCartTotal({
         ...local,
         products: products,
         quantities: buildQuantitiesObject(products)
-    }
+    })
 }
 
 export function emptyCart() {
@@ -39,6 +39,14 @@ export function emptyCart() {
         quantities: {}
     }
 }
+
+export function totalQuantities (quantities) {
+    let total = 0
+    for (const key in quantities) {
+        total = total + quantities[key] 
+    }
+    return total;
+} 
 
 function buildQuantitiesObject(products) {
     if (products == null) {
@@ -69,4 +77,13 @@ function addOrUpdateProduct(products, newProduct) {
     }
 
     return products;
+}
+
+function updateCartTotal(cart) {
+    return {
+        ...cart,
+        total: cart.products.reduce((accumulator, product) => {
+            return accumulator + parseFloat(product.price) * product.quantity
+        }, 0).toFixed(2).toString()
+    }
 }

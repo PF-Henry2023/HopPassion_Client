@@ -7,12 +7,12 @@ import Login from "./components/Login/Login";
 import UserProfile from "./components/UserProfile/UserProfile";
 import SignUp from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart";
-import UserSessionManager from "./components/UserSessionManager/UserSessionManager"
+import UserSessionManager from "./components/UserSessionManager/UserSessionManager";
 import CartSessionManager from "./components/CartSessionManager/CartSessionManager";
+import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
+import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
 import { useState } from "react";
-import { Alert } from "react-bootstrap";
-
 
 function App() {
   const [alert18, setAlert18] = useState(true);
@@ -29,8 +29,13 @@ function App() {
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/user/:id" element={<UserProfile />}></Route>
+        <Route path="/profile/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+        <Route
+          path="/mercadoPago/process_payment/*"
+          element={<PaymentGateway />}
+        ></Route>
+        <Route path="/status/:payment_id" element={<PaymentStatus />}></Route>
       </Routes>
     </div>
   );

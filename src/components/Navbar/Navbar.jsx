@@ -1,4 +1,4 @@
-import style from "./navbar.module.css";
+import style from "./Navbar.module.css";
 import { Link } from "react-router-dom"; // Import Link
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -10,14 +10,15 @@ import cartIcon from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.user)
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
+  
 
   const [input, setInput] = useState(null);
 
@@ -29,37 +30,40 @@ export default function NavBar() {
     setInput(event.target.value);
   }
 
-  function handleLogout() {
-    dispatch(logout())
-  }
+  const handleLogout = () => {
+    dispatch(logout(() => navigate("/"))); 
+  };
 
   function drawUserSection() {
     if (user) {
-      return <>
+      return (
+        <>
           <button onClick={handleLogout}>Logout</button>
           <span className={style.cartItemCount}>{user.name} </span>
-          <img src={profile} alt="" className={style.cart} />
-          <span className={style.cartItemCount}>{cart.products ? cart.products.length : null} </span>
+          <Link to={`/profile/${user.id}`} className={style.link}>
+            <img src={profile} alt="" className={style.cart} />
+          </Link>
+          <span className={style.cartItemCount}>
+            {cart.products && cart.products.length != 0 ? cart.products.length : null}{" "}
+          </span>
           <Link to={"/cart"} className={style.link}>
             <img src={cartIcon} alt="" className={style.profile} />
           </Link>
-      </>
+        </>
+      );
     } else {
-      return <>
-        <Link to={"/login"}>
-          Login 
-        </Link>
-        <Link to={"/signup"}>
-          Signup
-        </Link>
-      </>
+      return (
+        <>
+          <Link to={"/login"}>Login</Link>
+          <Link to={"/signup"}>Signup</Link>
+        </>
+      );
     }
   }
 
   return (
     <>
       <Navbar className={style.container}>
-        
         <Link to="/" className={style.logoLink}>
           <img src={logo_light} alt="" className={style.logoLight} />
         </Link>
@@ -88,7 +92,7 @@ export default function NavBar() {
             </Nav>
           </Navbar.Collapse>
         </Container>
-        { drawUserSection() }
+        {drawUserSection()}
       </Navbar>
     </>
   );
