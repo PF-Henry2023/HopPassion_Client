@@ -26,6 +26,7 @@ import {
   GET_CART_REQUEST,
   MERCADOPAGO,
   GET_USER_INFO,
+  UPDATE_CART_TOTAL
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -319,3 +320,11 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
+
+export const updateCartTotal = (newTotal) => {
+  return {
+    type: UPDATE_CART_TOTAL,
+    payload: newTotal,
+  };
+};
+
