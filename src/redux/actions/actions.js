@@ -69,7 +69,7 @@ export const login = (userData, handleLoginError) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signin", userData);
-      handleUserLogin(response.data);
+      handleUserLogin(response.data.token);
       dispatch({
         type: LOGIN,
         payload: getLoggedInUser(),
@@ -256,44 +256,43 @@ export const clearCart = () => {
   };
 };
 
-export const signupOauth2 = (userGoogleToken, errorHandler) => {
-  return async function(dispatch) {
+export const signupOauth2 = (userGoogleToken, handleSignupError) => {
+  return async function (dispatch) {
     try {
-      const response = await HopPassionClient.post(
-        "/users/signup/oauth2.0",
-        { tokenId: userGoogleToken}
-      )
-        
+      const response = await HopPassionClient.post("/users/signup/oauth2.0", {
+        tokenId: userGoogleToken,
+      });
+
       handleUserLogin(response.data.message);
 
-        return dispatch({
-          type: LOGIN,
-          payload: getLoggedInUser()
-        })
+      return dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
     } catch (error) {
-      errorHandler(error)
+      handleSignupError(error);
     }
-  }
-}
+  };
+};
 
-export const loginOauth = (userCredentials, errorHandler) => {
-  return async function(dispatch) {
+export const loginOauth = (userCredentials, handleLoginError) => {
+  return async function (dispatch) {
     try {
-      const response = await HopPassionClient.post(
-        "/users/login/oauth2.0", 
-        { tokenId: userCredentials});
+      const response = await HopPassionClient.post("/users/login/oauth2.0", {
+        tokenId: userCredentials,
+      });
 
-        handleUserLogin(response.data.token)
+      handleUserLogin(response.data.token);
 
-        return dispatch({
-          type: LOGIN,
-          payload: getLoggedInUser()
-        })
+      return dispatch({
+        type: LOGIN,
+        payload: getLoggedInUser(),
+      });
     } catch (error) {
-      errorHandler(error)
+      handleLoginError();
     }
-  }
-}
+  };
+};
 
 export const getUserInfo = (id) => {
   return async (dispatch) => {
