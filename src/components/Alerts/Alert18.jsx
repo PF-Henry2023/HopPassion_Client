@@ -1,24 +1,33 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { checkAgeConfirmation, setAgeConfirmation } from "../../utils/UserUtils";
 
 const Alert18 = () => {
-  const navigate = useNavigate();
 
   const confirmAge = () => {
+    if (checkAgeConfirmation()) {
+      return
+    }
+
     Swal.fire({
-      title: "¡Acceso permitido!",
-      text: "Puedes continuar navegando en nuestro sitio.",
+      title: "Confirmación de Edad",
+      text: "Por favor, confirma que sos mayor de 18 años para continuar.",
       icon: "success",
+      confirmButtonText: "Si, soy mayor",
+      denyButtonText: 'Todavía no',
+      showDenyButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setAgeConfirmation(true)
+      } else {
+        window.location.replace('https://www.google.com');
+      }
     });
-    navigate("/"); // Redirige al contenido principal después de la confirmación.
   };
 
   return (
     <div>
-      <h1>Confirmación de Edad</h1>
-      <p>Por favor, confirma que eres mayor de 18 años para continuar.</p>
-      <button onClick={confirmAge}>Sí, soy mayor.</button>
+      { confirmAge() }
     </div>
   );
 };

@@ -28,3 +28,11 @@ export function handleUserLogout() {
 export function getLoggedInUser() {
   return JSON.parse(window.localStorage.getItem("user"));
 }
+
+export function setAgeConfirmation(confirmed) {
+  window.localStorage.setItem("over18", confirmed);
+}
+
+export function checkAgeConfirmation() {
+  return window.localStorage.getItem("over18") ?? false
+}

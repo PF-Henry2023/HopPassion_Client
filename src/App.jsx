@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
@@ -12,18 +12,15 @@ import CartSessionManager from "./components/CartSessionManager/CartSessionManag
 import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
-import { useState } from "react";
 
 function App() {
-  const [alert18, setAlert18] = useState(true);
   
   return (
     <div className="app">
-      {alert18 && <Alert18 />}
+      <Alert18 />
       <CartSessionManager />
       <UserSessionManager />
       <Routes>
-        <Route path="/confirmacion" component={Alert18} />
         <Route path="/" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>
         <Route path="/product/:id" element={<Details />}></Route>
