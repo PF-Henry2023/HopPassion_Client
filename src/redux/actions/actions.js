@@ -24,10 +24,9 @@ import {
   CLEAR_CART,
   GET_CART,
   GET_CART_REQUEST,
-  MERCADOPAGO,
   GET_USER_INFO,
   UPDATE_CART_TOTAL,
-  DELETE_PRODUCTS
+  UPDATE_USER,
 } from "./actions-type";
 
 export const getUsers = () => {
@@ -118,7 +117,7 @@ export const getProducts = (filters, query) => {
         dispatch({ type: GET_PRODUCTS, payload: result.data });
       } catch (error) {
         console.log("no se encontraron coincidencias");
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
@@ -213,6 +212,7 @@ export const getCart = () => {
   return async (dispatch) => {
     try {
       const response = await HopPassionClient.get("/cart");
+      console.log(response)
       dispatch({ type: GET_CART, payload: response.data });
     } catch (error) {
       console.log(error.message);
@@ -300,14 +300,103 @@ export const loginOauth = (userCredentials, handleLoginError) => {
   };
 };
 
-export const getUserInfo = (id) => {
+export const getUserInfo = (id, token, navigate) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.get(`/users/${id}`);
-      dispatch({ type: GET_USER_INFO, payload: response.data });
+      const response = await HopPassionClient.get(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        const userData = {
+          name: response.data.name || "",
+          lastName: response.data.lastName || "",
+          email: response.data.email || "",
+          phone: response.data.phone || "",
+          address: response.data.address || "",
+          city: response.data.city || "",
+          country: response.data.country || "",
+          postalCode: response.data.postalCode || "",
+          password: response.data.password || "",
+        };
+
+        dispatch({
+          type: GET_USER_INFO,
+          payload: userData,
+        });
+
+        return userData;
+      } else if (response.status === 401) {
+        navigate("/login");
+      } else if (response.status === 403) {
+        navigate(`/profile/${id}`);
+      }
     } catch (error) {
-      console.error("Error al obtener la información del usuario:", error);
+      console.error("Error al obtener los datos del usuario", error);
     }
+  };
+};
+
+export const updateUser = (id, userData) => {
+  return async (dispatch) => {
+    try {
+      if (!userData) {
+        console.error("Los datos del usuario son inválidos.");
+        return;
+      }
+
+      console.log("Datos a enviar:", userData);
+
+      const response = await HopPassionClient.put(
+        `/users/update/${id}`,
+        userData
+      );
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.status === 200) {
+        dispatch({ type: UPDATE_USER, payload: response.data });
+        return response.data;
+      } else {
+        console.error("Error al actualizar el usuario:", response);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+    }
+  };
+};
+
+// export const getUserOrders = (id, token, navigate) => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await HopPassionClient.get("/cart/", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       if (response.status === 200) {
+
+//         dispatch({
+//           type: GET_USER_ORDERS,
+//           payload: response,
+//         });
+
+//         return response.data;
+//       } else if (response.status === 401) {
+//         navigate("/login");
+//       } else if (response.status === 403) {
+//         navigate(`/profile/${id}`);
+//       }
+//     } catch (error) {
+//       console.error("Error al obtener las ordenes del usuario", error);
+//     }
+//   };
+// };
+
+export const updateCartTotal = (newTotal) => {
+  return {
+    type: UPDATE_CART_TOTAL,
+    payload: newTotal,
   };
 };
 
@@ -326,11 +415,3 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
-
-export const updateCartTotal = (newTotal) => {
-  return {
-    type: UPDATE_CART_TOTAL,
-    payload: newTotal,
-  };
-};
-

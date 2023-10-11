@@ -10,13 +10,15 @@ import cartIcon from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
+  
 
   const [input, setInput] = useState(null);
 
@@ -28,9 +30,9 @@ export default function NavBar() {
     setInput(event.target.value);
   }
 
-  function handleLogout() {
-    dispatch(logout());
-  }
+  const handleLogout = () => {
+    dispatch(logout(() => navigate("/"))); 
+  };
 
   function drawUserSection() {
     if (user) {
@@ -38,7 +40,9 @@ export default function NavBar() {
         <>
           <button onClick={handleLogout}>Logout</button>
           <span className={style.cartItemCount}>{user.name} </span>
-          <img src={profile} alt="" className={style.cart} />
+          <Link to={`/profile/${user.id}`} className={style.link}>
+            <img src={profile} alt="" className={style.cart} />
+          </Link>
           <span className={style.cartItemCount}>
             {cart.products ? cart.products.length : null}{" "}
           </span>
