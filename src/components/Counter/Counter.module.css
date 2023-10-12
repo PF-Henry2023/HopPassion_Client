@@ -1,10 +1,10 @@
 .counter_buttons__container {
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: flex-start;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
 }
 
 .counter_buttons__content {
@@ -21,8 +21,12 @@
   font-size: 18pt;
   color: #6a7346;
   font-family: Roboto, sans-serif;
-  cursor: pointer;
   padding: 0px 5px;
+}
+
+.counter_buttons__button:disabled {
+  color: lightgray;
+  cursor: unset;
 }
 
 .counter_buttons__text {

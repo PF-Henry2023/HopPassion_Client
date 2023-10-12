@@ -1,48 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Counter.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Dash, Plus } from "react-bootstrap-icons";
-// import { increment, decrement } from "../../redux/actions/actions";
 
 function Counter({ initialQuantity, stock, productId, onQuantityChange }) {
-  const dispatch = useDispatch();
+  const quantityOnCart = useSelector((state) => state.cart.quantities[productId] ?? 0)
   const [quantity, setQuantity] = useState(initialQuantity);
 
-  // const handleQuantityChange = (newQuantity) => {
-  //   dispatch(updateCartItemQuantity(productId, newQuantity));
-  //   onQuantityChange(newQuantity);
-  // };
+  useEffect(() => {
+    updateQuantity(initialQuantity)
+  }, [quantityOnCart])
 
   const incrementQuantity = () => {
-    if (quantity < stock) {
-      dispatch(increment());
-      onQuantityChange(quantity + 1);
+    if (canIncrement()) {
+      updateQuantity(quantity + 1)
     }
   };
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-      dispatch(decrement());
-      onQuantityChange(quantity - 1);
+    if (canDecrement()) {
+      updateQuantity(quantity - 1)
     }
   };
 
-  // useEffect(() => {
-  //   setQuantity(initialQuantity);
-  // }, [initialQuantity]);
+  function updateQuantity(nq) {
+    setQuantity(nq)
+    onQuantityChange(nq)
+  }
+
+  function canIncrement() {
+    return quantity < (stock - quantityOnCart)
+  }
+
+  function canDecrement() {
+    return quantity > 1
+  }
 
   return (
     <div className={styles.counter_buttons__container}>
       <div className={styles.counter_buttons__content}>
-        <button className={styles.counter_buttons__button} onClick={decrementQuantity}>
+        <button 
+        className={styles.counter_buttons__button} 
+        disabled={!canDecrement()}
+        onClick={decrementQuantity}>
           <Dash />
         </button>
         <div className={styles.counter_buttons__text}>
           { quantity }
         </div>
-        <button className={styles.counter_buttons__button} onClick={incrementQuantity}>
+        <button 
+        className={styles.counter_buttons__button}
+        disabled={!canIncrement()}
+        onClick={incrementQuantity}>
           <Plus />
         </button>
       </div>

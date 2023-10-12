@@ -14,7 +14,8 @@ const Details = () => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const quantities = useSelector((state) => state.cart.quantities)
-  const [isLoading, setIsLoading] = useState(true);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ newQuantity, setNewQuantity ] = useState(1);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -64,18 +65,18 @@ const Details = () => {
                 <Counter
                   productId={productDetails.id}
                   initialQuantity={1}
-                  stock={5}
-                  onQuantityChange={(newQuantity) => {
-                    // Manejo de cambio de cantidad aquí
+                  stock={productDetails.stock}
+                  onQuantityChange={(nq) => {
+                    setNewQuantity(nq)
                   }}
                 />
 
                 <p className={styles.quantity}>
-                  {productDetails.stock} unidades disponibles { quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
+                  {productDetails.stock} unidades disponibles{ quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
                 </p>
 
                 <div className={styles.addToCartButtonContainer}>
-                  <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
+                  <AddToCartButton productId={productDetails.id} stock={productDetails.stock} quantity={newQuantity} />
                 </div>
 
 
