@@ -49,9 +49,7 @@ function validate(input) {
     errors.city = true;
   }
 
-  if (!input.postalCode || !postalCodeRegex.test(input.postalCode)) {
-    errors.postalCode = true;
-  } else if (input.postalCode.length < 1 || input.postalCode.length > 4) {
+  if (input.postalCode && !postalCodeRegex.test(input.postalCode)) {
     errors.postalCode = true;
   }
 
