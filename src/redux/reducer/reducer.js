@@ -3,8 +3,7 @@ import {
   emptyCart,
   mergeCart,
   setCart,
-  startSyncing,
-  stopSyncing,
+  startSyncing
 } from "../../utils/CartUtils";
 import {
   SIGNUP,
@@ -26,8 +25,7 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   GET_USERS,
-  DELETE_PRODUCTS,
-  UPDATE_CART_TOTAL,
+  DELETE_PRODUCTS
 } from "../actions/actions-type";
 
 const initialState = {
@@ -173,15 +171,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
-    case UPDATE_CART_TOTAL:
-      return {
-        ...state,
-        cart: {
-          ...state.cart,
-          total: action.payload,
-        },
-      };
-
+      
     default:
       return { ...state };
   }

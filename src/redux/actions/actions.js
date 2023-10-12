@@ -25,7 +25,6 @@ import {
   GET_CART,
   GET_CART_REQUEST,
   GET_USER_INFO,
-  UPDATE_CART_TOTAL,
   UPDATE_USER,
 } from "./actions-type";
 
@@ -392,13 +391,6 @@ export const updateUser = (id, userData) => {
 //     }
 //   };
 // };
-
-export const updateCartTotal = (newTotal) => {
-  return {
-    type: UPDATE_CART_TOTAL,
-    payload: newTotal,
-  };
-};
 
 export const processPayment = async (formData) => {
   try {
