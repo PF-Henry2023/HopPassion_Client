@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
@@ -11,10 +11,13 @@ import UserSessionManager from "./components/UserSessionManager/UserSessionManag
 import CartSessionManager from "./components/CartSessionManager/CartSessionManager";
 import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
+import Alert18 from "./components/Alerts/Alert18";
 
 function App() {
+  
   return (
     <div className="app">
+      <Alert18 />
       <CartSessionManager />
       <UserSessionManager />
       <Routes>

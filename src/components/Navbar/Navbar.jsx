@@ -44,7 +44,7 @@ export default function NavBar() {
             <img src={profile} alt="" className={style.cart} />
           </Link>
           <span className={style.cartItemCount}>
-            {cart.products ? cart.products.length : null}{" "}
+            {cart.products && cart.products.length != 0 ? cart.products.length : null}{" "}
           </span>
           <Link to={"/cart"} className={style.link}>
             <img src={cartIcon} alt="" className={style.profile} />
