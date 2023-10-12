@@ -64,14 +64,14 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                <Counter
+                {/* <Counter
                   productId={productDetails.id}
-                  initialQuantity={1}
-                  stock={productDetails.stock}
-                  onQuantityChange={(nq) => {
-                    setNewQuantity(nq)
+                  initialQuantity={initialQuantity}
+                  stock={maxQuantity}
+                  onQuantityChange={(newQuantity) => {
+                    // Manejo de cambio de cantidad aquí
                   }}
-                />
+                /> */}
 
                 <p className={styles.quantity}>
 
@@ -80,7 +80,6 @@ const Details = () => {
                     ? ", " + quantity() + " en el carrito."
                     : null}
                 </p>
-
                 <AddToCartButton
                   productId={productDetails.id}
                   stock={productDetails.stock}
