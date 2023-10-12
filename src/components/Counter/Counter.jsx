@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Counter.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { Dash, Plus } from "react-bootstrap-icons";
 // import { increment, decrement } from "../../redux/actions/actions";
 
 function Counter({ initialQuantity, stock, productId, onQuantityChange }) {
@@ -33,21 +34,18 @@ function Counter({ initialQuantity, stock, productId, onQuantityChange }) {
   // }, [initialQuantity]);
 
   return (
-    <div className={styles.quantityButtonsContainer}>
-      <button className={styles.quantityButton} onClick={decrementQuantity}>
-        -
-      </button>
-      <input
-        type="text"
-        value={quantity}
-        className={styles.quantity}
-        min="0"
-        max={stock}
-        readOnly
-      />
-      <button className={styles.quantityButton} onClick={incrementQuantity}>
-        +
-      </button>
+    <div className={styles.counter_buttons__container}>
+      <div className={styles.counter_buttons__content}>
+        <button className={styles.counter_buttons__button} onClick={decrementQuantity}>
+          <Dash />
+        </button>
+        <div className={styles.counter_buttons__text}>
+          { quantity }
+        </div>
+        <button className={styles.counter_buttons__button} onClick={incrementQuantity}>
+          <Plus />
+        </button>
+      </div>
     </div>
   );
 }

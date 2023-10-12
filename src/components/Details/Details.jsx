@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
+import Counter from "../Counter/Counter";
 import AddToCartButton from "../AddToCartButton/AddToCartButton"
 
 const Details = () => {
@@ -60,20 +61,23 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                {/* <Counter
+                <Counter
                   productId={productDetails.id}
-                  initialQuantity={initialQuantity}
-                  stock={maxQuantity}
+                  initialQuantity={1}
+                  stock={5}
                   onQuantityChange={(newQuantity) => {
                     // Manejo de cambio de cantidad aquí
                   }}
-                /> */}
+                />
 
                 <p className={styles.quantity}>
                   {productDetails.stock} unidades disponibles { quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
                 </p>
 
-                <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
+                <div className={styles.addToCartButtonContainer}>
+                  <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
+                </div>
+
 
                 <div className={styles.box}>
                   <div className={styles.firstrow}>
