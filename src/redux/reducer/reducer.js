@@ -25,7 +25,9 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   GET_USERS,
-  DELETE_PRODUCTS
+  DELETE_PRODUCTS,
+  UPDATE_CART_TOTAL,
+  GET_REVIEWS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -44,10 +46,16 @@ const initialState = {
   paymentStatus: null,
   userInfo: {},
   orderDetails: [],
+  reviewList: {},
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_REVIEWS:
+      return {
+        ...state,
+        ReviewList: action.payload,
+      };
     case SIGNUP:
       return {
         ...state,
@@ -114,8 +122,8 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_PRODUCTS:
       return {
         ...state,
-        products:[]
-      }
+        products: [],
+      };
 
     case GET_NEXT_PRODUCT_PAGE: {
       const list = (state.products ? state.products.products : []).concat(
