@@ -3,6 +3,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{6,}$/;
 const numberRegex = /^[1-9]\d{9}$/;
 const wordRegex = /^[A-Za-z\s]+$/;
 const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+const postalCodeRegex = /^\d{4,8}$/;
 
 function validate(input) {
   const errors = {};
@@ -37,6 +38,23 @@ function validate(input) {
     errors.address = true;
   }
 
+  if (
+    input.country &&
+    (!wordRegex.test(input.country) || input.country.length < 4)
+  ) {
+    errors.country = true;
+  }
+
+  if (input.city && (!wordRegex.test(input.city) || input.city.length < 4)) {
+    errors.city = true;
+  }
+
+  if (!input.postalCode || !postalCodeRegex.test(input.postalCode)) {
+    errors.postalCode = true;
+  } else if (input.postalCode.length < 1 || input.postalCode.length > 4) {
+    errors.postalCode = true;
+  }
+
   return errors;
 }
 
@@ -48,7 +66,10 @@ function isButtonDisabled(errors, input) {
     !input.email ||
     !input.address ||
     !input.phone ||
-    !input.password
+    !input.password ||
+    !input.country ||
+    !input.city ||
+    !input.postalCode
   );
 }
 
