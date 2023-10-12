@@ -6,7 +6,7 @@ import { CartPlus } from "react-bootstrap-icons";
 import { addToCart } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
-const AddToCartButton = ({ productId, stock }) => {
+const AddToCartButton = ({ productId, stock, quantity = 1 }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [ isAdding, setIsAdding ] = useState(false);
@@ -14,7 +14,7 @@ const AddToCartButton = ({ productId, stock }) => {
     const quantities = useSelector((state) => state.cart.quantities)
     const user = useSelector((state) => state.user)
 
-    function quantity() {
+    function existingQuantity() {
         return quantities[productId] ?? 0
     }
  
@@ -23,7 +23,7 @@ const AddToCartButton = ({ productId, stock }) => {
           navigate("/login")
         } else {
           setIsAdding(true)
-          dispatch(addToCart(productId, quantity() + 1, (result) => {
+          dispatch(addToCart(productId, existingQuantity() + quantity, (result) => {
             setIsAdding(false)
           }))
         }
@@ -36,7 +36,7 @@ const AddToCartButton = ({ productId, stock }) => {
     function buttonContent() {
         if(isLoading()) {
             return <Spinner animation="border" role="status"></Spinner>
-        } else if(quantity() >= stock) {
+        } else if(existingQuantity() >= stock) {
             return "Stock agotado"
         } else {
             return <><CartPlus /> Agregar</>
@@ -47,7 +47,7 @@ const AddToCartButton = ({ productId, stock }) => {
         <button
         className={style.button}
         onClick={() => handleAddToCart()}
-        disabled={quantity() >= stock || isLoading()}
+        disabled={existingQuantity() >= stock || isLoading()}
       >
         { buttonContent() }
       </button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { getUsers, login } from "../../redux/actions/actions";
+import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
@@ -21,17 +21,12 @@ export default function Login() {
     "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.user);
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
 
   useEffect(() => {
     if (user == null) {
@@ -74,13 +69,7 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userExists = users.find((user) => user.email === userData.email);
-
-    if (userExists) {
-      dispatch(login(userData, () => handleLoginError()));
-    } else {
-      handleLoginError();
-    }
+    dispatch(login(userData, () => handleLoginError()));
   };
 
   return (

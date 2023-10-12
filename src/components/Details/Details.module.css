@@ -78,6 +78,10 @@
   margin-top: 10px;
 }
 
+.addToCartButtonContainer {
+  display: inline-block;
+}
+
 .addToCartButton {
   width: 264px;
   height: 42px;
