@@ -17,7 +17,7 @@ const AddToCartButton = ({ productId, stock }) => {
     function quantity() {
         return quantities[productId] ?? 0
     }
- 
+
     const handleAddToCart = () => {
         if (user == null) {
           navigate("/login")
