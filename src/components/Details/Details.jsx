@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../redux/actions/actions";
+import { getProductById, getReviews } from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
-import AddToCartButton from "../AddToCartButton/AddToCartButton"
+
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
+import ReviewList from "../ReviewList/ReviewList";
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
-  const quantities = useSelector((state) => state.cart.quantities)
+
+  const quantities = useSelector((state) => state.cart.quantities);
   const [isLoading, setIsLoading] = useState(true);
+  const userId = localStorage.getItem("user");
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -21,14 +25,14 @@ const Details = () => {
       await dispatch(getProductById(id));
       setIsLoading(false);
     };
-
+    dispatch(getReviews(id, userId));
     fetchProductDetails();
   }, [dispatch, id]);
 
   function quantity() {
-    return quantities[productDetails.id] ?? 0
+    return quantities[productDetails.id] ?? 0;
   }
- 
+
   return (
     <div>
       <div className={styles.mainContainer}>
@@ -70,10 +74,16 @@ const Details = () => {
                 /> */}
 
                 <p className={styles.quantity}>
-                  {productDetails.stock} unidades disponibles { quantity() > 0 ? ", " + quantity() + " en el carrito." : null }
-                </p>
 
-                <AddToCartButton productId={productDetails.id} stock={productDetails.stock} />
+                  {productDetails.stock} unidades disponibles{" "}
+                  {quantity() > 0
+                    ? ", " + quantity() + " en el carrito."
+                    : null}
+                </p>
+                <AddToCartButton
+                  productId={productDetails.id}
+                  stock={productDetails.stock}
+                />
 
                 <div className={styles.box}>
                   <div className={styles.firstrow}>
@@ -112,6 +122,7 @@ const Details = () => {
           )}
         </div>
       </div>
+      <ReviewList />
       <Footer />
     </div>
   );
