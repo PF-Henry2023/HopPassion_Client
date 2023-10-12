@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById, getReviews } from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
+
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import ReviewList from "../ReviewList/ReviewList";
 
@@ -13,6 +14,7 @@ const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
+
   const quantities = useSelector((state) => state.cart.quantities);
   const [isLoading, setIsLoading] = useState(true);
   const userId = localStorage.getItem("user");
@@ -62,16 +64,17 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                {/* <Counter
+                <Counter
                   productId={productDetails.id}
-                  initialQuantity={initialQuantity}
-                  stock={maxQuantity}
-                  onQuantityChange={(newQuantity) => {
-                    // Manejo de cambio de cantidad aquí
+                  initialQuantity={1}
+                  stock={productDetails.stock}
+                  onQuantityChange={(nq) => {
+                    setNewQuantity(nq)
                   }}
-                /> */}
+                />
 
                 <p className={styles.quantity}>
+
                   {productDetails.stock} unidades disponibles{" "}
                   {quantity() > 0
                     ? ", " + quantity() + " en el carrito."
