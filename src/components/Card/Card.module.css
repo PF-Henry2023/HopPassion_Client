@@ -51,3 +51,9 @@
   grid-template-columns: auto auto;
   gap: 60px;
 }
+
+.addToCartContainer{
+  margin: 0 auto;
+  background-color: #edf2db;
+  width: 100%;
+}

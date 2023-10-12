@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
   getCart,
-  getCartRequest,
-  updateCartTotal,
+  getCartRequest
 } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import Counter from "../Counter/Counter";
@@ -14,21 +13,16 @@ import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
 import MercadoPagoComponent from "./MercadoPagoButtom/Buttom"
 import { Spinner } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { createSelector } from "reselect";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const selectCart = (state) => state.cart;
   const [isDeleting, setDeleting] = useState([]);
   const syncing = useSelector((state) => state.cart.syncing);
-  const navigate = useNavigate();
   const { orderId } = useParams();
-
-  const selectCartMemoized = createSelector([selectCart], (cart) => cart);
-
-  const cart = useSelector(selectCartMemoized);
+  const cart = useSelector((state) => state.cart);
+  
   useEffect(() => {
     dispatch(getCartRequest());
     dispatch(getCart());
@@ -43,12 +37,6 @@ const Cart = () => {
         alert("El producto no se encuentra en el carrito");
       return;
     }
-    const productPrice = productToRemove.price;
-    // Realiza el cálculo para actualizar el valor total del carrito
-    const updatedTotal = cart.total - productPrice;
-    // Actualiza el valor total en el estado del carrito
-    dispatch(updateCartTotal(updatedTotal));
-    // Luego, elimina el producto del carrito
     dispatch(removeFromCart(productId, (result) => {}));
   };
 

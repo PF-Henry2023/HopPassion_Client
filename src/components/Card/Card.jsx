@@ -23,7 +23,9 @@ const CardP = ({ id, title, price, image, stock }) => {
             </div>
           </div>
         </Card.Body>
-        <AddToCartButton productId={id} stock={stock} />
+        <div className={style.addToCartContainer}>
+          <AddToCartButton productId={id} stock={stock} />
+        </div>
       </Card>
     </div>
   );
