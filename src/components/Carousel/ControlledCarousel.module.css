@@ -1,0 +1,71 @@
+.imageContainer {
+    position: relative;
+    width: 100%;/* Ajusta la altura según tus requisitos */
+    overflow: hidden;
+  }
+  
+  /* .image1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    background-color: #EDF2DB80;
+  } */
+  
+  .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(237, 242, 219, 0.9); /* 20% de transparencia */
+    color: #6A7346;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .logo {
+    width: 70%; 
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .link {
+    font-size: 17pt; /* Tamaño de fuente de 17pt */
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    font-weight: 800; /* Peso de fuente medium (500) */
+    color: #97A663; /* Color del texto 97A663 */
+  }
+  .link:hover {
+    color: #6A7346;
+  }
+  
+  .description {
+    margin: 0 20px;
+    font-size: 17pt; 
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 500; 
+    color: #6A7346; 
+  }
+  
+  .button {
+    background-color: #97A663;
+    color: #EDF2DB;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #6A7346;
+  }
+  
