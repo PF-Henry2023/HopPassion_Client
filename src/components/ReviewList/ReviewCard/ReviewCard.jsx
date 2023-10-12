@@ -1,6 +1,6 @@
 import style from "./ReviewCard.module.css";
 import Rating from "../../Rating/Rating";
-const ReviewsCard = () => {
+const ReviewCard = () => {
   return (
     <div className={style.mainContainer}>
       <div>nombre y fecha</div>
@@ -10,4 +10,4 @@ const ReviewsCard = () => {
   );
 };
 
-export default ReviewsCard;
+export default ReviewCard;
