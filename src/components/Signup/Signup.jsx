@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +15,15 @@ import { gapi } from "gapi-script";
 import Swal from "sweetalert2";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import CountryList from "react-select-country-list";
+import Select from "react-select";
 
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const users = useSelector((state) => state.users);
+  const countryoptions = useMemo(() => CountryList().getData(), []);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -44,15 +47,22 @@ export default function SignUp() {
     "210577079376-bu8ig0s23lino9stujpaad72hmoaoqdh.apps.googleusercontent.com";
 
   const handleChange = (field, value) => {
+    let fieldValue = value;
+
+    // Extract the country name if the value is an object
+    if (typeof value === "object" && value.label) {
+      fieldValue = value.label;
+    }
+
     setData({
       ...userData,
-      [field]: value,
+      [field]: fieldValue,
     });
 
     setErrors(
       validate({
         ...userData,
-        [field]: value,
+        [field]: fieldValue,
       })
     );
   };
@@ -96,6 +106,8 @@ export default function SignUp() {
       gapi.auth2.init({ clientId: clientId });
     });
   }, []);
+
+  console.log(userData);
 
   return (
     <Container className={style.container} fluid={true}>
@@ -170,20 +182,21 @@ export default function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="country">
-              <Form.Label>Pais:</Form.Label>
-              <Form.Control
-                value={userData.country}
-                type="text"
-                placeholder="Ingresa tu pais de residencia"
-                className={style.formControl}
-                onChange={(event) => {
-                  handleChange("country", event.target.value);
+              <Form.Label>País de origen</Form.Label>
+              <Select
+                options={countryoptions}
+                placeholder="Selecciona el país que corresponde"
+                value={{
+                  value: userData.country,
+                  label: userData.country,
                 }}
-                isInvalid={errors.country}
-                isValid={userData.country && !errors.country}
+                onChange={(selectedOption) =>
+                  handleChange("country", selectedOption)
+                }
+                name="country"
               />
               <Form.Control.Feedback type="invalid">
-                <div>Ingrese un pais</div>
+                <div>Ingrese un país válido</div>
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -228,7 +241,7 @@ export default function SignUp() {
               <Form.Control
                 value={userData.postalCode}
                 type="text"
-                placeholder="Ingresa tu postalCode"
+                placeholder="Ingresa tu codigo postal"
                 className={style.formControl}
                 onChange={(event) => {
                   handleChange("postalCode", event.target.value);
@@ -237,7 +250,7 @@ export default function SignUp() {
                 isValid={userData.postalCode && !errors.postalCode}
               />
               <Form.Control.Feedback type="invalid">
-                <div>Ingrese un postalCode válido</div>
+                <div>Ingrese un codigo postal válido</div>
               </Form.Control.Feedback>
             </Form.Group>
 
