@@ -25,10 +25,10 @@
 
 .link {
   margin-top: 5px;
-  font-size: 17pt; /* Tamaño de fuente de 17pt */
-  font-family: "Poppins", sans-serif; /* Fuente Poppins */
-  font-weight: 800; /* Peso de fuente medium (500) */
-  color: #97a663; /* Color del texto 97A663 */
+  font-size: 17pt;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800; 
+  color: #97a663; 
 }
 
 .link:hover {
@@ -52,6 +52,7 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
+  font-family: "Poppins", sans-serif;
 }
 
 .button:hover {
@@ -64,8 +65,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #ddf391; /* Puedes establecer el color de fondo aquí */
-  padding: 20px;
+  background-color: #ddf391; 
+  padding: 40px;
 }
 
 .titleFeaturedProducts {
@@ -73,18 +74,21 @@
   font-weight: 500;
   color: #6a7346;
   margin: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600; 
 }
 
 .subtitle {
-  font-size: 20px;
+  font-size: 17pt;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   color: #6a7346;
-  /* Elimina el margen superior por defecto */
+  
 }
 
 .imageContainer {
   position: relative;
-  width: 100%; /* Ajusta la altura según tus requisitos */
+  width: 100%; 
   overflow: hidden;
 }
 
