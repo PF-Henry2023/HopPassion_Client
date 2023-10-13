@@ -1,5 +1,5 @@
 import style from "./Navbar.module.css";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Person, PersonAdd } from "react-bootstrap-icons";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export default function NavBar() {
   const user = useSelector((state) => state.user);
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
-  
 
   const [input, setInput] = useState(null);
 
@@ -31,7 +31,7 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    dispatch(logout(() => navigate("/"))); 
+    dispatch(logout(() => navigate("/")));
   };
 
   function drawUserSection() {
@@ -39,24 +39,33 @@ export default function NavBar() {
       return (
         <>
           <button onClick={handleLogout}>Logout</button>
-          <span className={style.cartItemCount}>{user.name} </span>
+          <span className={style.cartItemCount}>{user.name}</span>
           <Link to={`/profile/${user.id}`} className={style.link}>
             <img src={profile} alt="" className={style.cart} />
           </Link>
           <span className={style.cartItemCount}>
-            {cart.products && cart.products.length != 0 ? cart.products.length : null}{" "}
+            {cart.products && cart.products.length !== 0
+              ? cart.products.length
+              : null}
           </span>
-          <Link to={"/cart"} className={style.link}>
+          <Link to="/cart" className={style.link}>
             <img src={cartIcon} alt="" className={style.profile} />
           </Link>
         </>
       );
     } else {
       return (
-        <>
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/signup"}>Signup</Link>
-        </>
+        <div className={style.userSection}>
+          <Link to="/login" className={style.text}>
+            <Person className={style.person} />
+           <p>Iniciar Sesión</p>
+          </Link>
+          <div className={style.space}></div>
+          <Link to="/signup" className={style.text}>
+            <PersonAdd className={style.person} />
+            <p>Registrarse</p>
+          </Link>
+        </div>
       );
     }
   }
