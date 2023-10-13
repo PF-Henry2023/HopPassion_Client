@@ -11,7 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Person, PersonAdd } from "react-bootstrap-icons";
+import {
+  Person,
+  PersonPlus,
+  PersonGear,
+  PersonSlash,
+  Cart,
+} from "react-bootstrap-icons";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -38,18 +44,24 @@ export default function NavBar() {
     if (user) {
       return (
         <>
-          <button onClick={handleLogout}>Cerrar Seción</button>
-          <span className={style.cartItemCount}>{user.name}</span>
-          <Link to={`/profile/${user.id}`} className={style.link}>
-            <img src={profile} alt="" className={style.cart} />
+          <Link to="/cart" className={style.text}>
+            <Cart className={style.icon} />
+            <p>
+              {cart.products && cart.products.length !== 0
+                ? cart.products.length
+                : null}
+            </p>
           </Link>
-          <span className={style.cartItemCount}>
-            {cart.products && cart.products.length !== 0
-              ? cart.products.length
-              : null}
-          </span>
-          <Link to="/cart" className={style.link}>
-            <img src={cartIcon} alt="" className={style.profile} />
+
+          <Link to={`/profile/${user.id}`} className={style.text}>
+            <PersonGear className={style.icon} />
+            <p>{user.name}</p>
+          </Link>
+
+          {/* <button onClick={handleLogout}>Cerrar Seción</button> */}
+          <Link onClick={handleLogout} className={style.text}>
+            <PersonSlash className={style.icon} />
+            <p>Cerrar sesión</p>
           </Link>
         </>
       );
@@ -57,11 +69,11 @@ export default function NavBar() {
       return (
         <div className={style.mainContainer}>
           <Link to="/login" className={style.text}>
-            <Person className={style.person} />
-           <p>Iniciar Sesión</p>
+            <Person className={style.icon} />
+            <p>Iniciar Sesión</p>
           </Link>
           <Link to="/signup" className={style.text}>
-            <PersonAdd className={style.person} />
+            <PersonPlus className={style.icon} />
             <p>Registrarse</p>
           </Link>
         </div>

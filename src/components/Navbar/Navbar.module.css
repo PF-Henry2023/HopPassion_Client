@@ -14,6 +14,21 @@
   align-items: center; /* Alinea los elementos verticalmente en el centro */
 }
 
+.cartItem{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #edf2db;
+  font-weight: 400;
+  font-size: 12pt;
+  margin-right: 30px;
+  white-space: nowrap;
+  margin-top: 35px;
+  &:hover {
+    color: #ddf391;
+  }
+}
+
 .text {
   display: flex;
   align-items: center;
@@ -45,7 +60,7 @@
   margin-top: 20px;
 }
 
-.person {
+.icon {
   color: #edf2db;
   font-weight: 400;
   font-size: 20pt;
