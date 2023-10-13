@@ -1,17 +1,17 @@
 /* Navbar.module.css */
 
-.container {
+.mainContainer {
   background-color: #97a663;
-  height: 80px; /* Aumenta la altura de la barra de navegación */
-  display: flex;align-items: normal;
-  align-items: center;
-  padding: 0 20px; /* Añade relleno a los lados */
+  display: flex;
+  padding: 0 20px;
+  justify-content: center;
 }
 
-.userSection {
+.container {
+  width: 100%; /* Haz que el contenedor ocupe todo el ancho disponible */
+  justify-content: space-between;
   display: flex;
-  align-items: center;
-  margin-right: 20px;
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
 }
 
 .text {
@@ -19,15 +19,21 @@
   align-items: center;
   text-decoration: none;
   color: #edf2db;
-  font-weight: 600;
-  font-size: 14pt;
-  margin-right: 20px; /* Ajusta el margen derecho según tu preferencia */
+  font-weight: 400;
+  font-size: 12pt;
+  margin-right: 30px;
+  white-space: nowrap;
+  margin-top: 35px;
+  &:hover {
+    color: #ddf391;
+  }
 }
 
-
 .logoLight {
+  margin-top: 15px;
   margin-left: 40px;
   width: 180px;
+  margin-right: 40px;
 }
 
 .navContent {
@@ -36,31 +42,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 }
 
 .person {
   color: #edf2db;
-  font-weight: 600;
-  font-size: 28pt; /* Aumenta el tamaño al doble (puedes ajustar el tamaño según tus necesidades) */
-  margin-right: 20px;
-  margin-left: 30px;
+  font-weight: 400;
+  font-size: 20pt;
+  margin-right: 5px;
+  margin-bottom: 15px;
+  &:hover {
+    color: #ddf391;
+  }
 }
 
 .searchField {
   border: none;
   border-radius: 4px;
   padding: 10px;
-  width: 100%; 
-  background-color: #edf2db; 
-  color: #333; 
+  width: 100%;
+  background-color: #edf2db;
+  color: #333;
   font-weight: 500;
   font-size: 14pt;
 }
 
 .searchField::placeholder {
-  color: #b1b5a4; /* Ajusta el color del marcador de posición */
+  color: #b1b5a4;
 }
-
 
 .searchButton {
   background-color: #97a663;
@@ -74,8 +83,10 @@
 
   &:hover {
     background-color: #ddf391;
-    color:#97a663;
+    color: #97a663;
   }
 }
 
-.space{margin-left: 10px;}
+.space {
+  margin-left: 10px;
+}

@@ -38,7 +38,7 @@ export default function NavBar() {
     if (user) {
       return (
         <>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout}>Cerrar Seción</button>
           <span className={style.cartItemCount}>{user.name}</span>
           <Link to={`/profile/${user.id}`} className={style.link}>
             <img src={profile} alt="" className={style.cart} />
@@ -55,12 +55,11 @@ export default function NavBar() {
       );
     } else {
       return (
-        <div className={style.userSection}>
+        <div className={style.mainContainer}>
           <Link to="/login" className={style.text}>
             <Person className={style.person} />
            <p>Iniciar Sesión</p>
           </Link>
-          <div className={style.space}></div>
           <Link to="/signup" className={style.text}>
             <PersonAdd className={style.person} />
             <p>Registrarse</p>
@@ -71,7 +70,7 @@ export default function NavBar() {
   }
 
   return (
-    <>
+    <div className={style.mainContainer}>
       <Navbar className={style.container}>
         <Link to="/" className={style.logoLink}>
           <img src={logo_light} alt="" className={style.logoLight} />
@@ -103,6 +102,6 @@ export default function NavBar() {
         </Container>
         {drawUserSection()}
       </Navbar>
-    </>
+    </div>
   );
 }
