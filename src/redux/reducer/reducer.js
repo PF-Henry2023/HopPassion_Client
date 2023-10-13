@@ -1,9 +1,9 @@
-import { getLoggedInUser } from "./../../utils/UserUtils";
+// import { getLoggedInUser } from "./../../utils/UserUtils";
 import {
   emptyCart,
   mergeCart,
   setCart,
-  startSyncing
+  startSyncing,
 } from "../../utils/CartUtils";
 import {
   SIGNUP,
@@ -25,7 +25,8 @@ import {
   MERCADOPAGO,
   GET_USER_INFO,
   GET_USERS,
-  DELETE_PRODUCTS
+  DELETE_PRODUCTS,
+  GET_REVIEWS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -44,10 +45,16 @@ const initialState = {
   paymentStatus: null,
   userInfo: {},
   orderDetails: [],
+  reviewList: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_REVIEWS:
+      return {
+        ...state,
+        ReviewList: action.payload,
+      };
     case SIGNUP:
       return {
         ...state,
@@ -114,8 +121,8 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_PRODUCTS:
       return {
         ...state,
-        products:[]
-      }
+        products: [],
+      };
 
     case GET_NEXT_PRODUCT_PAGE: {
       const list = (state.products ? state.products.products : []).concat(
@@ -171,7 +178,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
-      
+
     default:
       return { ...state };
   }
