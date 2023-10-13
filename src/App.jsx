@@ -12,6 +12,7 @@ import CartSessionManager from "./components/CartSessionManager/CartSessionManag
 import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
+import AdminProfile from "./components/Admin/AdminProfile";
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/profile/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
         <Route
           path="/mercadoPago/process_payment/*"
           element={<PaymentGateway />}
