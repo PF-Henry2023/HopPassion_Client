@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById, getReviews } from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
-
+import Counter from "../Counter/Counter";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import ReviewList from "../ReviewList/ReviewList";
 
@@ -14,10 +14,10 @@ const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
-
   const quantities = useSelector((state) => state.cart.quantities);
   const [isLoading, setIsLoading] = useState(true);
-  const userId = localStorage.getItem("user");
+  const [newQuantity, setNewQuantity] = useState(1);
+  const idUser = localStorage.getItem("user");
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -25,7 +25,7 @@ const Details = () => {
       await dispatch(getProductById(id));
       setIsLoading(false);
     };
-    dispatch(getReviews(id, userId));
+    dispatch(getReviews(id, idUser));
     fetchProductDetails();
   }, [dispatch, id]);
 
@@ -64,26 +64,29 @@ const Details = () => {
                 <p className={styles.price}>$ {productDetails.price}</p>
                 <p className={styles.quantity}>Cantidad: </p>
 
-                {/* <Counter
+                <Counter
                   productId={productDetails.id}
-                  initialQuantity={initialQuantity}
-                  stock={maxQuantity}
-                  onQuantityChange={(newQuantity) => {
-                    // Manejo de cambio de cantidad aquí
+                  initialQuantity={1}
+                  stock={productDetails.stock}
+                  onQuantityChange={(nq) => {
+                    setNewQuantity(nq);
                   }}
-                /> */}
+                />
 
                 <p className={styles.quantity}>
-
-                  {productDetails.stock} unidades disponibles{" "}
+                  {productDetails.stock} unidades disponibles
                   {quantity() > 0
                     ? ", " + quantity() + " en el carrito."
                     : null}
                 </p>
-                <AddToCartButton
-                  productId={productDetails.id}
-                  stock={productDetails.stock}
-                />
+
+                <div className={styles.addToCartButtonContainer}>
+                  <AddToCartButton
+                    productId={productDetails.id}
+                    stock={productDetails.stock}
+                    quantity={newQuantity}
+                  />
+                </div>
 
                 <div className={styles.box}>
                   <div className={styles.firstrow}>

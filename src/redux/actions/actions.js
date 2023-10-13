@@ -28,7 +28,6 @@ import {
   UPDATE_USER,
   GET_REVIEWS,
 } from "./actions-type";
-import { Alert } from "react-bootstrap";
 
 export const getReviews = (idProd, idUsuario) => {
   return async function (dispatch) {
@@ -41,7 +40,6 @@ export const getReviews = (idProd, idUsuario) => {
         payload: response.data,
       });
     } catch (error) {
-      Alert(error.message);
       console.log(error.message);
     }
   };
@@ -56,7 +54,6 @@ export const getUsers = () => {
         payload: response.data,
       });
     } catch (error) {
-      Alert(error.message);
       console.log(error.message);
     }
   };

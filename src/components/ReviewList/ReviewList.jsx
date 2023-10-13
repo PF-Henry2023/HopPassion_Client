@@ -1,12 +1,9 @@
-// import Card from "react-bootstrap/Card";
-// import { Link } from "react-router-dom";
-// import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import style from "./ReviewList.module.css";
-import ReviewCard from "./ReviewCard/ReviewCard";
-import { useSelector } from "react-redux";
+// import ReviewCard from "./ReviewCard/ReviewCard";
+// import { useSelector } from "react-redux";
 
 const ReviewList = () => {
-  const rev = useSelector((state) => state.reviewList);
+  // const rev = useSelector((state) => state.reviewList);
   return (
     <div className={style.mainContainer}>
       <div name="title">Feedback From Our Customers</div>

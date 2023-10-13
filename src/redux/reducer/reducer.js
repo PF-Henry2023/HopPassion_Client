@@ -1,9 +1,9 @@
-import { getLoggedInUser } from "./../../utils/UserUtils";
+// import { getLoggedInUser } from "./../../utils/UserUtils";
 import {
   emptyCart,
   mergeCart,
   setCart,
-  startSyncing
+  startSyncing,
 } from "../../utils/CartUtils";
 import {
   SIGNUP,
@@ -26,7 +26,6 @@ import {
   GET_USER_INFO,
   GET_USERS,
   DELETE_PRODUCTS,
-  UPDATE_CART_TOTAL,
   GET_REVIEWS,
 } from "../actions/actions-type";
 
@@ -46,7 +45,7 @@ const initialState = {
   paymentStatus: null,
   userInfo: {},
   orderDetails: [],
-  reviewList: {},
+  reviewList: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -179,7 +178,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
-      
+
     default:
       return { ...state };
   }
