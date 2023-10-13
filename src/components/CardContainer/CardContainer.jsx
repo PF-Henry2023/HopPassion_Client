@@ -47,9 +47,8 @@ export default function CardContainer() {
   }
 
   return (
-    <div className={style.container}>
-      <div className={style.title}>Cervezas</div>
-      <div className={style.subtitle}>Selección de las mejores cervezas</div>
+   <>
+      <h2 className={style.subtitle}>Selección de las mejores cervezas</h2>
       <InfiniteScroll
         dataLength={products?.length}
         next={handleNextPage}
@@ -72,6 +71,6 @@ export default function CardContainer() {
           })}
         </div>
       </InfiniteScroll>
-    </div>
+      </>
   );
 }

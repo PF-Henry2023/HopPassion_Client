@@ -12,8 +12,8 @@ import Favorites from "../Favorites/Favorites";
  import logotype from "../../assets/logo_brand.png";
 // import { useState, useRef } from "react";
  import Carousel from "react-bootstrap/Carousel";
- import styles from "./Carousel.module.css";
  import { Link } from "react-router-dom";
+ import style from "./Home.module.css"
 
 const Home = () => {
   const ref = useRef(null);
@@ -34,20 +34,20 @@ const Home = () => {
       {/* <ControlledCarousel  /> */}
       <Carousel>
         <Carousel.Item>
-          <div className={styles.imageContainer}>
+          <div className={style.imageContainer}>
             <img
-              className={`d-block w-100 ${styles.image}`}
+              className={`d-block w-100 ${style.image}`}
               src={image1}
               alt="First slide"
             />
-            <div className={styles.overlay}>
-              <img src={logotype} alt="Logo" className={styles.logo} />
-              <p className={styles.description}>
+            <div className={style.overlay}>
+              <img src={logotype} alt="Logo" className={style.logo} />
+              <p className={style.description}>
                 Tu destino en línea para explorar y adquirir una amplia variedad
                 de cervezas artesanales y especialidades excepcionales.
               </p>
               <hr />
-              <button onClick={handleClick} className={styles.button}>
+              <button onClick={handleClick} className={style.button}>
                 Descubre Nuestras Cervezas
               </button>
             </div>
@@ -55,23 +55,23 @@ const Home = () => {
         </Carousel.Item>
 
         <Carousel.Item>
-          <div className={styles.imageContainer}>
+          <div className={style.imageContainer}>
             <img
-              className={`d-block w-100 ${styles.image}`}
+              className={`d-block w-100 ${style.image}`}
               src={image2}
               alt="First slide"
             />
-            <div className={styles.overlay}>
-              <img src={logotype} alt="Logo" className={styles.logo} />
-              <p className={styles.description}>
+            <div className={style.overlay}>
+              <img src={logotype} alt="Logo" className={style.logo} />
+              <p className={style.description}>
                 ¡Únete a nuestra comunidad cervecera
               </p>
-              <p className={styles.description}>
+              <p className={style.description}>
                 y descubre un mundo de sabores!
               </p>
               <hr />
-              <button className={styles.button}>Registrate</button>
-              <Link className={styles.link} to="/login">
+              <button className={style.button}>Registrate</button>
+              <Link className={style.link} to="/login">
                 {" "}
                 <h5>o Inicia seión</h5>
               </Link>
@@ -80,19 +80,19 @@ const Home = () => {
         </Carousel.Item>
 
         <Carousel.Item>
-          <div className={styles.imageContainer}>
+          <div className={style.imageContainer}>
             <img
-              className={`d-block w-100 ${styles.image}`}
+              className={`d-block w-100 ${style.image}`}
               src={image3}
               alt="First slide"
             />
-            <div className={styles.overlay}>
-              <img src={logotype} alt="Logo" className={styles.logo} />
-              <p className={styles.description}>
+            <div className={style.overlay}>
+              <img src={logotype} alt="Logo" className={style.logo} />
+              <p className={style.description}>
                 Descubre Nuestras Cervezas Destacadas
               </p>
               <hr />
-              <button className={styles.button}>Explorar Ahora</button>
+              <button className={style.button}>Explorar Ahora</button>
             </div>
           </div>
         </Carousel.Item>
@@ -100,8 +100,11 @@ const Home = () => {
 
       <Favorites />
       <Filters />
-      <CardContainer ref={ref} />
+      <div className={style.margin}>
+      <h1 className={style.title} ref={ref}>Cervezas</h1>
+      <CardContainer  />
       <Footer />
+      </div>
     </div>
   );
 };
