@@ -1,15 +1,3 @@
-.container {
-    background-color: #DDF391;
-    padding: 20px;
-}
-.title {
-    color: #6A7346;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 500;
-}
-.subtitle {
-    color: #6A7346; 
-    text-align: center;
-    font-size: 18px;
+.container{
+    margin: 40px;
 }

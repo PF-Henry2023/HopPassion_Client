@@ -1,76 +1,100 @@
-.container {
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  background-color: rgba(237, 242, 219, 1); 
+  color: #6a7346;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+}
+
+.logo {
+  margin-top: 10px;
+  width: 70%;
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.link {
+  margin-top: 5px;
+  font-size: 17pt; /* Tamaño de fuente de 17pt */
+  font-family: "Poppins", sans-serif; /* Fuente Poppins */
+  font-weight: 800; /* Peso de fuente medium (500) */
+  color: #97a663; /* Color del texto 97A663 */
+}
+
+.link:hover {
+  color: #6a7346;
+}
+
+.description {
+  margin: 0 20px;
+  font-size: 17pt;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: #6a7346;
+}
+
+.button {
+  background-color: #97a663;
+  color: #edf2db;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #6a7346;
+}
+
+.featuredProductsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #ddf391; /* Puedes establecer el color de fondo aquí */
   padding: 20px;
 }
-.title {
+
+.titleFeaturedProducts {
+  font-size: 30px;
+  font-weight: 500;
+  color: #6a7346;
+  margin: 10px;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: #6a7346;
+  /* Elimina el margen superior por defecto */
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%; /* Ajusta la altura según tus requisitos */
+  overflow: hidden;
+}
+
+.marginTwo {
+  margin-top: 40px;
+}
+
+.titleAllProducts {
   color: #6a7346;
   text-align: center;
   font-size: 40px;
   font-weight: 500;
 }
-.imageContainer {
-    position: relative;
-    width: 100%;/* Ajusta la altura según tus requisitos */
-    overflow: hidden;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: rgba(237, 242, 219, 0.9); /* 20% de transparencia */
-    color: #6A7346;
-    border-radius: 4px;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .logo {
-    width: 70%; 
-    max-width: 200px;
-    margin-bottom: 20px;
-  }
-
-  .link {
-    font-size: 17pt; /* Tamaño de fuente de 17pt */
-    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
-    font-weight: 800; /* Peso de fuente medium (500) */
-    color: #97A663; /* Color del texto 97A663 */
-  }
-  .link:hover {
-    color: #6A7346;
-  }
-  
-  .description {
-    margin: 0 20px;
-    font-size: 17pt; 
-    font-family: 'Poppins', sans-serif; 
-    font-weight: 500; 
-    color: #6A7346; 
-  }
-  
-  .button {
-    background-color: #97A663;
-    color: #EDF2DB;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .button:hover {
-    background-color: #6A7346;
-  }
-  
-  .margin{
-    margin-top: 40px;
-  }

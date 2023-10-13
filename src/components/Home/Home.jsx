@@ -3,30 +3,32 @@ import Navbar from "../Navbar/Navbar";
 import CardContainer from "../CardContainer/CardContainer";
 import Footer from "../Footer/Footer";
 import Filters from "../Filters/Filters";
-// import ControlledCarousel from "../Carousel/Carousel";
-import React, { forwardRef, useState, useRef } from "react";
+import React, { forwardRef, useRef } from "react";
 import Favorites from "../Favorites/Favorites";
- import image1 from "../../assets/image1.png";
- import image2 from "../../assets/image2.jpg";
- import image3 from "../../assets/image3.jpg";
- import logotype from "../../assets/logo_brand.png";
-// import { useState, useRef } from "react";
- import Carousel from "react-bootstrap/Carousel";
- import { Link } from "react-router-dom";
- import style from "./Home.module.css"
+import image1 from "../../assets/image1.png";
+import image2 from "../../assets/image2.jpg";
+import image3 from "../../assets/image3.jpg";
+import logotype from "../../assets/logo_brand.png";
+import Carousel from "react-bootstrap/Carousel";
+import { Link, useNavigate } from "react-router-dom";
+import style from "./Home.module.css";
 
 const Home = () => {
-  const ref = useRef(null);
+  const navigate = useNavigate();
+  const refAllProducts = useRef(null);
+  const refFeaturedProducts = useRef(null);
 
-  const handleClick = () => {
-    ref.current.scrollIntoView({ behavior: "smooth" });
+  const handleNavigate = () => {
+    navigate("/signup");
   };
 
-  // const scrollToRef = () => {
-  //   if (ref.current) {
-  //     ref.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
+  const handleScrollToAllProducts = () => {
+    refAllProducts.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleScrollToFeaturedProducts = () => {
+    refFeaturedProducts.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div>
@@ -47,7 +49,10 @@ const Home = () => {
                 de cervezas artesanales y especialidades excepcionales.
               </p>
               <hr />
-              <button onClick={handleClick} className={style.button}>
+              <button
+                onClick={handleScrollToAllProducts}
+                className={style.button}
+              >
                 Descubre Nuestras Cervezas
               </button>
             </div>
@@ -70,7 +75,9 @@ const Home = () => {
                 y descubre un mundo de sabores!
               </p>
               <hr />
-              <button className={style.button}>Registrate</button>
+              <button onClick={handleNavigate} className={style.button}>
+                Registrate
+              </button>
               <Link className={style.link} to="/login">
                 {" "}
                 <h5>o Inicia seión</h5>
@@ -97,13 +104,23 @@ const Home = () => {
           </div>
         </Carousel.Item>
       </Carousel>
+      <div className={style.featuredProductsContainer}>
+        <div className={style.marginOne}>
+          <h1 className={style.titleFeaturedProducts} ref={refFeaturedProducts}>
+            Tentate con nuestros productos destacados
+          </h1>
+          <h2 className={style.subtitle}>Éstas son las favoritas</h2>
+        </div>
+        <Favorites className={style.favoritesContainer} />
+      </div>
 
-      <Favorites />
       <Filters />
-      <div className={style.margin}>
-      <h1 className={style.title} ref={ref}>Cervezas</h1>
-      <CardContainer  />
-      <Footer />
+      <div className={style.marginTwo}>
+        <h1 className={style.titleAllProducts} ref={refAllProducts}>
+          Cervezas
+        </h1>
+        <CardContainer />
+        <Footer />
       </div>
     </div>
   );
