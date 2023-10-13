@@ -32,8 +32,14 @@ export default function Login() {
     if (user == null) {
       return;
     }
-    navigate("/");
-  }, [user]);
+    if (user.role === "admin") {
+      navigate(`/adminprofile/${user.id}`);
+    } else if(user.role === "user") {
+      navigate("/");
+    } else {
+      alert("Usuario NO autorizado");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     gapi.load("client:auth2", () => {
