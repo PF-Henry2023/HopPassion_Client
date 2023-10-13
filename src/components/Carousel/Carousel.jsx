@@ -2,20 +2,20 @@ import image1 from "../../assets/image1.png";
 import image2 from "../../assets/image2.jpg";
 import image3 from "../../assets/image3.jpg";
 import logotype from "../../assets/logo_brand.png";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import styles from "./ControlledCarousel.module.css";
+import styles from "./Carousel.module.css";
 import { Link } from "react-router-dom";
 
 function ControlledCarousel() {
-  const [index, setIndex] = useState(0);
+  const ref = useRef(null);
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
+  const handleClick = () => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel >
       <Carousel.Item>
         <div className={styles.imageContainer}>
           <img
@@ -30,7 +30,7 @@ function ControlledCarousel() {
               de cervezas artesanales y especialidades excepcionales.
             </p>
             <hr />
-            <button className={styles.button}>
+            <button onClick={handleClick} ref={ref} className={styles.button}>
               Descubre Nuestras Cervezas
             </button>
           </div>
@@ -54,7 +54,7 @@ function ControlledCarousel() {
             </p>
             <hr />
             <button className={styles.button}>Registrate</button>
-            <Link className={styles.link }to="/login">
+            <Link className={styles.link} to="/login">
               {" "}
               <h5>o Inicia seión</h5>
             </Link>

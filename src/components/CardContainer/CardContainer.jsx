@@ -9,9 +9,15 @@ import { createSelector } from "reselect";
 
 export default function CardContainer() {
   const dispatch = useDispatch();
-  const products = useSelector((state) =>
-    state.products ? state.products.products : []
-  );
+
+  const selectProducts = (state) =>
+    state.products ? state.products.products : [];
+
+  const getMemoizedProducts = createSelector([selectProducts], (products) => {
+    return products;
+  });
+
+  const products = useSelector(getMemoizedProducts);
 
   // Define el selector base sin memoización
   const selectPage = (state) =>
