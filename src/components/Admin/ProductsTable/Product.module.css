@@ -1,0 +1,16 @@
+.product{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttonEdit {
+    background-color: #97A663;
+}
+
+.buttonDes {
+    background-color: rgb(206, 126, 126);
+}
