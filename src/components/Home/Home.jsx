@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import Filters from "../Filters/Filters";
 import React, { forwardRef, useRef } from "react";
 import Favorites from "../Favorites/Favorites";
-import image1 from "../../assets/image1.png";
+import image1 from "../../assets/image1.jpg";
 import image2 from "../../assets/image2.jpg";
 import image3 from "../../assets/image3.jpg";
 import logotype from "../../assets/logo_brand.png";
@@ -164,7 +164,7 @@ const Home = () => {
           </Carousel.Item>
         </Carousel>
       )}
-      
+
       <div className={style.featuredProductsContainer}>
         <div className={style.marginOne}>
           <h1 className={style.titleFeaturedProducts} ref={refFeaturedProducts}>
@@ -173,13 +173,11 @@ const Home = () => {
           <h2 className={style.subtitle}>Éstas son las favoritas</h2>
         </div>
         <Favorites className={style.favoritesContainer} />
+        <div ref={refAllProducts}></div>
       </div>
-
       <Filters />
       <div className={style.marginTwo}>
-        <h1 className={style.titleAllProducts} ref={refAllProducts}>
-          Cervezas
-        </h1>
+        <h1 className={style.titleAllProducts}>Cervezas</h1>
         <CardContainer />
         <Footer />
       </div>
