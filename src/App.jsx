@@ -33,7 +33,7 @@ function App() {
         <Route
           path="/mercadoPago/process_payment/*"
           element={<PaymentGateway />}
-        ></Route>
+        />
         <Route path="/status/:payment_id" element={<PaymentStatus />}></Route>
       </Routes>
     </div>

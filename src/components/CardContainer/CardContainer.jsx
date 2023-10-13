@@ -9,9 +9,15 @@ import { createSelector } from "reselect";
 
 export default function CardContainer() {
   const dispatch = useDispatch();
-  const products = useSelector((state) =>
-    state.products ? state.products.products : []
-  );
+
+  const selectProducts = (state) =>
+    state.products ? state.products.products : [];
+
+  const getMemoizedProducts = createSelector([selectProducts], (products) => {
+    return products;
+  });
+
+  const products = useSelector(getMemoizedProducts);
 
   // Define el selector base sin memoización
   const selectPage = (state) =>
@@ -41,9 +47,8 @@ export default function CardContainer() {
   }
 
   return (
-    <div className={style.container}>
-      <div className={style.title}>Cervezas</div>
-      <div className={style.subtitle}>Selección de las mejores cervezas</div>
+   <>
+      <h2 className={style.subtitle}>Selección de las mejores cervezas</h2>
       <InfiniteScroll
         dataLength={products?.length}
         next={handleNextPage}
@@ -66,6 +71,6 @@ export default function CardContainer() {
           })}
         </div>
       </InfiniteScroll>
-    </div>
+      </>
   );
 }
