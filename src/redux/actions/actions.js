@@ -26,40 +26,20 @@ import {
   GET_CART_REQUEST,
   GET_USER_INFO,
   UPDATE_USER,
-  GET_REVIEWS,
 } from "./actions-type";
-import { Alert } from "react-bootstrap";
-
-export const getReviews = (idProd, idUsuario) => {
-  return async function (dispatch) {
-    try {
-      const response = await HopPassionClient.get(
-        `/review/list?idProd=${idProd}&idUsuario=${idUsuario}`
-      );
-      return dispatch({
-        type: GET_REVIEWS,
-        payload: response.data,
-      });
-    } catch (error) {
-      Alert(error.message);
-      console.log(error.message);
-    }
-  };
-};
 
 export const getUsers = () => {
-  return async function (dispatch) {
-    try {
+  try {
+    return async function (dispatch) {
       const response = await HopPassionClient.get(`/users/allUsers`);
       return dispatch({
         type: GET_USERS,
         payload: response.data,
       });
-    } catch (error) {
-      Alert(error.message);
-      console.log(error.message);
-    }
-  };
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const signup = ({ name, lastName, address, email, phone, password }) => {
@@ -207,7 +187,7 @@ export const createProduct = ({
 }) => {
   return async function (dispatch) {
     try {
-      await HopPassionClient.post("/product/create", {
+      const response = await HopPassionClient.post("/product/create", {
         name,
         image,
         description,
@@ -231,7 +211,7 @@ export const getCart = () => {
   return async (dispatch) => {
     try {
       const response = await HopPassionClient.get("/cart");
-      console.log(response);
+      console.log(response)
       dispatch({ type: GET_CART, payload: response.data });
     } catch (error) {
       console.log(error.message);
