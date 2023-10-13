@@ -1,10 +1,9 @@
-/* Navbar.module.css */
-
 .mainContainer {
   background-color: #97a663;
   display: flex;
   padding: 0 20px;
   justify-content: center;
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
@@ -34,11 +33,11 @@
   align-items: center;
   text-decoration: none;
   color: #edf2db;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12pt;
   margin-right: 30px;
   white-space: nowrap;
-  margin-top: 35px;
+  margin-top: 39px;
   &:hover {
     color: #ddf391;
   }
@@ -64,8 +63,8 @@
   color: #edf2db;
   font-weight: 400;
   font-size: 20pt;
-  margin-right: 5px;
-  margin-bottom: 15px;
+  margin-right: 8px;
+  margin-bottom: 19px;
   &:hover {
     color: #ddf391;
   }
@@ -92,7 +91,7 @@
   color: #edf2db;
   border-radius: 4px;
   padding: 6px 20px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14pt;
   transition: background-color 0.3s;
 
