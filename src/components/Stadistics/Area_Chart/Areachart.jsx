@@ -14,7 +14,7 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 
 function AreaChart() {
-  const [ info, setInfo ] = useState([]);
+  const [info, setInfo] = useState([]);
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -25,7 +25,7 @@ function AreaChart() {
     Filler,
     Legend
   );
-  
+
   const options = {
     responsive: true,
     plugins: {
@@ -34,11 +34,11 @@ function AreaChart() {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "",
       },
     },
   };
-  
+
   const labels = [
     "Enero",
     "Febrero",
@@ -55,13 +55,16 @@ function AreaChart() {
   ];
 
   useEffect(() => {
-    axios.get("http://localhost:3001/stadistics/monthlyIncomeForTheYear?type=amount")
+    axios
+      .get(
+        "http://localhost:3001/stadistics/monthlyIncomeForTheYear?type=amount"
+      )
       .then((response) => {
-        setInfo(response.data.data)
+        setInfo(response.data.data);
       })
-      .catch((error) => console.log(error))
-  },[])
-  
+      .catch((error) => console.log(error));
+  }, []);
+
   const data = {
     labels,
     datasets: [

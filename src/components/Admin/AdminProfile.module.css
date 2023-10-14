@@ -1,25 +1,19 @@
 /* Estilos para el contenedor principal */
-.mainContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px; /* Espacio entre las columnas */
-  }
   
   /* Estilos para la columna izquierda */
   .leftContent {
-    margin: 60px;
-    padding: 20px;
+    margin: 50px;
+    padding: 10px;
   }
   
   .rightContent {
+    width: 60vw;
     margin: 60px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
     background-color: white;
-    width: 617px; /* Ancho deseado */
-    height: 442px; /* Alto deseado */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
   }
   
@@ -28,6 +22,10 @@
     display: grid;
     grid-template-columns: auto auto;
     gap: 10px;
+  }
+
+  .area_chart {
+    margin: 35px;
   }
   
 .editButton {
@@ -40,4 +38,27 @@
   font-weight: 500;
   font-size: 20px;
   border-radius: 4px;
+}
+
+.cards_stadistics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.productstop {
+  
+  background-color: #97a663;
+}
+
+.container_grap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
 }
