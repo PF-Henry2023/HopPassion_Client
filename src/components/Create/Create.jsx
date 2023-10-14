@@ -8,10 +8,7 @@ import { getCategories, createProduct } from "../../redux/actions/actions";
 import CountryList from "react-select-country-list";
 import Select from "react-select";
 import Swal from "sweetalert2";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 import axios from "axios";
-import Return from "../Return/Return";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -138,7 +135,6 @@ const Create = () => {
 
   return (
     <div className={style.container}>
-      <Navbar />
       <div className={style.formcontainer}>
         <h3>Agregar nuevo producto</h3>
         <Form onSubmit={handleSubmit}>
@@ -281,8 +277,6 @@ const Create = () => {
           </Button>
         </Form>
       </div>
-
-      <Footer />
     </div>
   );
 };

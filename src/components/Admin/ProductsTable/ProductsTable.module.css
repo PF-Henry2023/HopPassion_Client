@@ -1,0 +1,41 @@
+.contpagination{
+    display: flex;
+    background-color: #97A663;
+    color: #EDF2DB;
+    padding: 10px 10px;
+    position: relative;
+}
+.barraDatos {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+.pagination {
+    display: flex;
+    width: 300px;
+    position: absolute;
+    right: 0;
+}
+.pagination button{
+    color: #EDF2DB;
+    background-color: #97A663;
+    border: none;
+}
+.gridContainer {
+    margin-top: 20px;
+}
+.gridContainer ul{
+    list-style-type: none;
+}
+.pageNumbers{
+    display: flex;
+    gap: 4px;
+}
+.pageNumbers div {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.pageNumbers div.activePage {
+    background-color: #DDF391; /* Cambia el color de fondo para resaltar el número actual */
+    color: #B1B5A4; /* Cambia el color del texto para resaltar el número actual */
+  }
