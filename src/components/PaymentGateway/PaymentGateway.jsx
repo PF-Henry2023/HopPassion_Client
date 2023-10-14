@@ -6,6 +6,8 @@ import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
 import styles from "./PaymentGateway.module.css"
 import { getCart, getCartRequest } from "../../redux/actions/actions";
+import HopPassionClient from "../../utils/NetworkingUtils";
+import { useNavigate } from "react-router-dom";
 
 initMercadoPago("TEST-d6e941ef-25e7-4238-99b1-6225487dd3b5");
 
@@ -13,7 +15,10 @@ const CardPaymentWrapper = memo((props) => {
   return <CardPayment
     locale="es-AR"
     initialization={{
-      amount: props.total
+      amount: props.total,
+      payer: {
+        email: props.payerEmail
+      }
     }}
     customization={{
       visual: {
@@ -33,7 +38,9 @@ const CardPaymentWrapper = memo((props) => {
 
 const PaymentGateway = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
+  const user = useSelector((state) => state.user)
   const syncing = useSelector((state) => state.cart.syncing);
   const cart = useSelector((state) => state.cart);
 
@@ -52,6 +59,7 @@ const PaymentGateway = () => {
         <div>
           <CardPaymentWrapper
             total={cart.total}
+            payerEmail={user.email}
             onReady={onReady}
             onError={onError}
           />
@@ -73,14 +81,14 @@ const PaymentGateway = () => {
     setIsMPReady(true)
   }
 
-  function handlePayButton() {
-    window.cardPaymentBrickController.getFormData()
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log(error)
-      });
+  async function handlePayButton() {
+    try {
+      const data = await window.cardPaymentBrickController.getFormData()
+      const response = await HopPassionClient.post("/pay/process_payment", data);
+      navigate('/payment/result?payment_id=' + response.data.payment_id);
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   return (
