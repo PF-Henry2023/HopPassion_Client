@@ -10,7 +10,7 @@ import { getCart, getCartRequest } from "../../redux/actions/actions";
 import HopPassionClient from "../../utils/NetworkingUtils";
 import { useNavigate } from "react-router-dom";
 
-initMercadoPago("TEST-d6e941ef-25e7-4238-99b1-6225487dd3b5");
+initMercadoPago("TEST-f3d5c7f4-e6c2-4b81-a665-275a86d19bfd");
 
 const CardPaymentWrapper = memo((props) => {
   return <CardPayment
