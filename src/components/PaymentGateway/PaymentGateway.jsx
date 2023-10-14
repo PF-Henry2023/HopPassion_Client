@@ -1,12 +1,13 @@
-import { memo, useState } from "react";
-import { useSelector } from "react-redux";
+import { memo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
 import styles from "./PaymentGateway.module.css"
+import { getCart, getCartRequest } from "../../redux/actions/actions";
 
-initMercadoPago("TEST-806f20f0-c9b7-4160-a09c-60b784d4852d");
+initMercadoPago("TEST-d6e941ef-25e7-4238-99b1-6225487dd3b5");
 
 const CardPaymentWrapper = memo((props) => {
   return <CardPayment
@@ -17,6 +18,9 @@ const CardPaymentWrapper = memo((props) => {
     customization={{
       visual: {
         hidePaymentButton: true
+      },
+      paymentMethods: {
+        maxInstallments: 1
       }
     }}
     onReady={props.onReady}
@@ -28,39 +32,17 @@ const CardPaymentWrapper = memo((props) => {
 })
 
 const PaymentGateway = () => {
+  const dispatch = useDispatch()
+
   const syncing = useSelector((state) => state.cart.syncing);
   const cart = useSelector((state) => state.cart);
 
   const [ isMPReady, setIsMPReady ] = useState(false)
 
-  const onSubmit = async ({ selectedPaymentMethod, formData }) => {
-    // callback llamado al hacer clic en el botón enviar datos
-    /*return new Promise((resolve, reject) => {
-      fetch(
-        "https://hoppassionserver-production.up.railway.app/mercadoPago/process_payment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setPaymentId(response.payment_id);
-          // Utiliza la función de devolución de llamada para realizar acciones después de la actualización del estado.
-          setPaymentId((prevPaymentId) => {
-            navigate(`/status/${prevPaymentId}`);
-            resolve();
-          });
-        })
-        .catch((error) => {
-          reject();
-        });
-    });*/
-  };
+  useEffect(() => {
+    dispatch(getCartRequest());
+    dispatch(getCart());
+  }, []);
 
   function drawPaymentComponent() {
     if (syncing || !cart.total) {
@@ -71,10 +53,13 @@ const PaymentGateway = () => {
           <CardPaymentWrapper
             total={cart.total}
             onReady={onReady}
-            onSubmit={onSubmit}
             onError={onError}
           />
-          { isMPReady ? <button className={styles.payButton}>Pagar ${cart.total}</button> : <></> }
+          { isMPReady 
+          ? <button className={styles.payButton} onClick={handlePayButton}>
+              Pagar ${cart.total}
+            </button> 
+          : <></> }
         </div>
       )
     }
@@ -86,6 +71,16 @@ const PaymentGateway = () => {
 
   const onReady = async () => {
     setIsMPReady(true)
+  }
+
+  function handlePayButton() {
+    window.cardPaymentBrickController.getFormData()
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   return (
