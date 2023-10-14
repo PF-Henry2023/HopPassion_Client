@@ -35,6 +35,7 @@ export default function StatusPayment(props) {
 
   return (
     <StatusScreen
+      locale="es-AR"
       initialization={initialization}
       onReady={onReady}
       onError={onError}

@@ -4,6 +4,7 @@ import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
+import Spinner from 'react-bootstrap/Spinner';
 import styles from "./PaymentGateway.module.css"
 import { getCart, getCartRequest } from "../../redux/actions/actions";
 import HopPassionClient from "../../utils/NetworkingUtils";
@@ -36,6 +37,22 @@ const CardPaymentWrapper = memo((props) => {
   return prev.total == next.total
 })
 
+const MPPayButton = ({total, loading, handlePayButton}) => {
+  return <>
+    <button className={styles.payButton} onClick={handlePayButton} disabled={loading}>
+        {
+          loading ? (
+            <Spinner animation="border" role="status" className={styles.loading}>
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <div style={{margin: '0 auto'}}>Pagar ${total}</div>
+          )
+        }
+    </button>
+  </>
+}
+
 const PaymentGateway = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -45,6 +62,7 @@ const PaymentGateway = () => {
   const cart = useSelector((state) => state.cart);
 
   const [ isMPReady, setIsMPReady ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   useEffect(() => {
     dispatch(getCartRequest());
@@ -64,9 +82,7 @@ const PaymentGateway = () => {
             onError={onError}
           />
           { isMPReady 
-          ? <button className={styles.payButton} onClick={handlePayButton}>
-              Pagar ${cart.total}
-            </button> 
+          ? <MPPayButton total={cart.total} loading={isLoading} handlePayButton={handlePayButton} />
           : <></> }
         </div>
       )
@@ -82,11 +98,14 @@ const PaymentGateway = () => {
   }
 
   async function handlePayButton() {
+    setIsLoading(true)
     try {
       const data = await window.cardPaymentBrickController.getFormData()
       const response = await HopPassionClient.post("/pay/process_payment", data);
       navigate('/payment/result?payment_id=' + response.data.payment_id);
+      setIsLoading(false)
     } catch(error) {
+      setIsLoading(false)
       console.log(error)
     }
   }
