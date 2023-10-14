@@ -6,7 +6,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfo, createProduct } from "../../redux/actions/actions";
-// import Create from "../Create/Create";
+import Create from "../Create/Create";
+import ProductsTable from "./ProductsTable/ProductsTable";
 
 
 const AdminProfile = () => {
@@ -23,7 +24,7 @@ const AdminProfile = () => {
         name: "",
         lastName: "",
         email: "",
-        phone: "",
+        phone: "",  
         address: "",
         city: "",
         country: "",
@@ -131,30 +132,12 @@ const AdminProfile = () => {
                     </div>
                     <div className={styles.rightContent}>
                         {activeOption === "Estadisticas" && <h1>Estadísticas</h1>}
-                        {activeOption === "Crear Producto" && <h1>Crear Producto</h1>}
-                        {activeOption === "Productos" && <h1>Productos</h1>}
+                        {activeOption === "Crear Producto" && <Create/>}
+                        {activeOption === "Productos" && <ProductsTable/>}
                         {activeOption === "Usuarios" && <h1>Usuarios</h1>}
                         {activeOption === "Reseñas" && <h1>Reseñas</h1>}
                         {activeOption === "Contraseña" && <h1>Contraseña</h1>}
 
-                        {activeOption === "Crear Producto" && 
-                            (editing ? (
-                                <form onSubmit={handleSubmitProduct} className={styles.updateForm}>
-                                    <div className={styles.rowContainer}>
-                                        <div>
-                                            <label>Nombre:</label>
-                                            <input 
-                                                type="text"
-                                                name="name"
-                                                value={productData.name}/>
-                                        </div>
-                                    </div>
-                                </form>
-                            ):(
-                                <>
-                                </>
-                            ))
-                        }
                     </div>
                 </div>
             )}
