@@ -12,7 +12,8 @@ import Col from "react-bootstrap/Col";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/card";
-// import Create from "../Create/Create";
+import Create from "../Create/Create";
+import ProductsTable from "./ProductsTable/ProductsTable";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,7 @@ const AdminProfile = () => {
     name: "",
     lastName: "",
     email: "",
-    phone: "",
+    phone: "",  
     address: "",
     city: "",
     country: "",
@@ -95,7 +96,7 @@ const AdminProfile = () => {
       {isLoading ? (
         <p className={styles.loading}>Cargando...</p>
       ) : (
-        <Container className="mx-auto">
+        <Container >
           <Container className="mainContainer">
             <Row className="mainRow">
               <Col
@@ -196,26 +197,18 @@ const AdminProfile = () => {
                       <Container>
                         <Row>
                           <Col className="d-flex justify-content-center align-items-center">
-                            <div className="shadow m-3">
-                              <CardTotalAmount />
-                            </div>
+                              <CardTotalAmount />              
                           </Col>
                           <Col className="d-flex justify-content-center align-items-center">
-                            <div className="shadow m-3">
                               <MyDoughnut />
-                            </div>
                           </Col>
                         </Row>
                         <Row>
                           <Col className="d-flex justify-content-center align-items-center">
-                            <div className="shadow m-3">
                               <AreaChart />
-                            </div>
                           </Col>
                           <Col className="d-flex justify-content-center align-items-center">
-                            <div className="shadow m-3">
                               <AreaChart />
-                            </div>
                           </Col>
                         </Row>
                       </Container>

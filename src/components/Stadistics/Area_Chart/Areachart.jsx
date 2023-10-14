@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import "./AreaChart.css";
 
 function AreaChart() {
   const [info, setInfo] = useState([]);

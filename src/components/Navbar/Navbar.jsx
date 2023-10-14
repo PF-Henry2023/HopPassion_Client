@@ -1,5 +1,5 @@
 import style from "./Navbar.module.css";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,6 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Person,
+  PersonPlus,
+  PersonGear,
+  PersonSlash,
+  Cart,
+} from "react-bootstrap-icons";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -18,7 +25,6 @@ export default function NavBar() {
   const user = useSelector((state) => state.user);
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
-  
 
   const [input, setInput] = useState(null);
 
@@ -31,38 +37,52 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    dispatch(logout(() => navigate("/"))); 
+    dispatch(logout(() => navigate("/")));
   };
 
   function drawUserSection() {
     if (user) {
       return (
         <>
-          <button onClick={handleLogout}>Logout</button>
-          <span className={style.cartItemCount}>{user.name} </span>
-          <Link to={`/profile/${user.id}`} className={style.link}>
-            <img src={profile} alt="" className={style.cart} />
+          <Link to="/cart" className={style.text}>
+            <Cart className={style.icon} />
+            <p>
+              {cart.products && cart.products.length !== 0
+                ? cart.products.length
+                : null}
+            </p>
           </Link>
-          <span className={style.cartItemCount}>
-            {cart.products && cart.products.length != 0 ? cart.products.length : null}{" "}
-          </span>
-          <Link to={"/cart"} className={style.link}>
-            <img src={cartIcon} alt="" className={style.profile} />
+
+          <Link to={`/profile/${user.id}`} className={style.text}>
+            <PersonGear className={style.icon} />
+            <p>{user.name}</p>
+          </Link>
+
+          {/* <button onClick={handleLogout}>Cerrar Seción</button> */}
+          <Link onClick={handleLogout} className={style.text}>
+            <PersonSlash className={style.icon} />
+            <p>Cerrar sesión</p>
           </Link>
         </>
       );
     } else {
       return (
-        <>
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/signup"}>Signup</Link>
-        </>
+        <div className={style.mainContainer}>
+          <Link to="/login" className={style.text}>
+            <Person className={style.icon} />
+            <p>Iniciar Sesión</p>
+          </Link>
+          <Link to="/signup" className={style.text}>
+            <PersonPlus className={style.icon} />
+            <p>Registrarse</p>
+          </Link>
+        </div>
       );
     }
   }
 
   return (
-    <>
+    <div className={style.mainContainer}>
       <Navbar className={style.container}>
         <Link to="/" className={style.logoLink}>
           <img src={logo_light} alt="" className={style.logoLight} />
@@ -94,6 +114,6 @@ export default function NavBar() {
         </Container>
         {drawUserSection()}
       </Navbar>
-    </>
+    </div>
   );
 }
