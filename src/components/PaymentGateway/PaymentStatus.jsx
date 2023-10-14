@@ -16,7 +16,7 @@ export default function StatusPayment(props) {
 
   useEffect(() => {
     if (navigateToHome) {
-      navigate('/profile/' + user.id);
+      navigate(`/profile/${user.id}?tab=orders`);
     }
   }, [navigateToHome]);
 

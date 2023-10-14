@@ -315,14 +315,10 @@ export const loginOauth = (userCredentials, handleLoginError) => {
   };
 };
 
-export const getUserInfo = (id, token, navigate) => {
+export const getUserInfo = (id) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.get(`/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await HopPassionClient.get(`/users/${id}`);
       if (response.status === 200) {
         const userData = {
           name: response.data.name || "",
@@ -342,10 +338,6 @@ export const getUserInfo = (id, token, navigate) => {
         });
 
         return userData;
-      } else if (response.status === 401) {
-        navigate("/login");
-      } else if (response.status === 403) {
-        navigate(`/profile/${id}`);
       }
     } catch (error) {
       console.error("Error al obtener los datos del usuario", error);
