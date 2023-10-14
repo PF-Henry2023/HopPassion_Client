@@ -12,6 +12,7 @@ export default function StatusPayment(props) {
   };
   const id = window.localStorage.getItem("id");
   useEffect(() => {
+    console.log(payment_id)
     if (navigateToHome) {
       navigate(`/profile/${id}`);
     }
@@ -25,9 +26,9 @@ export default function StatusPayment(props) {
   };
   const onReady = async () => {
     console.log("Pago exitoso");
-    setTimeout(() => {
-      setNavigateToHome(true);
-    }, 3000);
+    // setTimeout(() => {
+    //   setNavigateToHome(true);
+    // }, 3000);
   };
 
   return (

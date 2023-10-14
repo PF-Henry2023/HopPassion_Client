@@ -40,7 +40,7 @@ export function emptyCart() {
     }
 }
 
-export function totalQuantities (quantities) {
+export function totalQuantities(quantities) {
     let total = 0
     for (const key in quantities) {
         total = total + quantities[key] 

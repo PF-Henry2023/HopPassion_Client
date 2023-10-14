@@ -4,7 +4,7 @@ const MercadoPagoComponent = (props) => {
   const { total } = props;
   return (
     <>
-      <div data-tooltip={`Price:-$${total}`} className="button">
+      <div data-tooltip={`Price: $${total}`} className="button">
         <div className="button-wrapper">
           <div className="text">
             <img

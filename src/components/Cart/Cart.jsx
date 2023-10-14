@@ -126,7 +126,7 @@ const Cart = () => {
               <div>$ {cart.total}</div>
             </div>
             <div className={styles.buttons}>
-            <Link to="/mercadoPago/process_payment/*">
+            <Link to="/process_payment">
               <MercadoPagoComponent total={cart.total}
               />
             </Link>
