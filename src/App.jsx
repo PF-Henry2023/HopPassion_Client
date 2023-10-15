@@ -1,5 +1,6 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { setNavigate } from "./utils/NavigationUtils"
 import Home from "./components/Home/Home";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
@@ -13,9 +14,16 @@ import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
+import { useEffect } from "react";
 
 function App() {
   
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setNavigate(navigate)
+  }, [])
+
   return (
     <div className="app">
       <Alert18 />
