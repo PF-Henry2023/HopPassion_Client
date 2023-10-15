@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import axios from "axios";
 import "./Doughnut.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotalUsers } from "../../../redux/actions/actions";
-
+import axios from "axios";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MyDoughnut() {
-  const dispatch = useDispatch();
-  const dataUsers = useSelector((state) => state.totalUsers);
+  const [donut, setDonut] = useState();
 
   useEffect(() => {
-    dispatch(getTotalUsers());
-  }, []);
-
+    const getInfoChart = async () => {
+      try {
+        const donutChart = await axios.get(
+          "https://hoppassion-server.1.ie-1.fl0.io/stadistics/totalUsers"
+        )
+        setDonut(donutChart.data.data);
+      } catch (error) {
+        throw error
+      }
+    }
+    getInfoChart();
+  },[])
+  
+  console.log("donut", donut);
   const doughnutOptions = {
     cutout: 38,
     plugins: {
@@ -34,7 +41,7 @@ function MyDoughnut() {
     datasets: [
       {
         label: "# de Usuarios",
-        data: [1, 10],
+        data: [donut?.desactive, donut?.active],
         backgroundColor: ["rgba(236, 112, 99 )", "rgba(88, 214, 141)"],
         borderColor: ["rgba(236, 112, 99 )", "rgba(88, 214, 141)"],
         borderWidth: 1,
@@ -50,7 +57,7 @@ function MyDoughnut() {
             alt=""
           />
           <span>Usuarios totales</span>
-          <span className="totalUsers">{"50"}</span>
+          <span className="totalUsers">{donut?.totalUsers}</span>
         </div>
         <div className="dona">
           <Doughnut data={data} options={doughnutOptions} />
