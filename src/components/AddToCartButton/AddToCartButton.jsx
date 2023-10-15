@@ -21,7 +21,19 @@ const AddToCartButton = ({ productId, stock, quantity = 1 }) => {
 
   const handleAddToCart = () => {
     if (user == null) {
-      navigate("/login");
+      Swal.fire({
+        title: "No estas logueado!",
+        text: "Para continuar con la compra debes crearte una cuenta o loguearte",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, loguearme!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
     } else {
       setIsAdding(true);
       dispatch(
