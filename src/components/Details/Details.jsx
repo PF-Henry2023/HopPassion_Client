@@ -125,7 +125,7 @@ const Details = () => {
           )}
         </div>
       </div>
-      <ReviewList />
+      <ReviewList isLoading={isLoading} />
       <Footer />
     </div>
   );
