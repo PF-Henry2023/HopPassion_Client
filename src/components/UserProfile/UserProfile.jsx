@@ -144,6 +144,7 @@ const UserProfile = () => {
       ) : (
         <div className={styles.mainContainer}>
           <div className={styles.leftContent}>
+            <div className={styles.menu}>
             <p>Hola,</p>
 
             <h2>
@@ -155,7 +156,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Perfil" ? "active" : ""
+                    activeOption === "Perfil" ? "active" : styles.active
                   }`}
                   aria-current="page"
                   href="#"
@@ -167,7 +168,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Dirección" ? "active" : ""
+                    activeOption === "Dirección" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Dirección")} // Activa la opción "Dirección"
@@ -178,7 +179,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Mis compras" ? "active" : ""
+                    activeOption === "Mis compras" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={handleMyOrders}
@@ -188,6 +189,7 @@ const UserProfile = () => {
               </li>
             </ul>
             <hr />
+            </div>
           </div>
 
           <div className={styles.rightContent}>
