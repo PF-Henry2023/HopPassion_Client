@@ -10,12 +10,12 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MyDoughnut() {
   const dispatch = useDispatch();
-  const dataUsers = useSelector(state => state.totalUsers);
-  
+  const dataUsers = useSelector((state) => state.totalUsers);
+
   useEffect(() => {
     dispatch(getTotalUsers());
-  },[])
-  
+  }, []);
+
   const doughnutOptions = {
     cutout: 38,
     plugins: {

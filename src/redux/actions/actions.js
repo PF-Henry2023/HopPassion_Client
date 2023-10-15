@@ -37,6 +37,7 @@ export const getReviews = (idProd, idUsuario) => {
       const response = await HopPassionClient.get(
         `/review/list?idProd=${idProd}&idUsuario=${idUsuario}`
       );
+
       return dispatch({
         type: GET_REVIEWS,
         payload: response.data,
