@@ -44,7 +44,6 @@ const UserProfileOrders = () => {
         setIsLoading(true)
         try {
             const response = await HopPassionClient.get('/orders');
-            console.log(response.data)
             setOrders(response.data)
             setIsLoading(false)
         } catch (error) {
