@@ -29,6 +29,7 @@ import {
   GET_REVIEWS,
   GET_TOTALSALES,
   GET_TOTAL_USERS,
+  UPDATE_PRODUCT,
 } from "./actions-type";
 
 export const getReviews = (idProd, idUsuario) => {
@@ -447,3 +448,31 @@ export const getTotalUsers = async () => {
     }
   }
 }
+
+export const updateProduct = (id, productData) => {
+  return async (dispatch) => {
+    try {
+      if (!productData) {
+        console.error("Los datos del producto son inválidos.");
+        return;
+      }
+
+      console.log("Datos a enviar:", productData);
+
+      const response = await HopPassionClient.put(
+        `/product/${id}`,
+        productData
+      );
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.status === 200) {
+        dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+        return response.data;
+      } else {
+        console.error("Error al actualizar el producto:", response);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
+    }
+  };
+};
