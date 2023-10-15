@@ -1,29 +1,67 @@
 import style from "./ReviewList.module.css";
-import Rating from "../Rating/Rating";
-// import ReviewCard from "./ReviewCard/ReviewCard";
-// import { useSelector } from "react-redux";
+import ReviewCard from "./ReviewCard/ReviewCard";
+import StaticRating from "../Rating/StaticRating";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
+const selectReviewList = (state) => state.reviewList;
+
+const getMemoizedReviewList = createSelector(
+  [selectReviewList],
+  (reviewList) => reviewList
+);
 
 const ReviewList = () => {
-  // const rev = useSelector((state) => state.reviewList);
+  const rev = useSelector(getMemoizedReviewList);
+
+  const calcularPromedioRating = (reviews) => {
+    if (reviews.length === 0) {
+      return 0;
+    }
+    const totalRatings = reviews.reduce(
+      (sum, review) => sum + review.rating,
+      0
+    );
+    const promedio = totalRatings / reviews.length;
+    return Math.round(promedio * 10) / 10;
+  };
+
+  const promedio = calcularPromedioRating(rev);
+
+  let signo;
+  if (rev.length) {
+    signo = "!";
+  } else {
+    signo = "?";
+  }
   return (
     <div className={style.mainContainer}>
-      <div name="title">Feedback From Our Customers</div>
-      <div>
-        <p>estrellas(promedio) _____ 4.8 from 5 stars (por ejemplo)</p>
+      <div name="title" className={style.title}>
+        {`Feedback From Our Customers${signo}`}
       </div>
-      <div>
-       <Rating score={0}/> 
-      </div>
-      <div>
-        <p>aca el CRUD para la review del usuario</p>
-      </div>
-      <div>
-        <p>aca la review del usuario logueado(charlar con belu)</p>
-      </div>
-      <div className={style.listContainer}>
-        <p>listado de reviews(usar ReviewCard)</p>
-      </div>
+      {rev.length === 0 ? (
+        <div className={style.noReviewsYet}>No reviews yet.</div>
+      ) : (
+        <div>
+          <div className={style.totalRating}>
+            <div className={style.totalStar}>
+              <StaticRating
+                score={promedio}
+                starDimension={23}
+                starSpacing={0.1}
+                className={style.star}
+              />
+            </div>
+            <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
+          </div>
+          <div className={style.totalReviews}>{rev.length} reviews</div>
+          <div className={style.listContainer}>
+            {rev.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
