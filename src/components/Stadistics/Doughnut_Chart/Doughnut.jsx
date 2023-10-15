@@ -6,7 +6,6 @@ import axios from "axios";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MyDoughnut() {
-
   const [donut, setDonut] = useState();
 
   useEffect(() => {
@@ -24,7 +23,6 @@ function MyDoughnut() {
   },[])
   
   console.log("donut", donut);
-  
   const doughnutOptions = {
     cutout: 38,
     plugins: {

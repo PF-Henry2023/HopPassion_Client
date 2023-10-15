@@ -30,10 +30,10 @@ function App() {
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
         <Route
-          path="/mercadoPago/process_payment/*"
+          path="/payment/start"
           element={<PaymentGateway />}
         />
-        <Route path="/status/:payment_id" element={<PaymentStatus />}></Route>
+        <Route path="/payment/result" element={<PaymentStatus />}></Route>
       </Routes>
     </div>
   );

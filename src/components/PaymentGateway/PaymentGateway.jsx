@@ -1,103 +1,123 @@
-import { Payment } from "@mercadopago/sdk-react";
-import { initMercadoPago } from "@mercadopago/sdk-react";
-import PaymentStatus from "./PaymentStatus";
-import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-initMercadoPago("TEST-806f20f0-c9b7-4160-a09c-60b784d4852d");
-import { useSelector } from "react-redux";
+import { memo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import { totalQuantities } from "../../utils/CartUtils";
-import styles from "./PaymentGateway.module.css";
-// import image from "../../assets/imageBackground.png";
+import Loading from "../Loading/Loading";
+import Spinner from 'react-bootstrap/Spinner';
+import styles from "./PaymentGateway.module.css"
+import { getCart, getCartRequest } from "../../redux/actions/actions";
+import HopPassionClient from "../../utils/NetworkingUtils";
+import { useNavigate } from "react-router-dom";
+
+initMercadoPago("TEST-f3d5c7f4-e6c2-4b81-a665-275a86d19bfd");
+
+const CardPaymentWrapper = memo((props) => {
+  return <CardPayment
+    locale="es-AR"
+    initialization={{
+      amount: props.total,
+      payer: {
+        email: props.payerEmail
+      }
+    }}
+    customization={{
+      visual: {
+        hidePaymentButton: true
+      },
+      paymentMethods: {
+        maxInstallments: 1
+      }
+    }}
+    onReady={props.onReady}
+    onSubmit={props.onSubmit}
+    onError={props.onError}
+  />
+}, (prev, next) => {
+  return prev.total == next.total
+})
+
+
+const MPPayButton = ({total, loading, handlePayButton}) => {
+  return <>
+    <button className={styles.payButton} onClick={handlePayButton} disabled={loading}>
+        {
+          loading ? (
+            <Spinner animation="border" role="status" className={styles.loading}>
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <div style={{margin: '0 auto'}}>Pagar ${total}</div>
+          )
+        }
+    </button>
+  </>
+}
 
 const PaymentGateway = () => {
-  /* const { amountTotal, quantities } = props; */
-  const [paymentId, setPaymentId] = useState(null);
-  const cart = useSelector(e => e.cart);
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const initialization = {
-    amount: cart.total,
-    preferenceId: "<PREFERENCE_ID>",
-    quantity: totalQuantities(cart.quantities),
-  };
+  const user = useSelector((state) => state.user)
+  const syncing = useSelector((state) => state.cart.syncing);
+  const cart = useSelector((state) => state.cart);
 
-  const customization = {
-    paymentMethods: {
-      creditCard: "all",
-      debitCard: "all",
-      ticket: "all",
-      bankTransfer: "all",
-      atm: "all",
-      onboarding_credits: "all",
-      wallet_purchase: "all",
-      maxInstallments: 1,
-    },
-  };
+  const [ isMPReady, setIsMPReady ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
 
-  const onSubmit = async ({ selectedPaymentMethod, formData }) => {
-    // callback llamado al hacer clic en el botón enviar datos
-    return new Promise((resolve, reject) => {
-      fetch(
-        "https://hoppassion-server.1.ie-1.fl0.io/pay/process_payment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+  useEffect(() => {
+    dispatch(getCartRequest());
+    dispatch(getCart());
+  }, []);
+
+  function drawPaymentComponent() {
+    if (syncing || !cart.total) {
+      return <Loading />
+    } else {
+      return (
+        <div>
+          <CardPaymentWrapper
+            total={cart.total}
+            payerEmail={user.email}
+            onReady={onReady}
+            onError={onError}
+          />
+          { isMPReady 
+          ? <MPPayButton total={cart.total} loading={isLoading} handlePayButton={handlePayButton} />
+          : <></> }
+        </div>
       )
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setPaymentId(response.payment_id);
-          // Utiliza la función de devolución de llamada para realizar acciones después de la actualización del estado.
-          setPaymentId((prevPaymentId) => {
-            navigate(`/status/${prevPaymentId}`);
-            resolve();
-          });
-        })
-        .catch((error) => {
-          reject();
-        });
-    });
-  };
+    }
+  }
 
   const onError = async (error) => {
     console.log(error);
   };
+
   const onReady = async () => {
-    //window.alert("brick listo"); // Loader
-  };
+    setIsMPReady(true)
+  }
+
+  async function handlePayButton() {
+    setIsLoading(true)
+    try {
+      const data = await window.cardPaymentBrickController.getFormData()
+      const response = await HopPassionClient.post("/pay/process_payment", data);
+      navigate('/payment/result?payment_id=' + response.data.payment_id);
+      setIsLoading(false)
+    } catch(error) {
+      setIsLoading(false)
+      console.log(error)
+    }
+  }
+
   return (
     <>
-      <div>
-        <Navbar />
-        {/* </div>
-     <img className={styles.image} src={image}/>
-     <div> */}
-        <Routes>
-          <Route
-            path="/status"
-            element={<PaymentStatus idPayment={paymentId} />}
-          ></Route>
-        </Routes>
-        <Payment
-          initialization={initialization}
-          customization={customization}
-          onSubmit={onSubmit}
-          onReady={onReady}
-          onError={onError}
-        />
-      </div>
-      <div>
-        <Footer />
-      </div>
+      <Navbar />
+      { drawPaymentComponent() }
+      <Footer />
     </>
   );
 };
-export default PaymentGateway;
 
-//redigir
+export default PaymentGateway;

@@ -2,11 +2,11 @@ import GoogleLogin from "react-google-login";
 import { signupOauth2 } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import "./GoogleSingUp.css";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import style from "./GoogleSignUp.module.css";
 
-const GoogleSingUp = (props) => {
+const GoogleSignUp = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,7 +42,8 @@ const GoogleSingUp = (props) => {
     <>
       <GoogleLogin
         clientId={clientId}
-        buttonText="Sing up with Google"
+        buttonText="Ingresar con Google"
+        className={style.button}
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
@@ -51,4 +52,4 @@ const GoogleSingUp = (props) => {
   );
 };
 
-export default GoogleSingUp;
+export default GoogleSignUp;

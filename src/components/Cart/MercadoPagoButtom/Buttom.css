@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
 .button {
-  --width: 270px;
-  --height: 45px;
+  --width: 380px;
+  --height: 42px;
   --tooltip-height: 35px;
-  --tooltip-width: 90px;
+  --tooltip-width: 100px;
   --gap-between-tooltip-to-button: 18px;
   --button-color: #fff;
   --tooltip-color: #fff;
@@ -14,7 +14,6 @@
   position: relative;
   text-align: center;
   border-radius: 0.45em;
-  font-family: "Arial";
   transition: background 0.3s;
   border: 2px solid #2DAEF3;
 }
@@ -25,7 +24,7 @@
   width: var(--tooltip-width);
   height: var(--tooltip-height);
   background-color: #2DAEF3;
-  font-size: 0.9rem;
+  font-size: 12pt;
   color: #fff;
   border-radius: 0.25em;
   line-height: var(--tooltip-height);

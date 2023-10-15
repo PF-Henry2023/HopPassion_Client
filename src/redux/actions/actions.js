@@ -37,6 +37,7 @@ export const getReviews = (idProd, idUsuario) => {
       const response = await HopPassionClient.get(
         `/review/list?idProd=${idProd}&idUsuario=${idUsuario}`
       );
+
       return dispatch({
         type: GET_REVIEWS,
         payload: response.data,
@@ -230,7 +231,6 @@ export const getCart = () => {
   return async (dispatch) => {
     try {
       const response = await HopPassionClient.get("/cart");
-      console.log(response);
       dispatch({ type: GET_CART, payload: response.data });
     } catch (error) {
       console.log(error.message);
@@ -318,14 +318,10 @@ export const loginOauth = (userCredentials, handleLoginError) => {
   };
 };
 
-export const getUserInfo = (id, token, navigate) => {
+export const getUserInfo = (id) => {
   return async (dispatch) => {
     try {
-      const response = await HopPassionClient.get(`/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await HopPassionClient.get(`/users/${id}`);
       if (response.status === 200) {
         const userData = {
           name: response.data.name || "",
@@ -345,10 +341,6 @@ export const getUserInfo = (id, token, navigate) => {
         });
 
         return userData;
-      } else if (response.status === 401) {
-        navigate("/login");
-      } else if (response.status === 403) {
-        navigate(`/profile/${id}`);
       }
     } catch (error) {
       console.error("Error al obtener los datos del usuario", error);

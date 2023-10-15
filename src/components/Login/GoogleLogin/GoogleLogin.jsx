@@ -2,7 +2,7 @@ import { GoogleLogin } from "react-google-login";
 import { useState } from "react";
 import { loginOauth } from "../../../redux/actions/actions";
 import { useDispatch } from "react-redux";
-
+import style from "./GoogleLogin.module.css"
 const GoogleLoginOatuh2 = (props) => {
   const { clientId, handleLoginError } = props;
   const dispatch = useDispatch();
@@ -19,7 +19,8 @@ const GoogleLoginOatuh2 = (props) => {
   return (
     <GoogleLogin
       clientId={clientId}
-      buttonText="Login"
+      buttonText="Ingresar con Google"
+      className={style.button}
       onSuccess={onSuccess}
       onFailure={onFailure}
       cookiePolicy={"single_host_origin"}

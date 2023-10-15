@@ -1,19 +1,22 @@
 import { StatusScreen } from "@mercadopago/sdk-react";
-import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function StatusPayment(props) {
   const navigate = useNavigate();
-  const { payment_id } = useParams();
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const user = useSelector((state) => state.user)
   const [navigateToHome, setNavigateToHome] = useState(false);
+  
   const initialization = {
-    paymentId: payment_id, // id de pago para mostrar
+    paymentId: searchParams.get("payment_id"),
   };
-  const id = window.localStorage.getItem("id");
+
   useEffect(() => {
     if (navigateToHome) {
-      navigate(`/profile/${id}`);
+      navigate(`/profile/${user.id}?tab=orders`);
     }
   }, [navigateToHome]);
 
@@ -23,15 +26,16 @@ export default function StatusPayment(props) {
       setNavigateToHome(true);
     }, 3000);
   };
+
   const onReady = async () => {
-    console.log("Pago exitoso");
     setTimeout(() => {
       setNavigateToHome(true);
-    }, 3000);
+    }, 5000);
   };
 
   return (
     <StatusScreen
+      locale="es-AR"
       initialization={initialization}
       onReady={onReady}
       onError={onError}

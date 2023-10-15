@@ -17,7 +17,7 @@ const Details = () => {
   const quantities = useSelector((state) => state.cart.quantities);
   const [isLoading, setIsLoading] = useState(true);
   const [newQuantity, setNewQuantity] = useState(1);
-  const idUser = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -25,7 +25,7 @@ const Details = () => {
       await dispatch(getProductById(id));
       setIsLoading(false);
     };
-    dispatch(getReviews(id, idUser));
+    dispatch(getReviews(id, user.id));
     fetchProductDetails();
   }, [dispatch, id]);
 

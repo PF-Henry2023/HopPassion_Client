@@ -2,25 +2,20 @@ import React, { useState, useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import { useSearchParams, useParams, useNavigate } from "react-router-dom";
 import { getUserInfo, updateUser, getCart, getCartRequest } from "../../redux/actions/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { getLoggedInUser } from "../../utils/UserUtils";
-import { createSelector } from "reselect";
+import { useDispatch } from "react-redux";
 
 const UserProfile = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeOption, setActiveOption] = useState("Perfil");
-  const [editing, setEditing] = useState(false);
-  const token = localStorage.getItem("authToken");
   const navigate = useNavigate();
-  const user = getLoggedInUser();
-  // const [userOrders, setUserOrders] = useState({});
-  const selectCart = (state) => state.cart;
-  const selectCartMemoized = createSelector([selectCart], (cart) => cart);
+
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeOption, setActiveOption] = useState(mapQueryToTab(searchParams.get("tab")));
+  const [editing, setEditing] = useState(false);
 
   const [userData, setUserData] = useState({
     name: "",
@@ -34,23 +29,16 @@ const UserProfile = () => {
     password: "",
   });
 
-  const pendingOrder = useSelector(selectCartMemoized);
-
   useEffect(() => {
     dispatch(getCartRequest());
     dispatch(getCart());
   }, []);
 
   useEffect(() => {
-    //   Verificar si el usuario está autenticado y tiene el rol correcto
-    if (user.id !== Number(id)) {
-      navigate("/");
-      return;
-    }
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
-          getUserInfo(id, token, navigate)
+          getUserInfo(id, navigate)
         );
         setUserData(userDataResponse);
         setIsLoading(false);
@@ -61,16 +49,7 @@ const UserProfile = () => {
     if (isLoading && !editing) {
       fetchData();
     }
-  }, [dispatch, id, navigate, token, user, isLoading]);
-
-  // useEffect(() => {
-  //   if (user.id !== Number(id)) {
-  //     navigate("/");
-  //     return;
-  //   }
-  //   const response = dispatch(getCart());
-  //   setUserOrders(response.data);
-  // }, [dispatch]);
+  }, [dispatch, id, isLoading]);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -123,7 +102,7 @@ const UserProfile = () => {
   };
 
   const handleMyOrders = async () => {
-    try {
+    /*try {
       const response = await dispatch(getCart());
       console.log(response);
       // Verifica si 'data' y 'data.products' existen en la respuesta
@@ -141,10 +120,20 @@ const UserProfile = () => {
       }
     } catch (error) {
       console.error("Error al obtener las órdenes:", error);
-    }
+    } */
 
     setActiveOption("Mis compras");
   };
+
+  function mapQueryToTab(tab) {
+    if (tab == "address") {
+      return "Dirección"
+    } else if (tab == "orders") {
+      return "Mis compras"
+    }
+
+    return "Perfil"
+  }
 
 
   return (
@@ -155,6 +144,7 @@ const UserProfile = () => {
       ) : (
         <div className={styles.mainContainer}>
           <div className={styles.leftContent}>
+            <div className={styles.menu}>
             <p>Hola,</p>
 
             <h2>
@@ -166,7 +156,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Perfil" ? "active" : ""
+                    activeOption === "Perfil" ? "active" : styles.active
                   }`}
                   aria-current="page"
                   href="#"
@@ -178,7 +168,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Dirección" ? "active" : ""
+                    activeOption === "Dirección" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Dirección")} // Activa la opción "Dirección"
@@ -189,7 +179,7 @@ const UserProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Mis compras" ? "active" : ""
+                    activeOption === "Mis compras" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={handleMyOrders}
@@ -199,6 +189,7 @@ const UserProfile = () => {
               </li>
             </ul>
             <hr />
+            </div>
           </div>
 
           <div className={styles.rightContent}>
@@ -364,16 +355,17 @@ const UserProfile = () => {
                   </button>
                 </>
               ))}
-            {activeOption === "Mis compras" &&
-              (pendingOrder.products ?? []).map((orderDetail, index) => (
-                <div key={orderDetail.id}>
-                  {/* Renderizar detalles de la orden, por ejemplo: */}
-                  <p>Número de orden: {orderDetail.id}</p>
-                  <p>Producto: {orderDetail.name}</p>
-                  <p>Cantidad: {orderDetail.quantity}</p>
-                  <p>Total: {pendingOrder.total}</p>
-                </div>
-              ))}
+            {activeOption === "Mis compras"
+              // && (pendingOrder.products ?? []).map((orderDetail, index) => (
+              //   <div key={orderDetail.id}>
+              //     {/* Renderizar detalles de la orden, por ejemplo: */}
+              //     <p>Número de orden: {orderDetail.id}</p>
+              //     <p>Producto: {orderDetail.name}</p>
+              //     <p>Cantidad: {orderDetail.quantity}</p>
+              //     <p>Total: {pendingOrder.total}</p>
+              //   </div>
+              // ))
+            }
           </div>
         </div>
       )}

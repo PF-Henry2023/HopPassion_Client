@@ -71,7 +71,6 @@ function AreaChart() {
     getInfoChart();
   },[])
  console.log("areaChart:", area);
-
   const data = {
     labels: labels,
     datasets: [

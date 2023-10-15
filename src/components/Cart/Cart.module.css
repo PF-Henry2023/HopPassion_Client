@@ -1,35 +1,53 @@
+.cartTitle {
+  margin-top: 60px; /* Espacio inferior */
+  margin-left: 60px;
+  color: #6a7346;
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+}
+.title {
+  margin-left: 10px;
+  font-size: 18pt;
+  margin-bottom: 10px;
+}
+
 .cartContainer {
   display: grid;
-  grid-template-columns: auto 1fr 0.5fr; /* Tres columnas */
-  gap: 10px; /* Espacio entre las columnas y filas */
+  grid-template-columns: auto 1fr 0.5fr;
+  gap: 60px;
   padding: 20px;
 }
 
 .subtitles {
-  display: flex; /* Usamos flexbox en lugar de grid */
-  flex-direction: row; /* Alineamos los elementos en una fila */
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   font-weight: bold;
   margin-top: 10px;
+  font-size: 10pt;
+  color: #818181;
+  font-weight: 400;
 }
 
-.subtitle {
-  text-align: left;
+.subtitlePrice {
+  margin-left: 160px;
 }
 
 .cartItem {
+  align-items: center;
+  justify-content: center;
   display: grid;
-  grid-template-columns: 0.9fr 1fr 0.8fr 0.1fr;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-top: 10px;
+  grid-template-columns: 2fr 1.3fr 0.3fr 0.1fr;
+  margin-top: 5px;
+  padding-right: 20px;
+  box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
+  border-radius: 6px;
 }
 
-.cartTotal {
-  grid-column: 2 / 4; /* Título Mi Carrito en las columnas 2 y 3 */
-  text-align: center; /* Centra el texto horizontalmente */
-  font-size: 24px; /* Ajusta el tamaño del título */
-  margin-bottom: 20px; /* Espacio inferior */
+.productGroup {
+  display: flex;
+  align-items: center;
 }
 
 .cartItemImage {
@@ -37,37 +55,87 @@
 }
 
 .cartItemName {
-  font-size: 18px; /* Tamaño del nombre del producto */
+  font-size: 12px; /* Tamaño del nombre del producto */
 }
 
 .cartItemPrice {
-  font-weight: bold; /* Texto del precio en negrita */
-}
-
-.cartItemButton {
-  background-color: red; /* Color de fondo del botón Eliminar (ajusta según sea necesario) */
-  color: white; /* Color de texto del botón Eliminar (ajusta según sea necesario) */
-  border: none;
-  cursor: pointer;
-  padding: 5px 10px;
+  margin-top: 20px;
   font-weight: bold;
 }
 
+.cartItemButton {
+  background-color: #f2dcdb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90px;
+  height: 42px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  border: none;
+  color: #a66363;
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #a66363;
+    color: #f2dcdb;
+  }
+}
+
+.resume{
+  margin-top:10px;
+  padding: 50px;
+  box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
+  border-radius: 6px;
+}
+.subtotal{
+  color: #818181
+}
+
 .divider {
-  grid-column: 2 / 4; /* Tercera columna para la línea divisoria */
-  border-top: 1px solid #000; /* Línea divisoria */
-  margin: 10px 0; /* Espacio superior e inferior */
+  border: none; 
+  height: 1px;
+  background-color: #ccc; 
+  margin: 10px 0;
 }
 
 .total {
-  font-size: 20px; /* Tamaño del total */
+  font-size: 14pt; /* Tamaño del total */
   font-weight: bold;
   margin-top: 10px; /* Espacio superior */
 }
 
 .buttons {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Espacio entre botones */
+  gap: 10px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 380px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: #97a663;
+  border: none;
+  color: #edf2db;
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #ddf391;
+    color: #97a663;
+  }
 }

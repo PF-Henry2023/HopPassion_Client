@@ -57,7 +57,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_REVIEWS:
       return {
         ...state,
-        ReviewList: action.payload,
+        reviewList: action.payload,
       };
     case SIGNUP:
       return {
