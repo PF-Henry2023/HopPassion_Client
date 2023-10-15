@@ -12,6 +12,9 @@ import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
 import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
+import { createContext } from "react";
+import axios from "axios";
+export const TotalUsersStadistics = createContext(null);
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +70,36 @@ const AdminProfile = () => {
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
 
+  const dataChart = {
+    areaChart: {},
+    cardTotal: {},
+    donaChart: {},
+  };
+
+  useEffect(() => {
+    const getInfoChart = async () => {
+      try {
+        const areaChart1 = await axios.get(
+          "http://localhost:3001/stadistics/monthlyIncomeForTheYear?type=amount"
+        );
+        dataChart.areaChart = areaChart1.data;
+        const donutChart = await axios.get(
+          "http://localhost:3001/stadistics/totalUsers"
+        )
+        dataChart.donaChart = donutChart.data;
+        const cardTotal1 = await axios.get(
+          "http://localhost:3001/stadistics/historixalTotalSales"
+        )
+        dataChart.cardTotal = cardTotal1.data;
+        console.log("este es la info;", dataChart);
+      } catch (error) {
+        throw error
+      }
+    }
+    getInfoChart();
+  },[])
+
+
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
     const dataToUpdate = {
@@ -109,7 +142,7 @@ const AdminProfile = () => {
                   }`}
                   aria-current="page"
                   href="#"
-                  onClick={() => setActiveOption("Estadísticas")}
+                  onClick={() => setActiveOption("Estadisticas")}
                 >
                   Estadísticas
                 </a>
@@ -176,12 +209,12 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
-                <Container className="d-flex justify-content-center align-items-center">
-                  <CardTotalAmount  />
-                  <MyDoughnut/>
-                </Container>
-                <hr />
-                <AreaChart />
+                  <Container className="d-flex justify-content-center align-items-center">
+                    <CardTotalAmount />
+                    <MyDoughnut />
+                  </Container>
+                  <hr />
+                  <AreaChart />
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}

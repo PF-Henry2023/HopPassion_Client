@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,8 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
-import { getTotalSales } from "../../../redux/actions/actions";
+import axios from "axios";
+import { TotalUsersStadistics } from "../../Admin/AdminProfile";
 import "./AreaChart.css";
 
 ChartJS.register(
@@ -55,22 +55,30 @@ const labels = [
 ];
 
 function AreaChart() {
-
-  const dispatch = useDispatch();
-
+  const [area, setArea] = useState();
   useEffect(() => {
-    dispatch(getTotalSales);
-  }, []);
-
-  const info = useSelector(state => state.totalSales);
+    const getInfoChart = async () => {
+      try {
+        const {data} = await axios.get(
+          "https://hoppassion-server.1.ie-1.fl0.io/stadistics/monthlyIncomeForTheYear?type=amount"
+        );
+        console.log("peticion areachart:", data);
+        setArea(data);
+      } catch (error) {
+        throw error
+      }
+    }
+    getInfoChart();
+  },[])
+ console.log("areaChart:", area);
 
   const data = {
-    labels,
+    labels: labels,
     datasets: [
       {
         fill: true,
         label: "Cantidad de ventas",
-        data: info,
+        data: area?.data,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },

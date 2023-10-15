@@ -15,7 +15,6 @@ import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
 
 function App() {
-  
   return (
     <div className="app">
       <Alert18 />
