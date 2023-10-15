@@ -7,14 +7,15 @@
   padding-top: 100px;
   align-content: initial;
   display: grid;
-  padding-left: 80px;
-  padding-right: 80px;
+  padding:80px;
   box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
 }
+
 .leftContent p {
   margin-left: 15px;
   font-size: 10pt;
 }
+
 .leftContent h2 {
   margin-left: 15px;
   font-size: 18pt;
@@ -50,7 +51,7 @@
   padding: 20px;
   background-color: white;
   width: 617px; /* Ancho deseado */
-  height: 442px; /* Alto deseado */
+  min-height: 442px; /* Alto deseado */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
 }
 
@@ -60,6 +61,7 @@
   grid-template-columns: auto auto;
   gap: 10px;
 }
+
 .editButton {
   color: #ffffff;
   background-color: #97a663;
