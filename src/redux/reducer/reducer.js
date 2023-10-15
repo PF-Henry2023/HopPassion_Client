@@ -27,6 +27,8 @@ import {
   GET_USERS,
   DELETE_PRODUCTS,
   GET_REVIEWS,
+  GET_TOTALSALES,
+  GET_TOTAL_USERS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -46,6 +48,8 @@ const initialState = {
   userInfo: {},
   orderDetails: [],
   reviewList: [],
+  totalSales: 0,
+  totalUsers: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -179,6 +183,16 @@ const rootReducer = (state = initialState, action) => {
         userInfo: action.payload,
       };
 
+    case GET_TOTALSALES:
+      return {
+        ...state,
+        totalSales: action.payload,
+      };
+    case GET_TOTAL_USERS:
+      return {
+        ...state,
+        totalUsers: action.payload,
+      }
     default:
       return { ...state };
   }

@@ -27,6 +27,8 @@ import {
   GET_USER_INFO,
   UPDATE_USER,
   GET_REVIEWS,
+  GET_TOTALSALES,
+  GET_TOTAL_USERS,
 } from "./actions-type";
 
 export const getReviews = (idProd, idUsuario) => {
@@ -415,3 +417,33 @@ export const processPayment = async (formData) => {
     throw error;
   }
 };
+
+export const getTotalSales = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await HopPassionClient.get("/stadistics/historixalTotalSales");
+      dispatch({
+        type: GET_TOTALSALES,
+        payload: data.data
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getTotalUsers = async () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await HopPassionClient.get("/stadistics/totalUsers");
+      console.log("estos son los datos", data);
+      dispatch({
+        type: GET_TOTAL_USERS,
+        payload: data.data
+      })
+      return data.data;
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+}

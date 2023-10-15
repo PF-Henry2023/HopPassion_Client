@@ -13,7 +13,7 @@ const ReviewList = () => {
         <p>estrellas(promedio) _____ 4.8 from 5 stars (por ejemplo)</p>
       </div>
       <div>
-       <Rating score={0}/> 
+       <Rating score={3}/>
       </div>
       <div>
         <p>aca el CRUD para la review del usuario</p>
