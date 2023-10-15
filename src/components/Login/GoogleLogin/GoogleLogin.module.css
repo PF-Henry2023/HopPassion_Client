@@ -7,9 +7,9 @@
   background-color: #fff;
   cursor: pointer;
   justify-content: center;
-  width: 100vh;
   border: none;
   padding: 6px 20px;
   font-weight: 400;
+  width: 76vh;
   transition: background-color 0.3s;
 }

@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import cervezaEspumosaLogin from "../../assets/cervezaEspumosaLogin.png";
+import login_image from "../../assets/login_image.jpg";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
@@ -87,7 +87,7 @@ export default function Login() {
             <h2 className={style.title}>Iniciar sesión</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="email">
-                <Form.Label style={{ fontSize: "14pt", color: "#818181" }}>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
                   Correo electrónico:
                 </Form.Label>
                 <Form.Control
@@ -106,7 +106,7 @@ export default function Login() {
               </Form.Group>
 
               <Form.Group controlId="password">
-                <Form.Label style={{ fontSize: "14pt", color: "#818181" }}>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
                   Contraseña:
                 </Form.Label>
                 <Form.Control
@@ -151,7 +151,7 @@ export default function Login() {
           </div>
         </Col>
         <Col md={6}>
-          <img src={cervezaEspumosaLogin} alt="" className="img-fluid" />
+          <img src={login_image} alt="" className="img-fluid" />
         </Col>
       </Row>
       <Footer />
