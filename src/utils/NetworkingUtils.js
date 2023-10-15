@@ -1,4 +1,7 @@
 import axios from "axios";
+import { logout } from "../redux/actions/actions";
+import store from "../redux/store/store";
+import { navigate } from "./NavigationUtils";
 
 const HopPassionClient = axios.create({
   baseURL: "https://hoppassion-server.1.ie-1.fl0.io/",
@@ -26,7 +29,8 @@ HopPassionClient.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      // handle logout logic
+      navigate("/")
+      store.dispatch(logout())
     }
     return Promise.reject(error);
   }
