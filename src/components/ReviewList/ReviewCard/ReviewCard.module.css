@@ -33,6 +33,7 @@
 }
 
 .name {
+  font-family: "Architects Daughter", cursive;
   display: flex;
   flex-direction: row;
   width: 100%;

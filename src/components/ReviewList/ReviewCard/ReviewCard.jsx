@@ -27,6 +27,11 @@ const ReviewCard = ({ review }) => {
 
     return [firstPart, secondPart];
   };
+
+  const commentData = splitByBackticks(review.comment);
+  const title = commentData[0];
+  const comment = commentData[1];
+
   return (
     <div className={style.mainContainer}>
       <div className={style.nameDate}>
@@ -43,20 +48,8 @@ const ReviewCard = ({ review }) => {
         </div>
       </div>
       <div className={style.commentContainer}>
-        {splitByBackticks(review.comment)[0] ? (
-          <div className={style.name}>
-            {splitByBackticks(review.comment)[0]}
-          </div>
-        ) : (
-          <> </>
-        )}
-        {splitByBackticks(review.comment)[1] ? (
-          <div className={style.comment}>
-            {splitByBackticks(review.comment)[1]}
-          </div>
-        ) : (
-          <> </>
-        )}
+        {title ? <div className={style.name}>{title}</div> : <> </>}
+        {comment ? <div className={style.comment}>{comment}</div> : <> </>}
       </div>
     </div>
   );

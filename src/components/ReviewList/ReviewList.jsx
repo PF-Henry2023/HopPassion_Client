@@ -28,10 +28,16 @@ const ReviewList = () => {
 
   const promedio = calcularPromedioRating(rev);
 
+  let signo;
+  if (rev.length) {
+    signo = "!";
+  } else {
+    signo = "?";
+  }
   return (
     <div className={style.mainContainer}>
       <div name="title" className={style.title}>
-        Feedback From Our Customers
+        {`Feedback From Our Customers${signo}`}
       </div>
       {rev.length === 0 ? (
         <div className={style.noReviewsYet}>No reviews yet.</div>
@@ -46,9 +52,7 @@ const ReviewList = () => {
                 className={style.star}
               />
             </div>
-            <div style={{ marginLeft: "20px", fontSize: "15px" }}>
-              {`${promedio} out of 5 stars`}
-            </div>
+            <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
           </div>
           <div className={style.totalReviews}>{rev.length} reviews</div>
           <div className={style.listContainer}>
