@@ -209,7 +209,7 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
-                  <Container className="d-flex justify-content-center align-items-center">
+                  <Container className={styles.continer_graphics}>
                     <CardTotalAmount />
                     <MyDoughnut />
                   </Container>

@@ -40,7 +40,7 @@ const PaymentGateway = () => {
     // callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
       fetch(
-        "https://hoppassionserver-production.up.railway.app/mercadoPago/process_payment",
+        "https://hoppassion-server.1.ie-1.fl0.io/pay/process_payment",
         {
           method: "POST",
           headers: {
