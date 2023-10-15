@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Card.css";
+import { TotalUsersStadistics } from "../../Admin/AdminProfile";
 import axios from "axios";
 
 export default function CardTotalAmount() {
-  const [ total, setTotal ] = useState(0);
+  const [total, setTotal] = useState();
   useEffect(() => {
-    axios.get("http://localhost:3001/stadistics/historixalTotalSales")
-    .then((response) => {
-      const { data } = response.data;
-      setTotal(data);
-    })
-  }, [])
+    const getInfoChart = async () => {
+      try {
+        const cardTotal1 = await axios.get(
+          "https://hoppassion-server.1.ie-1.fl0.io/stadistics/historixalTotalSales"
+        )
+        setTotal(cardTotal1.data.data);
+      } catch (error) {
+        throw error
+      }
+    }
+    getInfoChart();
+  },[])
+  console.log("card Total,",total);
+  
   return (
     <div className="containerCard">
       <img
@@ -18,7 +27,7 @@ export default function CardTotalAmount() {
         alt="Dolar"
       />
       <div className="container_strings">
-        <span className="amount">$| { total }</span>
+        <span className="amount">$| {total}</span>
         <span className="span_generic">Total de ventas</span>
       </div>
     </div>

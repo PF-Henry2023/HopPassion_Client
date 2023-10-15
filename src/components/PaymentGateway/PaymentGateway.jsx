@@ -37,6 +37,7 @@ const CardPaymentWrapper = memo((props) => {
   return prev.total == next.total
 })
 
+
 const MPPayButton = ({total, loading, handlePayButton}) => {
   return <>
     <button className={styles.payButton} onClick={handlePayButton} disabled={loading}>
