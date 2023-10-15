@@ -128,7 +128,6 @@ export function getProductById(id) {
 export const getProducts = (filters, query) => {
   return async (dispatch) => {
     try {
-      console.log(buildGetProductsUrl(filters, query));
       try {
         const result = await HopPassionClient.get(
           buildGetProductsUrl(filters, query)
