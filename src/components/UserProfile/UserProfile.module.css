@@ -5,30 +5,30 @@
     gap: 20px; /* Espacio entre las columnas */
   }
   
-  /* Estilos para la columna izquierda */
-  .leftContent {
-    margin: 60px;
-    padding: 20px;
-  }
-  
-  .rightContent {
-    margin: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: white;
-    width: 617px; /* Ancho deseado */
-    height: 442px; /* Alto deseado */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
-  }
-  
-  /* Estilos para los elementos de nombre y apellido */
-  .rowContainer {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 10px;
-  }
+/* Estilos para la columna izquierda */
+.leftContent {
+  margin: 60px;
+  padding: 20px;
+}
+
+.rightContent {
+  margin: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: white;
+  width: 617px; /* Ancho deseado */
+  height: 442px; /* Alto deseado */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
+}
+
+/* Estilos para los elementos de nombre y apellido */
+.rowContainer {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
   
 .editButton {
   color: #ffffff;
