@@ -157,7 +157,7 @@ const Home = () => {
                 </button>
                 <Link className={style.link} to="/login">
                   {" "}
-                  <h5>o Inicia seión</h5>
+                  <h5>o Inicia sesión</h5>
                 </Link>
               </div>
             </div>
