@@ -5,7 +5,6 @@ import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -15,6 +14,7 @@ import Footer from "../Footer/Footer";
 import Swal from "sweetalert2";
 import GoogleLoginOatuh2 from "./GoogleLogin/GoogleLogin";
 import { gapi } from "gapi-script";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const clientId =
@@ -34,7 +34,7 @@ export default function Login() {
     }
     if (user.role === "admin") {
       navigate(`/adminprofile/${user.id}`);
-    } else if(user.role === "user") {
+    } else if (user.role === "user") {
       navigate("/");
     } else {
       alert("Usuario NO autorizado");
@@ -82,62 +82,76 @@ export default function Login() {
     <Container className={style.container} fluid={true}>
       <NavBar />
       <Row>
+        <Col md={6} className="text-left">
+          <div className={style.formContainer}>
+            <h2 className={style.title}>Iniciar sesión</h2>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label style={{ fontSize: "14pt", color: "#818181" }}>
+                  Correo electrónico:
+                </Form.Label>
+                <Form.Control
+                  value={userData.email}
+                  type="text"
+                  placeholder="Ingresa tu correo electrónico"
+                  onChange={(event) => {
+                    handleChange("email", event.target.value);
+                  }}
+                  isInvalid={errors.email}
+                  isValid={userData.email && !errors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                  <div>Controlar el formato del e-mail</div>
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="password">
+                <Form.Label style={{ fontSize: "14pt", color: "#818181" }}>
+                  Contraseña:
+                </Form.Label>
+                <Form.Control
+                  value={userData.password}
+                  type="password"
+                  placeholder="Ingresa tu contraseña"
+                  onChange={(event) => {
+                    handleChange("password", event.target.value);
+                  }}
+                  isInvalid={errors.password}
+                  isValid={userData.password && !errors.password}
+                />
+                <Form.Control.Feedback type="invalid">
+                  La contraseña debe contener 6 caracteres o más, una mayúscula
+                  y un caracter especial.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <div className={style.buttons}>
+                <button
+                  className={style.btn}
+                  variant="primary"
+                  type="submit"
+                  disabled={isButtonDisabled(errors, userData)}
+                >
+                  Ingresar
+                </button>
+                <GoogleLoginOatuh2
+                  className={style.btGoogle}
+                  clientId={clientId}
+                  handleLoginError={handleLoginError}
+                />
+              </div>
+              <div className={style.divider}></div>
+              <div className={style.signup}>
+                <p style={{ margin: "0" }}>¿No tenés una cuenta?</p>
+                <Link className={style.link} to="/signup">
+                  {" "}
+                  Registrate
+                </Link>
+              </div>
+            </Form>
+          </div>
+        </Col>
         <Col md={6}>
           <img src={cervezaEspumosaLogin} alt="" className="img-fluid" />
-        </Col>
-
-        <Col md={6} className="text-left">
-          <h2 className="mb-4">Ingresar a mi cuenta</h2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Correo electrónico:</Form.Label>
-              <Form.Control
-                value={userData.email}
-                type="text"
-                placeholder="Ingresa tu correo electrónico"
-                onChange={(event) => {
-                  handleChange("email", event.target.value);
-                }}
-                isInvalid={errors.email}
-                isValid={userData.email && !errors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                <div>Controlar el formato del e-mail</div>
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="password">
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control
-                value={userData.password}
-                type="password"
-                placeholder="Ingresa tu contraseña"
-                onChange={(event) => {
-                  handleChange("password", event.target.value);
-                }}
-                isInvalid={errors.password}
-                isValid={userData.password && !errors.password}
-              />
-              <Form.Control.Feedback type="invalid">
-                La contraseña debe contener 6 caracteres o más, una mayúscula y
-                un caracter especial.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <div className="d-flex justify-content-end">
-              <GoogleLoginOatuh2
-                clientId={clientId}
-                handleLoginError={handleLoginError}
-              />
-              <Button
-                className={style.btn}
-                variant="primary"
-                type="submit"
-                disabled={isButtonDisabled(errors, userData)}
-              >
-                INGRESAR
-              </Button>
-            </div>
-          </Form>
         </Col>
       </Row>
       <Footer />
