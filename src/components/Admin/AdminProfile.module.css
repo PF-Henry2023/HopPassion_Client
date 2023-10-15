@@ -22,7 +22,7 @@
     padding: 20px;
     background-color: white;
     width: 1000px; /* Ancho deseado */
-    height: 80%; /* Alto deseado */
+    height: 90%; /* Alto deseado */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
   }
   
@@ -44,3 +44,13 @@
   font-size: 20px;
   border-radius: 4px;
 }
+
+.dona {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.text{
+  font-weight: bold;
+  font-size: 40px;
+} 

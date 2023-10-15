@@ -1,0 +1,35 @@
+.containerStyle {
+  width: 350px;
+  border: 1px solid #D1F1A2;
+  padding: 15px;
+}
+
+.containerFlex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerFlex img {
+  display: block;
+  width: 30px;
+}
+
+.containerFlex span {
+  display: block;
+}
+
+.dona {
+  width: 120px;
+  height: 120px;
+}
+
+.totalUsers {
+  color: #198754;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
