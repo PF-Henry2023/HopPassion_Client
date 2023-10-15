@@ -443,7 +443,7 @@ export const getTotalUsers = async () => {
       })
       return data.data;
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
     }
   }
 }
