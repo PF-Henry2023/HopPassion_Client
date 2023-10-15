@@ -55,14 +55,13 @@ const labels = [
 ];
 
 function AreaChart() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTotalSales);
   }, []);
 
-  const info = useSelector(state => state.totalSales);
+  const info = useSelector((state) => state.totalSales);
 
   const data = {
     labels,

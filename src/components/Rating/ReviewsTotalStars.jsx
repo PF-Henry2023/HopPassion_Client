@@ -1,9 +1,13 @@
-import StarRatings from "react-star-ratings";
+// import StarRatings from "react-star-ratings";
 
-
-export default function ReviewsTotalStars(props) {
-  const { rating } = props;
-  return (
-    <StarRatings rating={rating} starDimension="40px" starSpacing="15px" starRatedColor="rgb(218, 86, 36)"/>
-  )
-}
+// export default function ReviewsTotalStars() {
+//   return (
+//     <StarRatings
+//       rating={}
+//       starRatedColor="blue"
+//       changeRating={this.changeRating}
+//       numberOfStars={6}
+//       name="rating"
+//     />
+//   );
+// }
