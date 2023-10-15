@@ -33,7 +33,7 @@ const UserProfileOrder = ({id, status, createdAt, total}) => {
 }
 
 const UserProfileOrders = () => {
-    const [ isLoading, setIsLoading ] = useState(false)
+    const [ isLoading, setIsLoading ] = useState(true)
     const [ orders, setOrders ] = useState([])
 
     useEffect(() => {

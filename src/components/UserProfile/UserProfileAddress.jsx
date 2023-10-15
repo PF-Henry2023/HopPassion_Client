@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 const UserProfileAddress = () => {
     const { id } = useParams();
-    const [ isLoading, setIsLoading ] = useState(false)
+    const [ isLoading, setIsLoading ] = useState(true)
     const [ isEditing, setIsEditing ] = useState(false)
     const [ editableData, setEditableData ] = useState({})
     const [ userData, setUserData ] = useState({
