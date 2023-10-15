@@ -29,6 +29,7 @@ import {
   GET_REVIEWS,
   GET_TOTALSALES,
   GET_TOTAL_USERS,
+  UPDATE_PRODUCT,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -193,6 +194,20 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         totalUsers: action.payload,
       }
+    case UPDATE_PRODUCT:
+      const updateProduct = action.payload; // Los nuevos datos del producto a actualizar
+      const updateProducts = state.products.map((product) => {
+        if(product.id === updateProduct.id) {
+          // Reemplaza el producto que coincide con el ID
+          return updateProduct;
+        } else {
+          return product;
+        }
+      });
+      return {
+        ...state,
+        products: updateProducts,
+      };
     default:
       return { ...state };
   }
