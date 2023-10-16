@@ -210,12 +210,17 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
+                <hr />
                   <Container className={styles.continer_graphics}>
+                    
                     <CardTotalAmount />
                     <MyDoughnut />
-                    <TopProducts/>
+                    
+                    <hr />
                   </Container>
                   <hr />
+                    <TopProducts/>
+                    <hr />
                   <AreaChart />
               </div>
             )}
