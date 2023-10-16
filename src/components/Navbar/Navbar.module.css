@@ -3,6 +3,7 @@
   display: flex;
   padding: 0 20px;
   justify-content: center;
+  width: 100%;
 }
 
 .container {
@@ -12,7 +13,7 @@
   align-items: center; /* Alinea los elementos verticalmente en el centro */
 }
 
-.cartItem{
+.cartItem {
   display: flex;
   align-items: center;
   text-decoration: none;
