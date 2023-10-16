@@ -37,7 +37,8 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    dispatch(logout(() => navigate("/")));
+    dispatch(logout());
+    navigate("/");
   };
 
   function drawUserSection() {
@@ -59,7 +60,7 @@ export default function NavBar() {
           </Link>
 
           {/* <button onClick={handleLogout}>Cerrar Seción</button> */}
-          <Link onClick={handleLogout} className={style.text}>
+          <Link onClick={handleLogout} to="/" className={style.text}>
             <PersonSlash className={style.icon} />
             <p>Cerrar sesión</p>
           </Link>

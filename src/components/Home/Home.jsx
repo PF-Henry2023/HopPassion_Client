@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import CardContainer from "../CardContainer/CardContainer";
 import Footer from "../Footer/Footer";
 import Filters from "../Filters/Filters";
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import Favorites from "../Favorites/Favorites";
 import image1 from "../../assets/image1.jpg";
 import image2 from "../../assets/image2.jpg";
@@ -13,12 +13,14 @@ import Carousel from "react-bootstrap/Carousel";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./Home.module.css";
 import { getLoggedInUser } from "../../utils/UserUtils";
+import HopPassionClient from "../../utils/NetworkingUtils";
 
 const Home = () => {
   const navigate = useNavigate();
   const refAllProducts = useRef(null);
   const refFeaturedProducts = useRef(null);
   const user = getLoggedInUser();
+  const [favorites, setFavorites] = useState([]);
 
   console.log(user);
 
@@ -33,6 +35,15 @@ const Home = () => {
   const handleScrollToFeaturedProducts = () => {
     refFeaturedProducts.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const petition = async () => {
+      const { data } = await HopPassionClient.get("/stadistics/getTenProduct");
+      setFavorites(data.top3)
+    }
+    petition();
+    console.log(favorites);
+  },[])
 
   return (
     <div>
@@ -174,7 +185,7 @@ const Home = () => {
           </h1>
           <h2 className={style.subtitle}>Éstas son las favoritas</h2>
         </div>
-        <Favorites className={style.favoritesContainer} />
+        <Favorites favorites={favorites} className={style.favoritesContainer} />
         <div ref={refAllProducts}></div>
       </div>
       <Filters />

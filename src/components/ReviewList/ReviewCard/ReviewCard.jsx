@@ -37,7 +37,7 @@ const ReviewCard = ({ review }) => {
     <div className={style.mainContainer}>
       <div className={style.nameDate}>
         <div className={style.name}>
-          {review.User.user ? review.User?.user : review.User?.email}
+          {review.User?.user ? review.User?.user : review.User?.email}
         </div>
         <div className={style.date}>{formatDate(review.updatedAt)}</div>
       </div>

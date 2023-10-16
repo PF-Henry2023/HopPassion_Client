@@ -52,10 +52,10 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
-    if (user.id !== Number(id)) {
+    /* if (user.id !== Number(id)) {
       navigate("/adminprofile");
       return;
-    }
+    } */
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
