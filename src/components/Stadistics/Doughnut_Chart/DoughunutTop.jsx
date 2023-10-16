@@ -14,7 +14,7 @@ function TopProducts(){
           // eslint-disable-next-line no-useless-catch
           try {
             const donutChartt = await axios.get(
-              "http://localhost:3001/stadistics/getTenProduct"
+              "https://hoppassion-server.1.ie-1.fl0.io/stadistics/getTenProduct"
             )
             setTop(donutChartt.data);
           } catch (error) {
@@ -56,7 +56,6 @@ function TopProducts(){
         <div>
           <h2 className="vendidos">Productos más vendidos</h2>
           <div className="principal">
-            
             <div className="labels">{top?.labels.map((e,i)=>(
               <h3 key={i}>{e}</h3>
             ))}</div>
