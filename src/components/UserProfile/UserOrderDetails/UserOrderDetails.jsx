@@ -14,7 +14,6 @@ const UserOrderDetails = ({ orderId, onBackClick }) => {
     setIsLoading(true);
     try {
       const response = await HopPassionClient.get(`/orders/${orderId}`);
-      console.log(response);
       setOrdersDetails(response.data);
       setIsLoading(false);
     } catch (error) {
