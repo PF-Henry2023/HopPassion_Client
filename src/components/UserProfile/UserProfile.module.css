@@ -42,34 +42,3 @@
     font-weight: 700;
   }
 }
-
-/* .rightContent {
-  margin: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: white;
-  width: 617px;
-  min-height: 442px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
-} */
-
-/* Estilos para los elementos de nombre y apellido */
-.rowContainer {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 10px;
-}
-
-.editButton {
-  color: #ffffff;
-  background-color: #97a663;
-  border: 0px;
-  margin: 0px;
-  padding: 5px 30px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  border-radius: 4px;
-}

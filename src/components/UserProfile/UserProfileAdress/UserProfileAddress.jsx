@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
-import styles from "./UserProfile.module.css";
-import { mapUserToUserInfo } from "./../../utils/UserUtils";
-import HopPassionClient from "../../utils/NetworkingUtils";
-import Loading from "../Loading/Loading";
+import styles from "./UserProfileAddress.module.css";
+import { mapUserToUserInfo } from "../../../utils/UserUtils";
+import HopPassionClient from "../../../utils/NetworkingUtils";
+import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
 
-const UserProfileProfile = () => {
+const UserProfileAddress = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editableData, setEditableData] = useState({});
   const [userData, setUserData] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
+    address: "",
+    postalCode: "",
+    city: "",
+    country: "",
   });
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const UserProfileProfile = () => {
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    if (!["name", "lastName", "email", "phone", "password"].includes(name)) {
+    if (!["address", "country", "city", "postalCode"].includes(name)) {
       return;
     }
     setEditableData({ ...editableData, [name]: value });
@@ -66,24 +65,20 @@ const UserProfileProfile = () => {
   function drawDefault() {
     return (
       <>
-        <h1>Mi perfil</h1>
+        <h1>Mi dirección</h1>
         <div className={styles.rowContainer}>
           <div>
-            <h4>Nombre</h4>
-            <p>{userData.name}</p>
-          </div>
-          <div>
-            <h4>Apellido</h4>
-            <p>{userData.lastName}</p>
+            <h4>Dirección</h4>
+            <p>{userData.address}</p>
           </div>
         </div>
-        <h4>Correo electrónico</h4> <p>{userData.email}</p>
+        <h4>Código Postal</h4> <p>{userData.postalCode}</p>
         <div className={styles.rowContainer}>
           <div>
-            <h4>Contraseña</h4> <p>********</p>
+            <h4>Ciudad</h4> <p>{userData.city}</p>
           </div>
           <div>
-            <h4>Número de teléfono</h4> <p>{userData.phone}</p>
+            <h4>País</h4> <p>{userData.country}</p>
           </div>
         </div>
         <button
@@ -106,26 +101,34 @@ const UserProfileProfile = () => {
         <form onSubmit={handleSubmit} className={styles.updateForm}>
           <div className={styles.rowContainer}>
             <div>
-              <h4>Nombre</h4>
-              <input type="text" name="name" onChange={handleInputChange} />
+              <h4>Calle</h4>
+              <input type="text" name="address" onChange={handleInputChange} />
             </div>
             <div>
-              <h4>Apellido</h4>
-              <input type="text" name="lastName" onChange={handleInputChange} />
+              {/* <h4>Ciudad</h4>
+                    <input
+                    type="text"
+                    name="city"
+                    value={userData.city}
+                    onChange={handleInputChange}
+                    /> */}
             </div>
           </div>
-          <h4>Correo electrónico</h4>{" "}
-          <input type="text" name="email" onChange={handleInputChange} />
+          <h4>Código Postal</h4>{" "}
+          <input type="text" name="postalCode" onChange={handleInputChange} />
           <div className={styles.rowContainer}>
             <div>
-              <h4>Contraseña</h4>{" "}
-              <input type="text" name="password" onChange={handleInputChange} />
+              <h4>Ciudad</h4>{" "}
+              <input type="text" name="city" onChange={handleInputChange} />
             </div>
             <div>
-              <h4>Número de teléfono</h4>{" "}
-              <input type="text" name="phone" onChange={handleInputChange} />
+              <h4>País</h4>{" "}
+              <input type="text" name="country" onChange={handleInputChange} />
             </div>
           </div>
+          {/* <button className={styles.saveButton} onClick={handleSave}>
+                Guardar
+                </button> */}
           <input type="submit" value="Guardar" />
         </form>
         <button onClick={() => handleEditClick(false)}>Cancelar</button>
@@ -146,4 +149,4 @@ const UserProfileProfile = () => {
   return <>{drawComponent()}</>;
 };
 
-export default UserProfileProfile;
+export default UserProfileAddress;

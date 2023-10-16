@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import Loading from "../Loading/Loading";
-import HopPassionClient from "../../utils/NetworkingUtils";
+import Loading from "../../Loading/Loading";
+import HopPassionClient from "../../../utils/NetworkingUtils";
 import styles from "./UserProfileOrders.module.css";
+import UserReviews from "../UserReviews/UserReviews";
+import UserOrderDetails from "../UserOrderDetails/UserOrderDetails";
 
-const UserProfileOrder = ({ id, status, createdAt, total }) => {
+const UserProfileOrder = ({ id, status, createdAt, total, onOrderDetailsClick }) => {
   function mapStatusToStatus(status) {
     switch (status) {
       case "send":
@@ -44,7 +46,7 @@ const UserProfileOrder = ({ id, status, createdAt, total }) => {
           <p>{id}</p>
         </div>
       </div>
-      <button>Ver detalle del pedido</button>
+      <button onClick={onOrderDetailsClick}>Ver detalle del pedido</button>
     </div>
   );
 };
@@ -52,40 +54,36 @@ const UserProfileOrder = ({ id, status, createdAt, total }) => {
 const UserProfileOrders = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [showReviews, setShowReviews] = useState(false);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
 
   useEffect(() => {
     getOrders();
   }, []);
 
+  function handleReviewsClick() {
+    setShowReviews(true);
+  }
+
+  function handleOrderDetailsClick() {
+    setShowOrderDetails(true);
+  }
+
+  function handleBackToOrders() {
+    setShowReviews(false);
+    setShowOrderDetails(false);
+  }
+
   async function getOrders() {
     setIsLoading(true);
     try {
       const response = await HopPassionClient.get("/orders");
+      console.log(response);
       setOrders(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error al obtener las ordenes del usuario", error);
+      console.error("Error al obtener las órdenes del usuario", error);
     }
-  }
-
-  function drawDefault() {
-    return (
-      <div className={styles.mainContainer}>
-        <h1>Mis compras</h1>
-        <div>
-          {orders.map((order) => (
-            <div className={styles.purchaseContainer} key={order.id}>
-              <UserProfileOrder
-                id={order.id}
-                status={order.status}
-                createdAt={order.created_at}
-                total={order.total}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
   }
 
   function drawLoading() {
@@ -95,8 +93,35 @@ const UserProfileOrders = () => {
   function drawComponent() {
     if (isLoading) {
       return drawLoading();
+    } else if (showReviews) {
+      return <UserReviews onBackClick={handleBackToOrders} />;
+    } else if (showOrderDetails) {
+      return <UserOrderDetails onBackClick={handleBackToOrders} />;
     } else {
-      return drawDefault();
+      const totalOrders = orders.length;
+      return (
+        <div className={styles.mainContainer}>
+          <h1>Mis compras</h1>
+          <p className={styles.totalOrders}>{totalOrders} compras totales</p>
+          <div className={styles.reviewsContainer}>
+            Opina sobre tus productos comprados
+            <button onClick={handleReviewsClick}>Calificar</button>
+          </div>
+          <div>
+            {orders.map((order) => (
+              <div className={styles.purchaseContainer} key={order.id}>
+                <UserProfileOrder
+                  id={order.id}
+                  status={order.status}
+                  createdAt={order.created_at}
+                  total={order.total}
+                  onOrderDetailsClick={handleOrderDetailsClick}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
     }
   }
 

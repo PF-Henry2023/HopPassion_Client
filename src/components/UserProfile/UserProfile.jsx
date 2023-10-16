@@ -1,9 +1,9 @@
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
-import UserProfileProfile from "./UserProfileProfile";
-import UserProfileAddress from "./UserProfileAddress";
-import UserProfileOrders from "./UserProfileOrders";
+import UserProfileProfile from "./UserProfileProfile/UserProfileProfile";
+import UserProfileAddress from "./UserProfileAdress/UserProfileAddress";
+import UserProfileOrders from "./UserProfileOrders/UserProfileOrders";
 import styles from "./UserProfile.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -45,10 +45,6 @@ const UserProfile = () => {
     return <SelectedComponent />;
   }
 
-  //   function selectedTitle() {
-  //     return options[activeOption].title;
-  //   }
-
   return (
     <div>
       <Navbar />
@@ -88,7 +84,6 @@ const UserProfile = () => {
             </div>
           </div>
           <div className={styles.rightContent}>
-            {/* <h1>{selectedTitle()}</h1> */}
             {selectedComponent()}
           </div>
         </div>

@@ -1,3 +1,53 @@
+.mainContainer h1 {
+  font-size: 18pt;
+  color: #6a7346;
+  font-weight: 700;
+  margin-left: 110px;
+  margin-top: 116px;
+}
+
+.totalOrders {
+  margin-left: 110px;
+  font-size: 12pt;
+  color: #818181;
+  font-weight: 400;
+}
+
+.reviewsContainer {
+  margin-bottom: 30px;
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: white;
+  width: 617px;
+  height: auto;
+  box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
+  border-radius: 6px;
+}
+
+.reviewsContainer button {
+  background-color: #97a663;
+  border: none;
+  color: #edf2db;
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  font-size: 12pt;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #ddf391;
+    color: #97a663;
+  }
+}
+
 .purchaseContainer {
   margin-bottom: 20px;
   margin-left: 60px;
