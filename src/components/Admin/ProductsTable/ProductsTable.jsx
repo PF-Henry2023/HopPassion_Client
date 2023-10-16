@@ -2,7 +2,6 @@ import { useEffect, useState  } from "react";
 import style from "./ProductsTable.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../redux/actions/actions";
-import Product from "../ProductsTable/Product";
 import Filters from "../../Filters/Filters";
 import EditProduct from "./EditProduct";
 
@@ -18,8 +17,8 @@ export default function ProductsTable({setEditing}) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 5;
 
-     // Nuevo estado para controlar la visibilidad de EditProduct
-     const [editProductId, setEditProductId] = useState(null);
+   // Nuevo estado para controlar la visibilidad de EditProduct
+   const [editProductId, setEditProductId] = useState(null);
 
   useEffect(() => {
     dispatch(getProducts(filters, searchQuery));
@@ -39,15 +38,15 @@ export default function ProductsTable({setEditing}) {
     pageNumbers.push(i);
   }
 
-  // Función para manejar la edición del producto
-  const handleEditProduct = (productId) => {
-    setEditProductId(productId);
-  };
-
-  // Función para cancelar la edición
-  const handleCancelEdit = () => {
-    setEditProductId(null);
-  };
+    // Función para manejar la edición del producto
+    const handleEditProduct = (productId) => {
+      setEditProductId(productId);
+    };
+  
+    // Función para cancelar la edición
+    const handleCancelEdit = () => {
+      setEditProductId(null);
+    };
 
   return (
     <div className={style.container}>
@@ -81,24 +80,21 @@ export default function ProductsTable({setEditing}) {
         {currentProducts.map((product) => {
             return (
               <div className={style.productStyle}>
-                <ul key={product.id}>
-                    <li>
-                    <Product
-                      id={product.id}
-                      name={product.name}
-                      alcoholContent={product.alcoholContent}
-                      price={product.price}
-                      stock={product.stock}
-                      setEditing={setEditing}
-                    />
+                <ul key={product.id} className={style.contentProduct}>
+                    <li className={style.productInfo}>
+                      <div className={style.product}>
+                          <span>{product.name}</span>
+                          <span>% {product.alcoholContent}</span>
+                          <span>$ {product.price}</span>
+                          <span>{product.stock}</span>
+                      </div>
                     </li>
-                    <hr />
                     {editProductId === product.id ? (
                       <EditProduct id={product.id} setEditing={setEditing} onCancel={handleCancelEdit} />
                     ) : (
                       <div className={style.buttons}>
-                        <button onClick={() => handleEditProduct(product.id)}>Editar</button>
-                        <button>Desactivar</button>
+                        <button className={style.buttonEdit} onClick={() => handleEditProduct(product.id)}>Editar</button>
+                        <button className={style.buttonDesactivar}>Desactivar</button>
                       </div>
                     )}
                 </ul>
