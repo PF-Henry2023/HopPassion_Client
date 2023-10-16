@@ -61,6 +61,8 @@ export default function Login() {
     );
   };
 
+  console.log(user);
+
   function handleLoginError(error) {
     Swal.fire({
       icon: "error",
