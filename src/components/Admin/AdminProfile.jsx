@@ -15,7 +15,6 @@ import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
 import ReviewManagement from "./ReviewManagment/ReviewManagment";
-import axios from "axios";
 export const TotalUsersStadistics = createContext(null);
 import UsersTable from "./UsersTable/UsersTable";
 
