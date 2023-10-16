@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 initMercadoPago("TEST-f3d5c7f4-e6c2-4b81-a665-275a86d19bfd");
 
 const CardPaymentWrapper = memo((props) => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return <CardPayment
     locale="es-AR"
     initialization={{
@@ -103,6 +104,16 @@ const PaymentGateway = () => {
     try {
       const data = await window.cardPaymentBrickController.getFormData()
       const response = await HopPassionClient.post("/pay/process_payment", data);
+      const { products } = cart;
+      console.log("products", products);
+      const filterIdProducts = products.map(e => e.id);
+      console.log("id de productos:", filterIdProducts);
+      const saveBuys = await HopPassionClient.post("/buy/createBuy", {
+        amount: cart.total,
+        payment_id: user.id,
+        userId: user.id ,
+        productId: filterIdProducts,
+      })
       navigate('/payment/result?payment_id=' + response.data.payment_id);
       setIsLoading(false)
     } catch(error) {
