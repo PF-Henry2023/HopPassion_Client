@@ -31,13 +31,64 @@ import {
   GET_TOTAL_USERS,
   UPDATE_PRODUCT,
   CLEAN_REVIEWS,
+  GET_REVIEWS_UNREVIEWED,
+  REVIEW_PROCESSED,
+  DELETE_REVIEW,
 } from "./actions-type";
+
+export const deleteReview = (idReview) => {
+  return async function (dispatch) {
+    try {
+      await HopPassionClient.delete(`/review/delete/${idReview}`);
+      return dispatch({
+        type: DELETE_REVIEW,
+        payload: idReview,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const reviewProcessed = (idReview) => {
+  return async function (dispatch) {
+    try {
+      const responre = await HopPassionClient.put(
+        `/review/update/${idReview}`,
+        {
+          isReviewed: true,
+        }
+      );
+      console.log(responre);
+      return dispatch({
+        type: REVIEW_PROCESSED,
+        payload: idReview,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const cleanReviews = () => {
   return function (dispatch) {
     return dispatch({
       type: CLEAN_REVIEWS,
     });
+  };
+};
+
+export const getReviewsUnreviewed = () => {
+  return async function (dispatch) {
+    try {
+      const { data } = await HopPassionClient.get(`/review/unreviewed`);
+      return dispatch({
+        type: GET_REVIEWS_UNREVIEWED,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };
 
@@ -72,7 +123,17 @@ export const getUsers = () => {
   };
 };
 
-export const signup = ({ name, lastName, address, email, phone, password }) => {
+export const signup = ({
+  name,
+  lastName,
+  address,
+  email,
+  phone,
+  password,
+  city,
+  postalCode,
+  country,
+}) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signup", {
@@ -82,6 +143,9 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
         email,
         phone,
         password,
+        city,
+        postalCode,
+        country,
       });
       handleUserLogin(response.data);
       dispatch({

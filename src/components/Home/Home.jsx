@@ -22,6 +22,8 @@ const Home = () => {
   const user = getLoggedInUser();
   const [favorites, setFavorites] = useState([]);
 
+  console.log(user);
+
   const handleNavigate = () => {
     navigate("/signup");
   };

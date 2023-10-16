@@ -13,6 +13,9 @@ export function handleUserLogin(token) {
     phone: decoded.phone,
     role: decoded.role,
     password: decoded.password,
+    postalCode: decoded.postalCode,
+    city: decoded.city,
+    country: decoded.country,
   };
 
   window.localStorage.setItem("token", token);
@@ -34,7 +37,7 @@ export function setAgeConfirmation(confirmed) {
 }
 
 export function checkAgeConfirmation() {
-  return window.localStorage.getItem("over18") ?? false
+  return window.localStorage.getItem("over18") ?? false;
 }
 
 export function mapUserToUserInfo(user) {
@@ -48,5 +51,5 @@ export function mapUserToUserInfo(user) {
     country: user.country || "",
     postalCode: user.postalCode || "",
     password: user.password || "",
-  }
+  };
 }

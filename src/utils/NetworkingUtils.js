@@ -29,8 +29,8 @@ HopPassionClient.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      navigate("/")
-      store.dispatch(logout())
+      navigate("/");
+      store.dispatch(logout());
     }
     return Promise.reject(error);
   }
