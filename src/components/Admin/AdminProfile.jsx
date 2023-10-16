@@ -2,7 +2,7 @@ import styles from "./AdminProfile.module.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { getLoggedInUser } from "../../utils/UserUtils";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfo, createProduct } from "../../redux/actions/actions";
@@ -14,7 +14,7 @@ import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
-import axios from "axios";
+import ReviewManagement from "./ReviewManagment/ReviewManagment";
 export const TotalUsersStadistics = createContext(null);
 import UsersTable from "./UsersTable/UsersTable";
 
@@ -61,6 +61,7 @@ const AdminProfile = () => {
         const userDataResponse = await dispatch(
           getUserInfo(id, token, navigate)
         );
+
         setUserData(userDataResponse);
         setIsLoading(false);
       } catch (error) {
@@ -71,7 +72,6 @@ const AdminProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
-
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
@@ -184,22 +184,23 @@ const AdminProfile = () => {
                 <span className={styles.text}>Estadísticas</span>
                 <hr />
                 <Container className={styles.continer_graphics}>
-                    
                   <CardTotalAmount />
                   <MyDoughnut />
-                    
-                    <hr />
+
+                  <hr />
                 </Container>
-                  <hr />
-                    <TopProducts/>
-                  <hr />
+                <hr />
+                <TopProducts />
+                <hr />
                 <AreaChart />
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
-            {activeOption === "Productos" && <ProductsTable setEditing={setEditing}/>}
-            {activeOption === "Usuarios" && <UsersTable/>}
-            {activeOption === "Reseñas" && <h1>Reseñas</h1>}
+            {activeOption === "Productos" && (
+              <ProductsTable setEditing={setEditing} />
+            )}
+            {activeOption === "Usuarios" && <UsersTable />}
+            {activeOption === "Reseñas" && <ReviewManagement />}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}
           </div>
         </div>

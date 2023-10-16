@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { setNavigate } from "./utils/NavigationUtils"
+import { setNavigate } from "./utils/NavigationUtils";
 import Home from "./components/Home/Home";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
@@ -17,12 +17,11 @@ import AdminProfile from "./components/Admin/AdminProfile";
 import { useEffect } from "react";
 
 function App() {
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setNavigate(navigate)
-  }, [])
+    setNavigate(navigate);
+  }, []);
 
   return (
     <div className="app">
@@ -31,17 +30,13 @@ function App() {
       <UserSessionManager />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/create" element={<Create />}></Route>
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/profile/:id" element={<UserProfile />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
-        <Route
-          path="/payment/start"
-          element={<PaymentGateway />}
-        />
+        <Route path="/payment/start" element={<PaymentGateway />} />
         <Route path="/payment/result" element={<PaymentStatus />}></Route>
       </Routes>
     </div>
