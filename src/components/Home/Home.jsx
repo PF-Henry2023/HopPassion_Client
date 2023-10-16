@@ -20,6 +20,8 @@ const Home = () => {
   const refFeaturedProducts = useRef(null);
   const user = getLoggedInUser();
 
+  console.log(user);
+
   const handleNavigate = () => {
     navigate("/signup");
   };
