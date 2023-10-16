@@ -14,6 +14,7 @@ import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
+import Protected from "./components/Protected/Protected";
 import { useEffect } from "react";
 
 function App() {
@@ -35,9 +36,18 @@ function App() {
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/profile/:id" element={<UserProfile />}></Route>
+
+        <Route path="/profile/:id" element={
+        <Protected requiredRole={["user"]}>
+          <UserProfile />
+        </Protected>
+        } />
         <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
+        <Route path="/adminprofile/:id" element={
+        <Protected requiredRole={[ "admin"]}>
+          <AdminProfile />
+        </Protected>
+        }/>
         <Route
           path="/payment/start"
           element={<PaymentGateway />}
