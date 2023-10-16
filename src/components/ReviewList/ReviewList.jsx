@@ -51,7 +51,6 @@ const ReviewList = ({ isLoading }) => {
                   score={promedio}
                   starDimension={23}
                   starSpacing={0.1}
-                  className={style.star}
                 />
               </div>
               <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
