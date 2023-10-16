@@ -1,6 +1,7 @@
 import style from "./ReviewCard.module.css";
 import StaticRating from "../../Rating/StaticRating";
 const ReviewCard = ({ review }) => {
+  console.log(review);
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
 
@@ -35,7 +36,9 @@ const ReviewCard = ({ review }) => {
   return (
     <div className={style.mainContainer}>
       <div className={style.nameDate}>
-        <div className={style.name}>{review.User.user}</div>
+        <div className={style.name}>
+          {review.User.user ? review.User?.user : review.User?.email}
+        </div>
         <div className={style.date}>{formatDate(review.updatedAt)}</div>
       </div>
       <div className={style.starContainer}>
