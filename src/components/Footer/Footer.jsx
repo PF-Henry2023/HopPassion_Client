@@ -1,5 +1,11 @@
 import style from "./Footer.module.css";
 import logo_light from "../../assets/logo_light.png";
+import visa from "../../assets/visa.png";
+import mastercard from "../../assets/mastercard.png";
+import cabal from "../../assets/cabal.png";
+import naranja from "../../assets/naranja.png";
+import american from "../../assets/american.png";
+
 
 export default function Footer() {
   return (
@@ -13,9 +19,13 @@ export default function Footer() {
         <div className={style.container_right__detail}>
           <div className={style.titles}>Medios de pago</div>
           <div className={style.container_right_detail__payment}>
-            <div className={style.paymentMethod}></div>
-            <div className={style.paymentMethod}></div>
-            <div className={style.paymentMethod}></div>
+            <div className={style.paymentMethodContainer}>
+            <img src={visa} alt="" className={style.paymentMethod}/>
+            <img src={mastercard} alt="" className={style.paymentMethod}/>
+            <img src={naranja} alt="" className={style.paymentMethod}/>
+            <img src={cabal} alt="" className={style.paymentMethod}/>
+            <img src={american} alt="" className={style.paymentMethod}/>
+            </div>
           </div>
         </div>
         <div className={style.container_right__detail}>
