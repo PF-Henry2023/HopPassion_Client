@@ -10,11 +10,13 @@ import Create from "../Create/Create";
 import ProductsTable from "./ProductsTable/ProductsTable";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
 import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
+import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
 import axios from "axios";
 export const TotalUsersStadistics = createContext(null);
+import UsersTable from "./UsersTable/UsersTable";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -69,35 +71,6 @@ const AdminProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
-
-  const dataChart = {
-    areaChart: {},
-    cardTotal: {},
-    donaChart: {},
-  };
-
-  useEffect(() => {
-    const getInfoChart = async () => {
-      try {
-        const areaChart1 = await axios.get(
-          "http://localhost:3001/stadistics/monthlyIncomeForTheYear?type=amount"
-        );
-        dataChart.areaChart = areaChart1.data;
-        const donutChart = await axios.get(
-          "http://localhost:3001/stadistics/totalUsers"
-        )
-        dataChart.donaChart = donutChart.data;
-        const cardTotal1 = await axios.get(
-          "http://localhost:3001/stadistics/historixalTotalSales"
-        )
-        dataChart.cardTotal = cardTotal1.data;
-        console.log("este es la info;", dataChart);
-      } catch (error) {
-        throw error
-      }
-    }
-    getInfoChart();
-  },[])
 
 
   const handleSubmitProduct = async (event) => {
@@ -209,17 +182,23 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
-                  <Container className={styles.continer_graphics}>
-                    <CardTotalAmount />
-                    <MyDoughnut />
-                  </Container>
+                <hr />
+                <Container className={styles.continer_graphics}>
+                    
+                  <CardTotalAmount />
+                  <MyDoughnut />
+                    
+                    <hr />
+                </Container>
                   <hr />
-                  <AreaChart />
+                    <TopProducts/>
+                  <hr />
+                <AreaChart />
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
             {activeOption === "Productos" && <ProductsTable setEditing={setEditing}/>}
-            {activeOption === "Usuarios" && <h1>Usuarios</h1>}
+            {activeOption === "Usuarios" && <UsersTable/>}
             {activeOption === "Reseñas" && <h1>Reseñas</h1>}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}
           </div>
