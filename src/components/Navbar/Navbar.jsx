@@ -5,8 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import FormControl from "react-bootstrap/FormControl";
 import logo_light from "../../assets/logo_light.png";
-import profile from "../../assets/profile.png";
-import cartIcon from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";

@@ -5,7 +5,13 @@ import styles from "./UserProfileOrders.module.css";
 import UserReviews from "../UserReviews/UserReviews";
 import UserOrderDetails from "../UserOrderDetails/UserOrderDetails";
 
-const UserProfileOrder = ({ id, status, createdAt, total, onOrderDetailsClick }) => {
+const UserProfileOrder = ({
+  id,
+  status,
+  createdAt,
+  total,
+  onOrderDetailsClick,
+}) => {
   function mapStatusToStatus(status) {
     switch (status) {
       case "send":
@@ -56,6 +62,7 @@ const UserProfileOrders = () => {
   const [orders, setOrders] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState();
 
   useEffect(() => {
     getOrders();
@@ -65,8 +72,9 @@ const UserProfileOrders = () => {
     setShowReviews(true);
   }
 
-  function handleOrderDetailsClick() {
+  function handleOrderDetailsClick(orderId) {
     setShowOrderDetails(true);
+    setSelectedOrderId(orderId);
   }
 
   function handleBackToOrders() {
@@ -96,7 +104,7 @@ const UserProfileOrders = () => {
     } else if (showReviews) {
       return <UserReviews onBackClick={handleBackToOrders} />;
     } else if (showOrderDetails) {
-      return <UserOrderDetails onBackClick={handleBackToOrders} />;
+      return <UserOrderDetails onBackClick={handleBackToOrders} orderId={selectedOrderId}/>;
     } else {
       const totalOrders = orders.length;
       return (
@@ -115,10 +123,17 @@ const UserProfileOrders = () => {
                   status={order.status}
                   createdAt={order.created_at}
                   total={order.total}
-                  onOrderDetailsClick={handleOrderDetailsClick}
+                  onOrderDetailsClick={() => handleOrderDetailsClick(order.id)}
                 />
               </div>
             ))}
+            {showOrderDetails && (
+              <UserOrderDetails
+                onBackClick={handleBackToOrders}
+                orderId={selectedOrderId}
+                userId={userId}
+              />
+            )}
           </div>
         </div>
       );

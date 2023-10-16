@@ -1,156 +1,62 @@
-// import { useState, useEffect } from "react";
-// import Loading from "../../Loading/Loading";
-// import HopPassionClient from "../../../utils/NetworkingUtils";
-// import styles from "./UserOrderDetails.module.css";
-// import UserReviews from "../UserReviews/UserReviews";
+import { useState, useEffect } from "react";
+import HopPassionClient from "../../../utils/NetworkingUtils";
+import styles from "./UserOrderDetails.module.css";
+import { ArrowLeft } from "react-bootstrap-icons";
+import Loading from "../../Loading/Loading";
+import { useParams } from "react-router-dom";
 
+const UserOrderDetails = ({ orderId, onBackClick }) => {
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [orderDetails, setOrdersDetails] = useState([]);
 
-import React from 'react'
+  async function getOrderDetails(orderId) {
+    setIsLoading(true);
+    try {
+      const response = await HopPassionClient.get(`/orders/${orderId}`);
+      console.log(response);
+      setOrdersDetails(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error al obtener el detalle de la órden", error);
+    }
+  }
 
-const UserOrderDetails = () => {
+  useEffect(() => {
+    getOrderDetails(orderId);
+  }, [orderId, id]);
+
   return (
-    <div>
-      hola
+    <div className={styles.header}>
+      <ArrowLeft className={styles.backButton} onClick={onBackClick} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+         <h1>Detalles de la orden</h1>
+          <p>ID de la orden: {orderId}</p>
+          <p>Fecha de creación: {orderDetails.created_at}</p>
+          <p>Estado de la orden: {orderDetails.status}</p>
+          <h2>Dirección de envío:</h2>
+          <p>Calle: {orderDetails.address.street}</p>
+          <p>Código Postal: {orderDetails.address.postal_code}</p>
+          <p>Ciudad: {orderDetails.address.city}</p>
+          <p>País: {orderDetails.address.country}</p>
+          <h2>Productos:</h2>
+          <ul>
+            {orderDetails.products.map((product, index) => (
+              <li key={index}>
+                <p>Nombre del producto: {product.name}</p>
+                <p>Cantidad: {product.quantity}</p>
+                <p>Precio unitario: ${product.price}</p>
+                <p>Subtotal: ${product.subtotal}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default UserOrderDetails
-
-// const UserProfileOrder = ({ id, status, createdAt, total }) => {
-//   function mapStatusToStatus(status) {
-//     switch (status) {
-//       case "send":
-//         return "Confirmado";
-//       case "delivered":
-//         return "Entregado";
-//       default:
-//         return "";
-//     }
-//   }
-
-//   function mapCreatedAtToDate(createdAt) {
-//     const date = new Date(createdAt);
-//     const year = date.getUTCFullYear();
-//     const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-//     const day = String(date.getUTCDate()).padStart(2, "0");
-//     const hours = String(date.getUTCHours()).padStart(2, "0");
-//     const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-//     return `${year}-${month}-${day} ${hours}:${minutes}`;
-//   }
-
-//   return (
-//     <div className={styles.container}>
-//       <div className={styles.text}>
-//         <div className={styles.row}>
-//           <h2>Fecha del pedido:</h2>
-//           <h2 className={styles.totalSubtitle}>Total:</h2>
-//           <h2>Estado del pedido:</h2>
-//         </div>
-//         <div className={styles.row}>
-//           <p>{mapCreatedAtToDate(createdAt)}</p>
-//           <p>${total}</p>
-//           <p className={styles.status}>{mapStatusToStatus(status)}</p>
-//         </div>
-//         <div className={styles.row}></div>
-//         <h2>Número de orden:</h2>
-//         <div className={styles.row}>
-//           <p>{id}</p>
-//         </div>
-//       </div>
-//       <button>Ver detalle del pedido</button>
-//     </div>
-//   );
-// };
-
-// const UserProfileOrders = () => {
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [orders, setOrders] = useState([]);
-
-//   useEffect(() => {
-//     getOrders();
-//   }, []);
-
-//   async function getOrders() {
-//     setIsLoading(true);
-//     try {
-//       const response = await HopPassionClient.get("/orders");
-//       console.log(response)
-//       setOrders(response.data);
-//       setIsLoading(false);
-//     } catch (error) {
-//       console.error("Error al obtener las ordenes del usuario", error);
-//     }
-//   }
-
-//   function drawDefault() {
-//     const totalOrders = orders.length;
-
-//     return (
-//       <div className={styles.mainContainer}>
-//         <h1>Mis compras</h1>
-//         <p className={styles.totalOrders}>{totalOrders} compras totales</p>
-//         <div className={styles.reviewsContainer}>
-//           Opiná sobre tus productos comprados
-//           <button onClick={handleReviewsClick}>Calificar</button>
-//         </div>
-//         {showReviews ? (
-//           <UserReviews />
-//         ) : (
-//           <div>
-//             {orders.map((order) => (
-//               <div className={styles.purchaseContainer} key={order.id}>
-//                 <UserProfileOrder
-//                   id={order.id}
-//                   status={order.status}
-//                   createdAt={order.created_at}
-//                   total={order.total}
-//                 />
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-//     );
-//   }
-
-//   function drawLoading() {
-//     return <Loading />;
-//   }
-
-//   function drawComponent() {
-//     if (isLoading) {
-//       return drawLoading();
-//     } else if (showReviews) {
-//       return <UserReviews onBackClick={handleBackToOrders} />;
-//     } else {
-//       const totalOrders = orders.length;
-//       return (
-//         <div className={styles.mainContainer}>
-//           <h1>Mis compras</h1>
-//           <p className={styles.totalOrders}>{totalOrders} compras totales</p>
-//           <div className={styles.reviewsContainer}>
-//             Opiná sobre tus productos comprados
-//             <button onClick={handleReviewsClick}>Calificar</button>
-//           </div>
-//           <div>
-//             {orders.map((order) => (
-//               <div className={styles.purchaseContainer} key={order.id}>
-//                 <UserProfileOrder
-//                   id={order.id}
-//                   status={order.status}
-//                   createdAt={order.created_at}
-//                   total={order.total}
-//                 />
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       );
-//     }
-//   }
-
-//   return <>{drawComponent()}</>;
-// };
-
-// export default UserProfileOrders;
+export default UserOrderDetails;
