@@ -26,3 +26,5 @@ export const UPDATE_USER = "UPDATE_USER";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const GET_TOTALSALES = "GET_TOTALSALES";
 export const GET_TOTAL_USERS = "GET_TOTAL_USERS";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const CLEAN_REVIEWS = "CLEAN_REVIEWS";

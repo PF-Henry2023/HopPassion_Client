@@ -29,7 +29,17 @@ import {
   GET_REVIEWS,
   GET_TOTALSALES,
   GET_TOTAL_USERS,
+  UPDATE_PRODUCT,
+  CLEAN_REVIEWS,
 } from "./actions-type";
+
+export const cleanReviews = () => {
+  return function (dispatch) {
+    return dispatch({
+      type: CLEAN_REVIEWS,
+    });
+  };
+};
 
 export const getReviews = (idProd, idUsuario) => {
   return async function (dispatch) {
@@ -128,7 +138,6 @@ export function getProductById(id) {
 export const getProducts = (filters, query) => {
   return async (dispatch) => {
     try {
-      console.log(buildGetProductsUrl(filters, query));
       try {
         const result = await HopPassionClient.get(
           buildGetProductsUrl(filters, query)
@@ -422,10 +431,12 @@ export const processPayment = async (formData) => {
 export const getTotalSales = () => {
   return async (dispatch) => {
     try {
-      const { data } = await HopPassionClient.get("/stadistics/historixalTotalSales");
+      const { data } = await HopPassionClient.get(
+        "/stadistics/historixalTotalSales"
+      );
       dispatch({
         type: GET_TOTALSALES,
-        payload: data.data
+        payload: data.data,
       });
     } catch (error) {
       alert(error.message);
@@ -440,11 +451,39 @@ export const getTotalUsers = async () => {
       console.log("estos son los datos", data);
       dispatch({
         type: GET_TOTAL_USERS,
-        payload: data.data
-      })
+        payload: data.data,
+      });
       return data.data;
     } catch (error) {
-      window.alert(error.message)
+      window.alert(error.message);
     }
-  }
-}
+  };
+};
+
+export const updateProduct = (id, productData) => {
+  return async (dispatch) => {
+    try {
+      if (!productData) {
+        console.error("Los datos del producto son inválidos.");
+        return;
+      }
+
+      console.log("Datos a enviar:", productData);
+
+      const response = await HopPassionClient.put(
+        `/product/${id}`,
+        productData
+      );
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.status === 200) {
+        dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+        return response.data;
+      } else {
+        console.error("Error al actualizar el producto:", response);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
+    }
+  };
+};

@@ -220,7 +220,7 @@ const AdminProfile = () => {
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
-            {activeOption === "Productos" && <ProductsTable />}
+            {activeOption === "Productos" && <ProductsTable setEditing={setEditing}/>}
             {activeOption === "Usuarios" && <h1>Usuarios</h1>}
             {activeOption === "Reseñas" && <h1>Reseñas</h1>}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}

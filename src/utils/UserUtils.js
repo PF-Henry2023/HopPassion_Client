@@ -36,3 +36,17 @@ export function setAgeConfirmation(confirmed) {
 export function checkAgeConfirmation() {
   return window.localStorage.getItem("over18") ?? false
 }
+
+export function mapUserToUserInfo(user) {
+  return {
+    name: user.name || "",
+    lastName: user.lastName || "",
+    email: user.email || "",
+    phone: user.phone || "",
+    address: user.address || "",
+    city: user.city || "",
+    country: user.country || "",
+    postalCode: user.postalCode || "",
+    password: user.password || "",
+  }
+}

@@ -29,6 +29,8 @@ import {
   GET_REVIEWS,
   GET_TOTALSALES,
   GET_TOTAL_USERS,
+  UPDATE_PRODUCT,
+  CLEAN_REVIEWS,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -54,6 +56,12 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    //CLEAN_REVIEWS
+    case CLEAN_REVIEWS:
+      return {
+        ...state,
+        reviewList: [],
+      };
     case GET_REVIEWS:
       return {
         ...state,
@@ -192,7 +200,21 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         totalUsers: action.payload,
-      }
+      };
+    case UPDATE_PRODUCT:
+      const updateProduct = action.payload; // Los nuevos datos del producto a actualizar
+      const updateProducts = state.products.map((product) => {
+        if (product.id === updateProduct.id) {
+          // Reemplaza el producto que coincide con el ID
+          return updateProduct;
+        } else {
+          return product;
+        }
+      });
+      return {
+        ...state,
+        products: updateProducts,
+      };
     default:
       return { ...state };
   }
