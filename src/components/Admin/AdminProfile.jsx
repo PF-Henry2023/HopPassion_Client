@@ -10,6 +10,7 @@ import Create from "../Create/Create";
 import ProductsTable from "./ProductsTable/ProductsTable";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
 import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
+import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
@@ -180,11 +181,17 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
+                <hr />
                 <Container className={styles.continer_graphics}>
+                    
                   <CardTotalAmount />
                   <MyDoughnut />
+                    
+                    <hr />
                 </Container>
-                <hr />
+                  <hr />
+                    <TopProducts/>
+                  <hr />
                 <AreaChart />
               </div>
             )}
