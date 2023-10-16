@@ -16,6 +16,7 @@ import { Container } from "react-bootstrap";
 import { createContext } from "react";
 import axios from "axios";
 export const TotalUsersStadistics = createContext(null);
+import UsersTable from "./UsersTable/UsersTable";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -196,10 +197,8 @@ const AdminProfile = () => {
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
-            {activeOption === "Productos" && (
-              <ProductsTable setEditing={setEditing} />
-            )}
-            {activeOption === "Usuarios" && <h1>Usuarios</h1>}
+            {activeOption === "Productos" && <ProductsTable setEditing={setEditing}/>}
+            {activeOption === "Usuarios" && <UsersTable/>}
             {activeOption === "Reseñas" && <h1>Reseñas</h1>}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}
           </div>
