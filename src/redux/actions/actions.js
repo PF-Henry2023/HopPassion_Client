@@ -72,7 +72,17 @@ export const getUsers = () => {
   };
 };
 
-export const signup = ({ name, lastName, address, email, phone, password }) => {
+export const signup = ({
+  name,
+  lastName,
+  address,
+  email,
+  phone,
+  password,
+  city,
+  postalCode,
+  country,
+}) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signup", {
@@ -82,6 +92,9 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
         email,
         phone,
         password,
+        city,
+        postalCode,
+        country,
       });
       handleUserLogin(response.data);
       dispatch({
