@@ -5,7 +5,7 @@ import { getLoggedInUser } from "../../utils/UserUtils";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserInfo, createProduct } from "../../redux/actions/actions";
+import { getUserInfo } from "../../redux/actions/actions";
 import Create from "../Create/Create";
 import ProductsTable from "./ProductsTable/ProductsTable";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
@@ -40,17 +40,6 @@ const AdminProfile = () => {
     password: "",
   });
 
-  const [productData, setProductData] = useState({
-    name: "",
-    image: "",
-    description: "",
-    country: "",
-    price: "",
-    alcoholContent: "",
-    stock: "",
-    amountMl: "",
-  });
-
   useEffect(() => {
     /* if (user.id !== Number(id)) {
       navigate("/adminprofile");
@@ -72,27 +61,6 @@ const AdminProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
-
-  const handleSubmitProduct = async (event) => {
-    event.preventDefault();
-    const dataToUpdate = {
-      name: productData.name,
-      image: productData.image,
-      description: productData.description,
-      country: productData.country,
-      price: productData.price,
-      alcoholContent: productData.alcoholContent,
-      stock: productData.stock,
-      amountMl: productData.amountMl,
-    };
-    dispatch(createProduct(dataToUpdate))
-      .then(() => {
-        setEditing(false);
-      })
-      .catch((error) => {
-        console.error("Error al crear el producto:", error);
-      });
-  };
 
   return (
     <>
