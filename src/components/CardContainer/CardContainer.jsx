@@ -19,11 +19,10 @@ export default function CardContainer() {
 
   const products = useSelector(getMemoizedProducts);
 
-  // Define el selector base sin memoización
   const selectPage = (state) =>
     state.products ? state.products.page : { page: 1, hasMore: true };
-  const selectFilters = (state) => state.filters;
-  const selectSearchQuery = (state) => state.filters.searchQuery;
+  const filters = useSelector((state) => state.filters);
+  const searchQuery = useSelector((state) => state.query);
 
   // Aplica memoización al selector usando createSelector
   const getPageInfo = createSelector([selectPage], (page) => {
@@ -35,8 +34,6 @@ export default function CardContainer() {
 
   // Luego, usa getPageInfo en tu componente
   const page = useSelector(getPageInfo);
-  const filters = useSelector(selectFilters);
-  const searchQuery = useSelector(selectSearchQuery);
 
   useEffect(() => {
     dispatch(getProducts(filters, searchQuery));
