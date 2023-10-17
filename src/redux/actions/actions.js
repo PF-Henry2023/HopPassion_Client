@@ -430,8 +430,6 @@ export const updateUser = (id, userData) => {
         return;
       }
 
-      updateUserLocal(userData);
-
       console.log("Datos a enviar:", userData);
 
       const response = await HopPassionClient.put(

@@ -40,6 +40,7 @@ export const updateUserLocal = (input) => {
     country: input.country,
   };
   window.localStorage.setItem("user", JSON.stringify(user));
+  console.log(user);
   return;
 };
 

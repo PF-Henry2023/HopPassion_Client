@@ -1,11 +1,9 @@
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
-
 import UserProfileProfile from "./UserProfileProfile/UserProfileProfile";
 import UserProfileAddress from "./UserProfileAdress/UserProfileAddress";
 import UserProfileOrders from "./UserProfileOrders/UserProfileOrders";
-
 import styles from "./UserProfile.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
