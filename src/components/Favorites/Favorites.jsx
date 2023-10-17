@@ -6,7 +6,7 @@ export default function Favorites(props) {
   return (
     <div className={style.container}>
       {
-        favorites.map(e => (
+        favorites?.map(e => (
           <Card
             key={e.id}
             id={e.id}
