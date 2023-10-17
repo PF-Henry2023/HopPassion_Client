@@ -47,8 +47,9 @@
 }
 .productInfo {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 100px;
+    gap: 10px;
 }
 .buttons{
     display: flex;
@@ -61,4 +62,15 @@
 .buttonDesactivar{
     background-color: rgb(240, 183, 183);
     color: rgb(167, 58, 58);
+}
+.contentProduct {
+    display: flex;
+    flex-direction: column;
+}
+.product{
+  display: flex;
+  gap: 50px; 
+}
+.product span {
+    margin: 2px 0; 
 }
