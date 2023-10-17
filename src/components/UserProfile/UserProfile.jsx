@@ -1,15 +1,11 @@
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
-<<<<<<< HEAD
-import UserProfileProfile from "./UserProfileProfile";
-import UserProfileAddress from "./UserProfileAddress";
-import UserProfileOrders from "./UserProfileOrders";
-=======
+
 import UserProfileProfile from "./UserProfileProfile/UserProfileProfile";
 import UserProfileAddress from "./UserProfileAdress/UserProfileAddress";
 import UserProfileOrders from "./UserProfileOrders/UserProfileOrders";
->>>>>>> eb7659e4a1d7b2dee2a878a4c3b6767dc456d5e9
+
 import styles from "./UserProfile.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -34,7 +30,6 @@ const UserProfile = () => {
   const [searchParams] = useSearchParams();
   const user = useSelector((state) => state.user);
 
-<<<<<<< HEAD
   console.log(user);
 
   const [activeOption, setActiveOption] = useState(
@@ -74,41 +69,6 @@ const UserProfile = () => {
               </h2>
               <hr />
 
-=======
-  const [activeOption, setActiveOption] = useState(
-    mapQueryToTab(searchParams.get("tab"))
-  );
-
-  function isLoading() {
-    return user == null;
-  }
-
-  function mapQueryToTab(tab) {
-    return Object.keys(options).find((o) => o === tab) ?? "profile";
-  }
-
-  function selectedComponent() {
-    const SelectedComponent = options[activeOption].component;
-    return <SelectedComponent />;
-  }
-
-  return (
-    <div>
-      <Navbar />
-      {isLoading() ? (
-        <Loading />
-      ) : (
-        <div className={styles.mainContainer}>
-          <div className={styles.leftContent}>
-            <div className={styles.menu}>
-              <p>Hola,</p>
-
-              <h2>
-                {user.name} {user.lastName}!
-              </h2>
-              <hr />
-
->>>>>>> eb7659e4a1d7b2dee2a878a4c3b6767dc456d5e9
               <ul className="nav flex-column">
                 {Object.keys(options).map((optionId) => {
                   const option = options[optionId];
@@ -132,10 +92,7 @@ const UserProfile = () => {
             </div>
           </div>
           <div className={styles.rightContent}>
-<<<<<<< HEAD
             <h1>{selectedTitle()}</h1>
-=======
->>>>>>> eb7659e4a1d7b2dee2a878a4c3b6767dc456d5e9
             {selectedComponent()}
           </div>
         </div>

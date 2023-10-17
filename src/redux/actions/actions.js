@@ -4,6 +4,7 @@ import {
   handleUserLogin,
   getLoggedInUser,
   handleUserLogout,
+  updateUserLocal,
 } from "../../utils/UserUtils";
 import {
   SIGNUP,
@@ -428,6 +429,8 @@ export const updateUser = (id, userData) => {
         console.error("Los datos del usuario son inválidos.");
         return;
       }
+
+      updateUserLocal(userData);
 
       console.log("Datos a enviar:", userData);
 
