@@ -10,10 +10,10 @@ import { getCart, getCartRequest } from "../../redux/actions/actions";
 import HopPassionClient from "../../utils/NetworkingUtils";
 import { useNavigate } from "react-router-dom";
 
+
 initMercadoPago("TEST-f3d5c7f4-e6c2-4b81-a665-275a86d19bfd");
 
 const CardPaymentWrapper = memo((props) => {
-  const user = JSON.parse(localStorage.getItem("user"));
   return <CardPayment
     locale="es-AR"
     initialization={{
@@ -37,7 +37,6 @@ const CardPaymentWrapper = memo((props) => {
 }, (prev, next) => {
   return prev.total == next.total
 })
-
 
 const MPPayButton = ({total, loading, handlePayButton}) => {
   return <>

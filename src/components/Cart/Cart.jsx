@@ -16,6 +16,8 @@ import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { getLoggedInUser } from "../../utils/UserUtils";
+import Swal from 'sweetalert2'
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -24,6 +26,28 @@ const Cart = () => {
   const { orderId } = useParams();
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const user = getLoggedInUser();
+  useEffect(() => {
+    if(!user.phone && !user.postalCode && !user.city && !user.country){
+      Swal.fire({
+        title: 'Faltan datos!!',
+        text: "Todavia no proporcionaste tus datos de envio!!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Completar datos'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const id = user.id;
+          navigate(`/profile/${id}`)
+        } else {
+          navigate("/")
+        }
+      })
+    }
+  },[])
+  console.log(user);
 
   useEffect(() => {
     dispatch(getCartRequest());

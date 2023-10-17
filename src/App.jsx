@@ -15,6 +15,7 @@ import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
 import { useEffect } from "react";
+import NotFound from "./components/Not_found/NotFound";
 
 function App() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
         <Route path="/payment/start" element={<PaymentGateway />} />
         <Route path="/payment/result" element={<PaymentStatus />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
   );
