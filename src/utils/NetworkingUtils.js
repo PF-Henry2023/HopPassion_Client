@@ -5,10 +5,14 @@ import { navigate } from "./NavigationUtils";
 
 const HopPassionClient = axios.create({
 <<<<<<< HEAD
+<<<<<<< HEAD
   baseURL: "http://localhost:3001",
 =======
   baseURL: "http://localhost:3001/"
 >>>>>>> userReviews
+=======
+  baseURL: "http://localhost:3001",
+>>>>>>> d23955b286fea72e05cacf2e95e9b16097c47516
 });
 
 //otra forma mas corta seria:
