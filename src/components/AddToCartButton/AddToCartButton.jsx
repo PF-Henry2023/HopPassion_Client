@@ -54,6 +54,19 @@ const AddToCartButton = ({ productId, stock, quantity = 1 }) => {
     return isAdding || (cartSyncing && user != null);
   };
 
+  function componentContent() {
+    if (user && user.role == "admin") {
+      return null
+    }
+
+    return <button
+            className={style.button}
+            onClick={() => handleAddToCart()}
+            disabled={existingQuantity() >= stock || isLoading()}>
+            {buttonContent()}
+          </button>
+  }
+
   function buttonContent() {
     if (isLoading()) {
       return <Spinner animation="border" role="status"></Spinner>;
@@ -69,13 +82,9 @@ const AddToCartButton = ({ productId, stock, quantity = 1 }) => {
   }
 
   return (
-    <button
-      className={style.button}
-      onClick={() => handleAddToCart()}
-      disabled={existingQuantity() >= stock || isLoading()}
-    >
-      {buttonContent()}
-    </button>
+    <>
+      { componentContent() }
+    </>
   );
 };
 

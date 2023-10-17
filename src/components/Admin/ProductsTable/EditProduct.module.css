@@ -1,0 +1,9 @@
+.catePrecPais {
+    display: flex;
+    justify-content: space-between;
+}
+.volGraStock {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}

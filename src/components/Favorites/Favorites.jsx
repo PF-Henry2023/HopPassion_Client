@@ -1,14 +1,21 @@
 import style from "./Favorites.module.css";
 import Card from "../Card/Card";
 
-export default function Favorites() {
+export default function Favorites(props) {
+  const { favorites } = props;
   return (
     <div className={style.container}>
-      <Card
-        title="Cerveza IPA"
-        price="5.99"
-        image="https://res.cloudinary.com/dkwvnp3ut/image/upload/v1695689024/HopPassion/3.png"
-      />
+      {
+        favorites.map(e => (
+          <Card
+            key={e.id}
+            id={e.id}
+            title={e.name}
+            price={e.price}
+            image={e.image}
+          />
+        ))
+      }
     </div>
   );
 }

@@ -4,11 +4,11 @@
   align-items: center;
   border-radius: 0px 0px 4px 4px;
   height: 100%;
-  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
-   align-content: flex-end;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  align-content: flex-end;
 }
 .imageWrapper {
-  width: 255px;
+  width: 230px;
   height: 230px;
   background-color: #ffffff;
   overflow: hidden;
@@ -56,4 +56,5 @@
   margin: 0 auto;
   background-color: #edf2db;
   width: 100%;
+  text-align: center;
 }

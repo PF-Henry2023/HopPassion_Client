@@ -10,7 +10,7 @@ const getMemoizedReviewList = createSelector(
   [selectReviewList],
   (reviewList) => reviewList
 );
-
+//const rev = useSelector(getMemoizedReviewList);
 const ReviewList = ({ isLoading }) => {
   const rev = useSelector(getMemoizedReviewList);
 
@@ -35,7 +35,6 @@ const ReviewList = ({ isLoading }) => {
     signo = "?";
   }
   return (
-    // Renderiza solo si isLoading es false
     !isLoading && (
       <div className={style.mainContainer}>
         <div name="title" className={style.title}>

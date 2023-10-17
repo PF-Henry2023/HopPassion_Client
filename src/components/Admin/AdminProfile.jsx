@@ -2,10 +2,10 @@ import styles from "./AdminProfile.module.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { getLoggedInUser } from "../../utils/UserUtils";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserInfo, createProduct } from "../../redux/actions/actions";
+import { getUserInfo } from "../../redux/actions/actions";
 import Create from "../Create/Create";
 import ProductsTable from "./ProductsTable/ProductsTable";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
@@ -14,7 +14,7 @@ import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
-import axios from "axios";
+import ReviewManagement from "./ReviewManagment/ReviewManagment";
 export const TotalUsersStadistics = createContext(null);
 import UsersTable from "./UsersTable/UsersTable";
 
@@ -40,27 +40,17 @@ const AdminProfile = () => {
     password: "",
   });
 
-  const [productData, setProductData] = useState({
-    name: "",
-    image: "",
-    description: "",
-    country: "",
-    price: "",
-    alcoholContent: "",
-    stock: "",
-    amountMl: "",
-  });
-
   useEffect(() => {
-    if (user.id !== Number(id)) {
+    /* if (user.id !== Number(id)) {
       navigate("/adminprofile");
       return;
-    }
+    } */
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
           getUserInfo(id, token, navigate)
         );
+
         setUserData(userDataResponse);
         setIsLoading(false);
       } catch (error) {
@@ -71,28 +61,6 @@ const AdminProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
-
-
-  const handleSubmitProduct = async (event) => {
-    event.preventDefault();
-    const dataToUpdate = {
-      name: productData.name,
-      image: productData.image,
-      description: productData.description,
-      country: productData.country,
-      price: productData.price,
-      alcoholContent: productData.alcoholContent,
-      stock: productData.stock,
-      amountMl: productData.amountMl,
-    };
-    dispatch(createProduct(dataToUpdate))
-      .then(() => {
-        setEditing(false);
-      })
-      .catch((error) => {
-        console.error("Error al crear el producto:", error);
-      });
-  };
 
   return (
     <>
@@ -184,22 +152,23 @@ const AdminProfile = () => {
                 <span className={styles.text}>Estadísticas</span>
                 <hr />
                 <Container className={styles.continer_graphics}>
-                    
                   <CardTotalAmount />
                   <MyDoughnut />
-                    
-                    <hr />
+
+                  <hr />
                 </Container>
-                  <hr />
-                    <TopProducts/>
-                  <hr />
+                <hr />
+                <TopProducts />
+                <hr />
                 <AreaChart />
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
-            {activeOption === "Productos" && <ProductsTable setEditing={setEditing}/>}
-            {activeOption === "Usuarios" && <UsersTable/>}
-            {activeOption === "Reseñas" && <h1>Reseñas</h1>}
+            {activeOption === "Productos" && (
+              <ProductsTable setEditing={setEditing} />
+            )}
+            {activeOption === "Usuarios" && <UsersTable />}
+            {activeOption === "Reseñas" && <ReviewManagement />}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}
           </div>
         </div>
