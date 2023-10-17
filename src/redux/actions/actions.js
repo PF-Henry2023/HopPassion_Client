@@ -4,6 +4,7 @@ import {
   handleUserLogin,
   getLoggedInUser,
   handleUserLogout,
+  updateUserLocal,
 } from "../../utils/UserUtils";
 import {
   SIGNUP,

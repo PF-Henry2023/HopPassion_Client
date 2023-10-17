@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import styles from "./UserProfileProfile.module.css"
+import styles from "./UserProfileProfile.module.css";
 import { mapUserToUserInfo } from "../../../utils/UserUtils";
 import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
+import { updateUser } from "../../../redux/actions/actions";
+import { useDispatch } from "react-redux";
 
 const UserProfileProfile = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editableData, setEditableData] = useState({});
   const [userData, setUserData] = useState({
     name: "",
     lastName: "",
-    email: "",
     phone: "",
     password: "",
   });
@@ -39,7 +41,7 @@ const UserProfileProfile = () => {
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    if (!["name", "lastName", "email", "phone", "password"].includes(name)) {
+    if (!["name", "lastName", "phone", "password"].includes(name)) {
       return;
     }
     setEditableData({ ...editableData, [name]: value });
@@ -49,10 +51,7 @@ const UserProfileProfile = () => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const response = await HopPassionClient.put(
-        `/users/update/${id}`,
-        editableData
-      );
+      dispatch(updateUser(id, editableData));
       setUserData({ ...userData, ...editableData });
       setIsEditing(false);
       setIsLoading(false);
@@ -77,7 +76,6 @@ const UserProfileProfile = () => {
             <p>{userData.lastName}</p>
           </div>
         </div>
-        <h4>Correo electrónico</h4> <p>{userData.email}</p>
         <div className={styles.rowContainer}>
           <div>
             <h4>Contraseña</h4> <p>********</p>
@@ -114,8 +112,6 @@ const UserProfileProfile = () => {
               <input type="text" name="lastName" onChange={handleInputChange} />
             </div>
           </div>
-          <h4>Correo electrónico</h4>{" "}
-          <input type="text" name="email" onChange={handleInputChange} />
           <div className={styles.rowContainer}>
             <div>
               <h4>Contraseña</h4>{" "}
@@ -127,8 +123,8 @@ const UserProfileProfile = () => {
             </div>
           </div>
           <input type="submit" value="Guardar" />
+          <button onClick={() => handleEditClick(false)}>Cancelar</button>
         </form>
-        <button onClick={() => handleEditClick(false)}>Cancelar</button>
       </>
     );
   }

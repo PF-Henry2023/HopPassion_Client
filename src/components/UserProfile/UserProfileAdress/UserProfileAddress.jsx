@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./UserProfileAddress.module.css";
 import { mapUserToUserInfo } from "../../../utils/UserUtils";
 import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../redux/actions/actions";
+import CountryList from "react-select-country-list";
+import Select from "react-select";
 
 const UserProfileAddress = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const countryoptions = useMemo(() => CountryList().getData(), []);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editableData, setEditableData] = useState({});
@@ -36,22 +42,19 @@ const UserProfileAddress = () => {
     setIsEditing(editing);
   }
 
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    if (!["address", "country", "city", "postalCode"].includes(name)) {
-      return;
+  function handleInputChange(field, value) {
+    let fieldValue = value;
+    if (typeof value === "object" && value.label) {
+      fieldValue = value.label;
     }
-    setEditableData({ ...editableData, [name]: value });
+    setEditableData({ ...editableData, [field]: fieldValue });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const response = await HopPassionClient.put(
-        `/users/update/${id}`,
-        editableData
-      );
+      dispatch(updateUser(id, editableData));
       setUserData({ ...userData, ...editableData });
       setIsEditing(false);
       setIsLoading(false);
@@ -104,15 +107,6 @@ const UserProfileAddress = () => {
               <h4>Calle</h4>
               <input type="text" name="address" onChange={handleInputChange} />
             </div>
-            <div>
-              {/* <h4>Ciudad</h4>
-                    <input
-                    type="text"
-                    name="city"
-                    value={userData.city}
-                    onChange={handleInputChange}
-                    /> */}
-            </div>
           </div>
           <h4>Código Postal</h4>{" "}
           <input type="text" name="postalCode" onChange={handleInputChange} />
@@ -123,13 +117,21 @@ const UserProfileAddress = () => {
             </div>
             <div>
               <h4>País</h4>{" "}
-              <input type="text" name="country" onChange={handleInputChange} />
+              <Select
+                options={countryoptions}
+                placeholder="Selecciona el país que corresponde"
+                value={{
+                  value: editableData.country,
+                  label: editableData.country,
+                }}
+                onChange={(value) => handleInputChange("country", value)}
+                name="country"
+              />
             </div>
           </div>
-          {/* <button className={styles.saveButton} onClick={handleSave}>
-                Guardar
-                </button> */}
-          <input type="submit" value="Guardar" />
+          <button className={styles.saveButton} type="submit" value="Guardar">
+            Guardar
+          </button>
         </form>
         <button onClick={() => handleEditClick(false)}>Cancelar</button>
       </>

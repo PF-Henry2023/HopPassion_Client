@@ -28,6 +28,8 @@ const UserProfile = () => {
   const [searchParams] = useSearchParams();
   const user = useSelector((state) => state.user);
 
+  console.log(user);
+
   const [activeOption, setActiveOption] = useState(
     mapQueryToTab(searchParams.get("tab"))
   );
@@ -43,6 +45,10 @@ const UserProfile = () => {
   function selectedComponent() {
     const SelectedComponent = options[activeOption].component;
     return <SelectedComponent />;
+  }
+
+  function selectedTitle() {
+    return options[activeOption].title;
   }
 
   return (
@@ -84,6 +90,7 @@ const UserProfile = () => {
             </div>
           </div>
           <div className={styles.rightContent}>
+            <h1>{selectedTitle()}</h1>
             {selectedComponent()}
           </div>
         </div>
