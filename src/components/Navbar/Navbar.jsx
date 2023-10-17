@@ -35,8 +35,17 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    dispatch(logout(() => navigate("/")));
+    dispatch(logout());
+    navigate("/");
   };
+
+  function profileLink() {
+    if (user.role == "admin") {
+      return `/adminprofile/${user.id}`
+    } else if (user.role == "user") {
+      return `/profile/${user.id}`
+    }
+  }
 
   function drawUserSection() {
     if (user) {
@@ -51,13 +60,13 @@ export default function NavBar() {
             </p>
           </Link>
 
-          <Link to={`/profile/${user.id}`} className={style.text}>
+          <Link to={profileLink()} className={style.text}>
             <PersonGear className={style.icon} />
             <p>{user.name}</p>
           </Link>
 
           {/* <button onClick={handleLogout}>Cerrar Seción</button> */}
-          <Link onClick={handleLogout} className={style.text}>
+          <Link onClick={handleLogout} to="/" className={style.text}>
             <PersonSlash className={style.icon} />
             <p>Cerrar sesión</p>
           </Link>

@@ -23,6 +23,10 @@
   padding-bottom: 10px;
 }
 
+.formcontainer h3{
+  color: #6A7346;
+}
+
 .container {
   border-radius: 4px;
   display: flex;
@@ -43,4 +47,14 @@
   margin-top: 10px;
   background-color: #97a663 !important;
   border: 0px !important;
+}
+
+.categoriaYprecio{
+  display: flex;
+  justify-content: space-between;
+}
+
+.volgraduacionYstock{
+  display: flex;
+  justify-content: space-between;
 }

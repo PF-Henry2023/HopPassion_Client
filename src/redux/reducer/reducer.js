@@ -31,6 +31,9 @@ import {
   GET_TOTAL_USERS,
   UPDATE_PRODUCT,
   CLEAN_REVIEWS,
+  GET_REVIEWS_UNREVIEWED,
+  REVIEW_PROCESSED,
+  DELETE_REVIEW,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -56,7 +59,30 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    //CLEAN_REVIEWS
+    case DELETE_REVIEW: {
+      const updatedReviewList = state.reviewList.filter(
+        (review) => review.id !== action.payload
+      );
+      return {
+        ...state,
+        reviewList: updatedReviewList,
+      };
+    }
+    case REVIEW_PROCESSED: {
+      const updatedReviewList = state.reviewList.filter(
+        (review) => review.id !== action.payload
+      );
+      return {
+        ...state,
+        reviewList: updatedReviewList,
+      };
+    }
+    case GET_REVIEWS_UNREVIEWED:
+      return {
+        ...state,
+        reviewList: action.payload,
+      };
+
     case CLEAN_REVIEWS:
       return {
         ...state,
