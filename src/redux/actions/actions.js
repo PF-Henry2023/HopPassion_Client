@@ -29,7 +29,68 @@ import {
   GET_REVIEWS,
   GET_TOTALSALES,
   GET_TOTAL_USERS,
+  UPDATE_PRODUCT,
+  CLEAN_REVIEWS,
+  GET_REVIEWS_UNREVIEWED,
+  REVIEW_PROCESSED,
+  DELETE_REVIEW,
 } from "./actions-type";
+
+export const deleteReview = (idReview) => {
+  return async function (dispatch) {
+    try {
+      await HopPassionClient.delete(`/review/delete/${idReview}`);
+      return dispatch({
+        type: DELETE_REVIEW,
+        payload: idReview,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const reviewProcessed = (idReview) => {
+  return async function (dispatch) {
+    try {
+      const responre = await HopPassionClient.put(
+        `/review/update/${idReview}`,
+        {
+          isReviewed: true,
+        }
+      );
+      console.log(responre);
+      return dispatch({
+        type: REVIEW_PROCESSED,
+        payload: idReview,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const cleanReviews = () => {
+  return function (dispatch) {
+    return dispatch({
+      type: CLEAN_REVIEWS,
+    });
+  };
+};
+
+export const getReviewsUnreviewed = () => {
+  return async function (dispatch) {
+    try {
+      const { data } = await HopPassionClient.get(`/review/unreviewed`);
+      return dispatch({
+        type: GET_REVIEWS_UNREVIEWED,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const getReviews = (idProd, idUsuario) => {
   return async function (dispatch) {
@@ -62,7 +123,17 @@ export const getUsers = () => {
   };
 };
 
-export const signup = ({ name, lastName, address, email, phone, password }) => {
+export const signup = ({
+  name,
+  lastName,
+  address,
+  email,
+  phone,
+  password,
+  city,
+  postalCode,
+  country,
+}) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signup", {
@@ -72,6 +143,9 @@ export const signup = ({ name, lastName, address, email, phone, password }) => {
         email,
         phone,
         password,
+        city,
+        postalCode,
+        country,
       });
       handleUserLogin(response.data);
       dispatch({
@@ -421,10 +495,12 @@ export const processPayment = async (formData) => {
 export const getTotalSales = () => {
   return async (dispatch) => {
     try {
-      const { data } = await HopPassionClient.get("/stadistics/historixalTotalSales");
+      const { data } = await HopPassionClient.get(
+        "/stadistics/historixalTotalSales"
+      );
       dispatch({
         type: GET_TOTALSALES,
-        payload: data.data
+        payload: data.data,
       });
     } catch (error) {
       alert(error.message);
@@ -439,11 +515,39 @@ export const getTotalUsers = async () => {
       console.log("estos son los datos", data);
       dispatch({
         type: GET_TOTAL_USERS,
-        payload: data.data
-      })
+        payload: data.data,
+      });
       return data.data;
     } catch (error) {
-      window.alert(error.message)
+      window.alert(error.message);
     }
-  }
-}
+  };
+};
+
+export const updateProduct = (id, productData) => {
+  return async (dispatch) => {
+    try {
+      if (!productData) {
+        console.error("Los datos del producto son inválidos.");
+        return;
+      }
+
+      console.log("Datos a enviar:", productData);
+
+      const response = await HopPassionClient.put(
+        `/product/${id}`,
+        productData
+      );
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.status === 200) {
+        dispatch({ type: UPDATE_PRODUCT, payload: response.data });
+        return response.data;
+      } else {
+        console.error("Error al actualizar el producto:", response);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
+    }
+  };
+};

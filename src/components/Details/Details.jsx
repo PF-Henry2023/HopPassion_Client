@@ -3,7 +3,11 @@ import Navbar from "../Navbar/Navbar";
 import styles from "./Details.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById, getReviews } from "../../redux/actions/actions";
+import {
+  getProductById,
+  getReviews,
+  cleanReviews,
+} from "../../redux/actions/actions";
 import Footer from "../Footer/Footer";
 import Return from "../Return/Return";
 import Counter from "../Counter/Counter";
@@ -25,8 +29,16 @@ const Details = () => {
       await dispatch(getProductById(id));
       setIsLoading(false);
     };
-    dispatch(getReviews(id, user.id));
+
+    if (user) {
+      dispatch(getReviews(id, user.id));
+    } else {
+      dispatch(getReviews(id));
+    }
     fetchProductDetails();
+    return () => {
+      dispatch(cleanReviews());
+    };
   }, [dispatch, id]);
 
   function quantity() {
@@ -125,7 +137,7 @@ const Details = () => {
           )}
         </div>
       </div>
-      <ReviewList />
+      <ReviewList isLoading={isLoading} />
       <Footer />
     </div>
   );

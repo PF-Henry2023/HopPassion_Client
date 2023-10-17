@@ -1,14 +1,22 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { getLoggedInUser } from "../../utils/UserUtils";
 
 const Protected = ({ requiredRole, children }) => {
-  const userRole = useSelector((state) => state.user ? state.user.role : null);
+  const loggedInUser = getLoggedInUser()
+  const userRole = loggedInUser ? loggedInUser.role : null
 
-  if (userRole !== "admin" && userRole !== "user") {
+  if (!["admin", "user"].includes(userRole)) {
+    console.log(1)
     return <Navigate to="/" replace />;
   }
 
   if (requiredRole === "admin" && userRole !== "admin") {
+    console.log(2)
+    return <Navigate to="/" replace />;
+  }
+
+  if (requiredRole === "user" && userRole !== "user") {
+    console.log(3)
     return <Navigate to="/" replace />;
   }
 

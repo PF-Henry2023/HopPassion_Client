@@ -10,8 +10,8 @@ const getMemoizedReviewList = createSelector(
   [selectReviewList],
   (reviewList) => reviewList
 );
-
-const ReviewList = () => {
+//const rev = useSelector(getMemoizedReviewList);
+const ReviewList = ({ isLoading }) => {
   const rev = useSelector(getMemoizedReviewList);
 
   const calcularPromedioRating = (reviews) => {
@@ -35,34 +35,35 @@ const ReviewList = () => {
     signo = "?";
   }
   return (
-    <div className={style.mainContainer}>
-      <div name="title" className={style.title}>
-        {`Feedback From Our Customers${signo}`}
-      </div>
-      {rev.length === 0 ? (
-        <div className={style.noReviewsYet}>No reviews yet.</div>
-      ) : (
-        <div>
-          <div className={style.totalRating}>
-            <div className={style.totalStar}>
-              <StaticRating
-                score={promedio}
-                starDimension={23}
-                starSpacing={0.1}
-                className={style.star}
-              />
-            </div>
-            <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
-          </div>
-          <div className={style.totalReviews}>{rev.length} reviews</div>
-          <div className={style.listContainer}>
-            {rev.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
-          </div>
+    !isLoading && (
+      <div className={style.mainContainer}>
+        <div name="title" className={style.title}>
+          {`Feedback From Our Customers${signo}`}
         </div>
-      )}
-    </div>
+        {rev.length === 0 ? (
+          <div className={style.noReviewsYet}>No reviews yet.</div>
+        ) : (
+          <div>
+            <div className={style.totalRating}>
+              <div className={style.totalStar}>
+                <StaticRating
+                  score={promedio}
+                  starDimension={23}
+                  starSpacing={0.1}
+                />
+              </div>
+              <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
+            </div>
+            <div className={style.totalReviews}>{rev.length} reviews</div>
+            <div className={style.listContainer}>
+              {rev.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
   );
 };
 

@@ -2,7 +2,7 @@ import styles from "./AdminProfile.module.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { getLoggedInUser } from "../../utils/UserUtils";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfo, createProduct } from "../../redux/actions/actions";
@@ -10,11 +10,13 @@ import Create from "../Create/Create";
 import ProductsTable from "./ProductsTable/ProductsTable";
 import CardTotalAmount from "../Stadistics/totalSalesForYear/Card";
 import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
+import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
 import { createContext } from "react";
-import axios from "axios";
+import ReviewManagement from "./ReviewManagment/ReviewManagment";
 export const TotalUsersStadistics = createContext(null);
+import UsersTable from "./UsersTable/UsersTable";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,15 +52,16 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
-    if (user.id !== Number(id)) {
+    /* if (user.id !== Number(id)) {
       navigate("/adminprofile");
       return;
-    }
+    } */
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
           getUserInfo(id, token, navigate)
         );
+
         setUserData(userDataResponse);
         setIsLoading(false);
       } catch (error) {
@@ -69,36 +72,6 @@ const AdminProfile = () => {
       fetchData();
     }
   }, [dispatch, id, navigate, token, user, isLoading]);
-
-  const dataChart = {
-    areaChart: {},
-    cardTotal: {},
-    donaChart: {},
-  };
-
-  useEffect(() => {
-    const getInfoChart = async () => {
-      try {
-        const areaChart1 = await axios.get(
-          "http://localhost:3001/stadistics/monthlyIncomeForTheYear?type=amount"
-        );
-        dataChart.areaChart = areaChart1.data;
-        const donutChart = await axios.get(
-          "http://localhost:3001/stadistics/totalUsers"
-        )
-        dataChart.donaChart = donutChart.data;
-        const cardTotal1 = await axios.get(
-          "http://localhost:3001/stadistics/historixalTotalSales"
-        )
-        dataChart.cardTotal = cardTotal1.data;
-        console.log("este es la info;", dataChart);
-      } catch (error) {
-        throw error
-      }
-    }
-    getInfoChart();
-  },[])
-
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
@@ -209,18 +182,25 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
-                  <Container className={styles.continer_graphics}>
-                    <CardTotalAmount />
-                    <MyDoughnut />
-                  </Container>
+                <hr />
+                <Container className={styles.continer_graphics}>
+                  <CardTotalAmount />
+                  <MyDoughnut />
+
                   <hr />
-                  <AreaChart />
+                </Container>
+                <hr />
+                <TopProducts />
+                <hr />
+                <AreaChart />
               </div>
             )}
             {activeOption === "Crear Producto" && <Create />}
-            {activeOption === "Productos" && <ProductsTable />}
-            {activeOption === "Usuarios" && <h1>Usuarios</h1>}
-            {activeOption === "Reseñas" && <h1>Reseñas</h1>}
+            {activeOption === "Productos" && (
+              <ProductsTable setEditing={setEditing} />
+            )}
+            {activeOption === "Usuarios" && <UsersTable />}
+            {activeOption === "Reseñas" && <ReviewManagement />}
             {activeOption === "Contraseña" && <h1>Contraseña</h1>}
           </div>
         </div>
