@@ -8,6 +8,8 @@ export default function Favorites(props) {
       {
         favorites.map(e => (
           <Card
+            key={e.id}
+            id={e.id}
             title={e.name}
             price={e.price}
             image={e.image}

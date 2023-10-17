@@ -1,0 +1,17 @@
+.rowContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+  }
+  
+  .editButton {
+    color: #ffffff;
+    background-color: #97a663;
+    border: 0px;
+    margin: 0px;
+    padding: 5px 30px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 4px;
+  }

@@ -6,7 +6,6 @@ import {
   getCartRequest,
 } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
-import Counter from "../Counter/Counter";
 import Return from "../Return/Return";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -21,7 +20,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [isDeleting, setDeleting] = useState([]);
   const syncing = useSelector((state) => state.cart.syncing);
-  const { orderId } = useParams();
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
 

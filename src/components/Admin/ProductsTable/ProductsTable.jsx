@@ -1,4 +1,4 @@
-import { useEffect, useState  } from "react";
+import React, { useEffect, useState  } from "react";
 import style from "./ProductsTable.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../redux/actions/actions";
@@ -77,30 +77,33 @@ export default function ProductsTable({setEditing}) {
           </div>
         </div>
         <div className={style.gridContainer}>
-        {currentProducts.map((product) => {
+          {currentProducts.map((product) => {
             return (
-              <div className={style.productStyle}>
-                <ul key={product.id} className={style.contentProduct}>
+              <div className={style.productStyle} key={product.id}>
+                <ul className={style.contentProduct}>
+                  <li className={style.productInfo}>
+                    <div className={style.product}>
+                      <span>{product.name}</span>
+                      <span>% {product.alcoholContent}</span>
+                      <span>$ {product.price}</span>
+                      <span>{product.stock}</span>
+                    </div>
+                    <div className={style.buttons}>
+                      <button className={style.buttonEdit} onClick={() => handleEditProduct(product.id)}>
+                        Editar
+                      </button>
+                      <button className={style.buttonDesactivar}>Desactivar</button>
+                    </div>
+                  </li>
+                  {editProductId === product.id && (
                     <li className={style.productInfo}>
-                      <div className={style.product}>
-                          <span>{product.name}</span>
-                          <span>% {product.alcoholContent}</span>
-                          <span>$ {product.price}</span>
-                          <span>{product.stock}</span>
-                      </div>
+                      <EditProduct id={product.id} setEditing={setEditProductId} onCancel={handleCancelEdit} />
                     </li>
-                    {editProductId === product.id ? (
-                      <EditProduct id={product.id} setEditing={setEditing} onCancel={handleCancelEdit} />
-                    ) : (
-                      <div className={style.buttons}>
-                        <button className={style.buttonEdit} onClick={() => handleEditProduct(product.id)}>Editar</button>
-                        <button className={style.buttonDesactivar}>Desactivar</button>
-                      </div>
-                    )}
+                  )}
                 </ul>
               </div>
             );
-        })}
+          })}
         </div>
     </div>
   );
