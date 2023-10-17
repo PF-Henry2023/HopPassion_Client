@@ -22,9 +22,9 @@ export default function Footer() {
             <div className={style.paymentMethodContainer}>
             <img src={visa} alt="" className={style.paymentMethod}/>
             <img src={mastercard} alt="" className={style.paymentMethod}/>
-            <img src={naranja} alt="" className={style.paymentMethod}/>
             <img src={cabal} alt="" className={style.paymentMethod}/>
             <img src={american} alt="" className={style.paymentMethod}/>
+            <img src={naranja} alt="" className={style.paymentMethod}/>
             </div>
           </div>
         </div>
