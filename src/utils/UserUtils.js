@@ -23,6 +23,26 @@ export function handleUserLogin(token) {
   window.localStorage.setItem("id", user.id);
 }
 
+export const updateUserLocal = (input) => {
+  console.log("entro a la funcion ");
+  window.localStorage.removeItem("user");
+  const user = {
+    id: input.id,
+    name: input.name,
+    lastName: input.lastName,
+    address: input.address,
+    email: input.email,
+    phone: input.phone,
+    role: input.role,
+    password: input.password,
+    postalCode: input.postalCode,
+    city: input.city,
+    country: input.country,
+  };
+  window.localStorage.setItem("user", JSON.stringify(user));
+  return;
+};
+
 export function handleUserLogout() {
   window.localStorage.removeItem("token");
   window.localStorage.removeItem("user");

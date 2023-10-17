@@ -34,6 +34,7 @@ import {
   GET_REVIEWS_UNREVIEWED,
   REVIEW_PROCESSED,
   DELETE_REVIEW,
+  UPDATE_USER,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -226,6 +227,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         totalUsers: action.payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     case UPDATE_PRODUCT:
       const updateProduct = action.payload; // Los nuevos datos del producto a actualizar

@@ -1,99 +1,103 @@
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
-import UserProfileProfile from "./UserProfileProfile"
-import UserProfileAddress from "./UserProfileAddress"
-import UserProfileOrders from "./UserProfileOrders"
-import styles from "./UserProfile.module.css"
+import UserProfileProfile from "./UserProfileProfile";
+import UserProfileAddress from "./UserProfileAddress";
+import UserProfileOrders from "./UserProfileOrders";
+import styles from "./UserProfile.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 const options = {
-    "profile": {
-        title: "Perfil",
-        component: UserProfileProfile
-    },
-    "address": {
-        title: "Dirección",
-        component: UserProfileAddress
-    },
-    "orders": {
-        title: "Mis compras",
-        component: UserProfileOrders
-    }
-}
+  profile: {
+    title: "Perfil",
+    component: UserProfileProfile,
+  },
+  address: {
+    title: "Dirección",
+    component: UserProfileAddress,
+  },
+  orders: {
+    title: "Mis compras",
+    component: UserProfileOrders,
+  },
+};
 
 const UserProfile = () => {
-    const [searchParams] = useSearchParams();
-    const user = useSelector((state) => state.user)
+  const [searchParams] = useSearchParams();
+  const user = useSelector((state) => state.user);
 
-    const [activeOption, setActiveOption] = useState(mapQueryToTab(searchParams.get("tab")));
+  console.log(user);
 
-    function isLoading() {
-        return user == null
-    }
+  const [activeOption, setActiveOption] = useState(
+    mapQueryToTab(searchParams.get("tab"))
+  );
 
-    function mapQueryToTab(tab) {
-        return Object.keys(options).find(o => o === tab) ?? "profile";
-    }
+  function isLoading() {
+    return user == null;
+  }
 
-    function selectedComponent() {
-        const SelectedComponent = options[activeOption].component
-        return <SelectedComponent />
-    }
+  function mapQueryToTab(tab) {
+    return Object.keys(options).find((o) => o === tab) ?? "profile";
+  }
 
-    function selectedTitle() {
-        return options[activeOption].title
-    }
+  function selectedComponent() {
+    const SelectedComponent = options[activeOption].component;
+    return <SelectedComponent />;
+  }
 
-    return (
-        <div>
-            <Navbar />
-            {
-                isLoading() ?
-                <Loading /> :
-                <div className={styles.mainContainer}>
-                    <div className={styles.leftContent}>
-                        <div className={styles.menu}>
-                        <p>Hola,</p>
+  function selectedTitle() {
+    return options[activeOption].title;
+  }
 
-                        <h2>
-                        {user.name} {user.lastName}!
-                        </h2>
-                        <hr />
+  return (
+    <div>
+      <Navbar />
+      {isLoading() ? (
+        <Loading />
+      ) : (
+        <div className={styles.mainContainer}>
+          <div className={styles.leftContent}>
+            <div className={styles.menu}>
+              <p>Hola,</p>
 
-                        <ul className="nav flex-column">
-                            {
-                                Object.keys(options).map((optionId) => {
-                                    const option = options[optionId]
-                                    return <li key={optionId} className="nav-item">
-                                                <a
-                                                className={`nav-link ${
-                                                    activeOption === optionId ? "active" : styles.active
-                                                }`}
-                                                aria-current="page"
-                                                href="#"
-                                                onClick={() => setActiveOption(optionId)}
-                                                >
-                                                {option.title}
-                                                </a>
-                                            </li>
-                                })
-                            }
-                        </ul>
-                        <hr />
-                        </div>
-                    </div>
-                    <div className={styles.rightContent}>
-                        <h1>{ selectedTitle() }</h1>
-                        { selectedComponent() }
-                    </div>
-                </div>
-            }
-            <Footer />
+              <h2>
+                {user.name} {user.lastName}!
+              </h2>
+              <hr />
+
+              <ul className="nav flex-column">
+                {Object.keys(options).map((optionId) => {
+                  const option = options[optionId];
+                  return (
+                    <li key={optionId} className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          activeOption === optionId ? "active" : styles.active
+                        }`}
+                        aria-current="page"
+                        href="#"
+                        onClick={() => setActiveOption(optionId)}
+                      >
+                        {option.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+              <hr />
+            </div>
+          </div>
+          <div className={styles.rightContent}>
+            <h1>{selectedTitle()}</h1>
+            {selectedComponent()}
+          </div>
         </div>
-    )
-}
+      )}
+      <Footer />
+    </div>
+  );
+};
 
 export default UserProfile;
