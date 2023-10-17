@@ -122,10 +122,12 @@ function PendingReviews() {
             {expandedProducts[product.id] && (
               <div className={styles.productReview}>
                 <input
+                  className={styles.input}
                   type="text"
                   onChange={(e) => setUserComment(e.target.value)}
                 />
                 <button
+                className={styles.button}
                   onClick={() =>
                     saveProductDescription(product.id, userComment)
                   }

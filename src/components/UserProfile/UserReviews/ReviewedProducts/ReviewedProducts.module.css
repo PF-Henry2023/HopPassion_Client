@@ -1,0 +1,51 @@
+.product {
+  width: 575px;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.productHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.productName {
+  margin-top: 10px;
+  font-size: 12pt;
+  font-weight: 400;
+}
+
+.productReview {
+  margin-top: 10px;
+  font-size: 12pt;
+  font-weight: 400;
+  color: #B1B5A4;
+}
+
+.starFill {
+  color: #97a663;
+}
+
+.starOutline {
+  color: #B1B5A4;
+}
+
+.button {
+  margin-left: 100px;
+  margin-top:10px;
+  color: #ffffff;
+  background-color: #97a663;
+  border: 0px;
+  padding: 5px 30px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 4px;
+  &:hover {
+    background-color: #ddf391;
+    color: #97a663;
+  }
+}

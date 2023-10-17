@@ -6,19 +6,51 @@ import { Star, StarFill } from "react-bootstrap-icons";
 import { Spinner } from "react-bootstrap";
 
 function ReviewedProducts() {
-  const [reviewedProducts, setReviewedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Agregamos el estado de carga
+  const [reviewedProducts, setReviewedProducts] = useState({
+    comment: "",
+    lastName: ""
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const [editingProduct, setEditingProduct] = useState(null);
 
   const fetchReviewedProducts = async () => {
     try {
       const response = await HopPassionClient.get(`/product/qualified/${id}`);
       setReviewedProducts(response.data);
-      setIsLoading(false); // Cambiamos isLoading a falso cuando se completó la carga
+      setIsLoading(false);
     } catch (error) {
       console.error("Error al obtener productos reseñados", error);
-      setIsLoading(false); // Aseguramos que isLoading sea falso en caso de error
+      setIsLoading(false);
     }
+  };
+  console.log(reviewedProducts);
+
+  const handleSave = async (editedReview) => {
+    try {
+      const { id, comment, rating, productId } = editedReview;
+      const updatedReview = {
+        id,
+        comment,
+        rating,
+      };
+      const response = await HopPassionClient.put(
+        `/review/update/${id}`,
+        updatedReview
+      );
+
+      if (response.status === 200) {
+        setEditingProduct(null);
+      } else {
+        console.error("Error al actualizar la revisión:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error al actualizar la revisión:", error);
+    }
+  };
+
+  const handleEdit = (productId) => {
+    setEditingProduct(productId);
   };
 
   function calculateAverageRating(reviews) {
@@ -54,11 +86,38 @@ function ReviewedProducts() {
                     )}
                   </span>
                 ))}
+                {editingProduct === product.id ? (
+                  <button
+                    className={styles.button}
+                    onClick={() => handleSave(product)}
+                  >
+                    Guardar
+                  </button>
+                ) : (
+                  <button
+                    className={styles.button}
+                    onClick={() => handleEdit(product.id)}
+                  >
+                    Editar
+                  </button>
+                )}
               </div>
             </div>
             {product.Reviews.map((review, index) => (
               <div key={index} className={styles.reviewItem}>
-                <p className={styles.productReview}>{review.comment}</p>
+                {editingProduct === product.id ? (
+                  <input
+                    type="text"
+                    className={styles.input}
+                    onChange={(e) => {
+                      const updatedReview = { ...review };
+                      updatedReview.comment = e.target.value;
+                      handleSave(updatedReview);
+                    }}
+                  />
+                ) : (
+                  <p className={styles.productReview}>{review.comment}</p>
+                )}
               </div>
             ))}
           </div>

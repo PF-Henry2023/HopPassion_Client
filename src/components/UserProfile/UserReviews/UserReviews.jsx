@@ -1,7 +1,6 @@
 import styles from "./UserReviews.module.css";
 import { ArrowLeft } from "react-bootstrap-icons";
-import React, { useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import React, { useState } from "react";
 import PendingReviews from "./PendingReviews/PendingReviews";
 import ReviewedProducts from "./ReviewedProducts/ReviewedProducts";
 
