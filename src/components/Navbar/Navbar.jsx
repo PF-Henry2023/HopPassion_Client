@@ -41,9 +41,9 @@ export default function NavBar() {
 
   function profileLink() {
     if (user.role == "admin") {
-      return `/adminprofile/${user.id}`
+      return `/adminprofile/${user.id}`;
     } else if (user.role == "user") {
-      return `/profile/${user.id}`
+      return `/profile/${user.id}`;
     }
   }
 
@@ -74,7 +74,7 @@ export default function NavBar() {
       );
     } else {
       return (
-        <div className={style.mainContainer}>
+        <>
           <Link to="/login" className={style.text}>
             <Person className={style.icon} />
             <p>Iniciar Sesión</p>
@@ -83,7 +83,7 @@ export default function NavBar() {
             <PersonPlus className={style.icon} />
             <p>Registrarse</p>
           </Link>
-        </div>
+        </>
       );
     }
   }
