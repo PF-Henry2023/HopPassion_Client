@@ -57,6 +57,7 @@
 
 .cartItemName {
   font-size: 12px; /* Tamaño del nombre del producto */
+  display: inline-block;
 }
 
 .cartItemPrice {
