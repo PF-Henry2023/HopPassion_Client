@@ -4,16 +4,9 @@ import store from "../redux/store/store";
 import { navigate } from "./NavigationUtils";
 
 const HopPassionClient = axios.create({
-<<<<<<< HEAD
-<<<<<<< HEAD
-  baseURL: "http://localhost:3001",
-=======
-  baseURL: "http://localhost:3001/"
->>>>>>> userReviews
-=======
-  baseURL: "http://localhost:3001",
->>>>>>> d23955b286fea72e05cacf2e95e9b16097c47516
+  baseURL: "http://hoppassion-server.1.ie-1.fl0.io/",
 });
+
 
 //otra forma mas corta seria:
 //axios.defaults.BaseURL = "https://hoppassionserver-production.up.railway.app";
