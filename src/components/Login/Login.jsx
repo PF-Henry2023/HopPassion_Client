@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { login, getUsers } from "../../redux/actions/actions";
+import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
@@ -29,10 +29,6 @@ export default function Login() {
   });
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
-  useEffect(() => {
     if (user == null) {
       return;
     }
@@ -40,9 +36,7 @@ export default function Login() {
       navigate(`/adminprofile/${user.id}`);
     } else if (user.role === "user") {
       navigate("/");
-    } else {
-      alert("Usuario NO autorizado");
-    }
+    } 
   }, [user, navigate]);
 
   useEffect(() => {

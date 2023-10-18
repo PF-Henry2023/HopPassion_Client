@@ -23,8 +23,6 @@ const UserProfileAddress = () => {
     country: "",
   });
 
-  console.log(editableData);
-
   useEffect(() => {
     getUserInfo();
   }, []);

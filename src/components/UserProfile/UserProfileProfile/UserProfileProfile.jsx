@@ -6,9 +6,6 @@ import { updateUser } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserProfileProfile = () => {
-  useEffect(() => {
-    console.log("este es la info del token actual:");
-  }, []);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
