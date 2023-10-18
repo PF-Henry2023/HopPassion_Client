@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../redux/actions/actions";
 import Filters from "../../Filters/Filters";
 import EditProduct from "./EditProduct";
+import Borrado from "./borrado";
 
 export default function ProductsTable({setEditing}) {
   const dispatch = useDispatch();
@@ -92,7 +93,8 @@ export default function ProductsTable({setEditing}) {
                       <button className={style.buttonEdit} onClick={() => handleEditProduct(product.id)}>
                         Editar
                       </button>
-                      <button className={style.buttonDesactivar}>Desactivar</button>
+                     {/*  <button className={style.buttonDesactivar}>Desactivar</button> */}
+                     <Borrado id={product.id} /> {/* Pasa el id del producto aquí */}
                     </div>
                   </li>
                   {editProductId === product.id && (
