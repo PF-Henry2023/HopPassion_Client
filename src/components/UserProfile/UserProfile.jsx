@@ -5,9 +5,10 @@ import UserProfileProfile from "./UserProfileProfile/UserProfileProfile";
 import UserProfileAddress from "./UserProfileAdress/UserProfileAddress";
 import UserProfileOrders from "./UserProfileOrders/UserProfileOrders";
 import styles from "./UserProfile.module.css";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { getUserInfo } from "../../redux/actions/actions";
 
 const options = {
   profile: {
@@ -27,8 +28,6 @@ const options = {
 const UserProfile = () => {
   const [searchParams] = useSearchParams();
   const user = useSelector((state) => state.user);
-
-  console.log(user);
 
   const [activeOption, setActiveOption] = useState(
     mapQueryToTab(searchParams.get("tab"))

@@ -16,6 +16,7 @@ import AdminProfile from "./components/Admin/AdminProfile";
 import Protected from "./components/Protected/Protected";
 import { useEffect } from "react";
 import About from "./components/About/About"
+import NotFound from "./components/Not_found/NotFound";
 
 function App() {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ function App() {
 
         {/* If no routes match we default to Home */}
         <Route element={<Home />}></Route>
+        <Route  path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
   );

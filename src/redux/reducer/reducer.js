@@ -36,13 +36,16 @@ import {
   DELETE_REVIEW,
   UPDATE_USER,
   GET_USER_BY_NAME,
+  UPDATE_USER_STATE,
 } from "../actions/actions-type";
+
+import { getLoggedInUser } from "../../utils/UserUtils";
 
 const initialState = {
   //user: getLoggedInUser(),
   users: [],
-  user: null,
-  //user: getLoggedInUser(),
+  //user: null,
+  user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
@@ -253,6 +256,11 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           users: action.payload,
     };
+    case UPDATE_USER_STATE: 
+      return {
+        ...state,
+        user: action.payload,
+      }
     default:
       return { ...state };
   }
