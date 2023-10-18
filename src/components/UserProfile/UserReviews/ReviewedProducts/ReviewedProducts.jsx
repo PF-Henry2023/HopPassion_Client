@@ -4,15 +4,12 @@ import HopPassionClient from "../../../../utils/NetworkingUtils";
 import { useParams } from "react-router-dom";
 import { Star, StarFill } from "react-bootstrap-icons";
 import { Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ReviewedProducts() {
-  const [reviewedProducts, setReviewedProducts] = useState({
-    comment: "",
-    lastName: ""
-  });
+  const [reviewedProducts, setReviewedProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
-  const [editingProduct, setEditingProduct] = useState(null);
 
   const fetchReviewedProducts = async () => {
     try {
@@ -25,33 +22,6 @@ function ReviewedProducts() {
     }
   };
   console.log(reviewedProducts);
-
-  const handleSave = async (editedReview) => {
-    try {
-      const { id, comment, rating, productId } = editedReview;
-      const updatedReview = {
-        id,
-        comment,
-        rating,
-      };
-      const response = await HopPassionClient.put(
-        `/review/update/${id}`,
-        updatedReview
-      );
-
-      if (response.status === 200) {
-        setEditingProduct(null);
-      } else {
-        console.error("Error al actualizar la revisión:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error al actualizar la revisión:", error);
-    }
-  };
-
-  const handleEdit = (productId) => {
-    setEditingProduct(productId);
-  };
 
   function calculateAverageRating(reviews) {
     if (reviews.length === 0) return 0;
@@ -74,52 +44,28 @@ function ReviewedProducts() {
       ) : (
         reviewedProducts.map((product) => (
           <div key={product.id} className={styles.product}>
-            <div className={styles.productHeader}>
-              <h2 className={styles.productName}>{product.name}</h2>
-              <div className={styles.rating}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star}>
-                    {star <= calculateAverageRating(product.Reviews) ? (
-                      <StarFill className={styles.starFill} />
-                    ) : (
-                      <Star className={styles.starOutline} />
-                    )}
-                  </span>
-                ))}
-                {editingProduct === product.id ? (
-                  <button
-                    className={styles.button}
-                    onClick={() => handleSave(product)}
-                  >
-                    Guardar
-                  </button>
-                ) : (
-                  <button
-                    className={styles.button}
-                    onClick={() => handleEdit(product.id)}
-                  >
-                    Editar
-                  </button>
-                )}
+            <Link className={styles.link} to={`/product/${product.id}`}>
+              <div className={styles.productHeader}>
+                <h2 className={styles.productName}>{product.name}</h2>
+                <div className={styles.rating}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span key={star}>
+                      {star <= calculateAverageRating(product.Reviews) ? (
+                        <StarFill className={styles.starFill} />
+                      ) : (
+                        <Star className={styles.starOutline} />
+                      )}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            </Link>
             {product.Reviews.map((review, index) => (
               <div key={index} className={styles.reviewItem}>
-                {editingProduct === product.id ? (
-                  <input
-                    type="text"
-                    className={styles.input}
-                    onChange={(e) => {
-                      const updatedReview = { ...review };
-                      updatedReview.comment = e.target.value;
-                      handleSave(updatedReview);
-                    }}
-                  />
-                ) : (
-                  <p className={styles.productReview}>{review.comment}</p>
-                )}
+                <p className={styles.productReview}>{review.comment}</p>
               </div>
             ))}
+            <hr></hr>
           </div>
         ))
       )}

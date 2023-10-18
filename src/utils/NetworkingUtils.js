@@ -5,10 +5,14 @@ import { navigate } from "./NavigationUtils";
 
 const HopPassionClient = axios.create({
 <<<<<<< HEAD
+<<<<<<< HEAD
   baseURL: "http://hoppassion-server.1.ie-1.fl0.io/",
 =======
   baseURL: "https://hoppassion-server.1.ie-1.fl0.io",
 >>>>>>> d24423aa189c50113bdfd5cf703536277373dba9
+=======
+  baseURL: "https://hoppassion-server.1.ie-1.fl0.io",
+>>>>>>> userProfile
 });
 
 //otra forma mas corta seria:

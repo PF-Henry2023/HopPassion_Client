@@ -46,10 +46,6 @@ const UserProfile = () => {
     return <SelectedComponent />;
   }
 
-  function selectedTitle() {
-    return options[activeOption].title;
-  }
-
   return (
     <div>
       <Navbar />
@@ -88,10 +84,7 @@ const UserProfile = () => {
               <hr />
             </div>
           </div>
-          <div className={styles.rightContent}>
-            <h1>{selectedTitle()}</h1>
-            {selectedComponent()}
-          </div>
+          <div className={styles.rightContent}>{selectedComponent()}</div>
         </div>
       )}
       <Footer />
