@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Card.css";
-import { TotalUsersStadistics } from "../../Admin/AdminProfile";
 import axios from "axios";
 
 export default function CardTotalAmount() {
@@ -10,16 +9,16 @@ export default function CardTotalAmount() {
       try {
         const cardTotal1 = await axios.get(
           "https://hoppassion-server.1.ie-1.fl0.io/stadistics/historixalTotalSales"
-        )
+        );
         setTotal(cardTotal1.data.data);
       } catch (error) {
-        throw error
+        throw error;
       }
-    }
+    };
     getInfoChart();
-  },[])
-  console.log("card Total,",total);
-  
+  }, []);
+  console.log("card Total,", total);
+
   return (
     <div className="containerCard">
       <img

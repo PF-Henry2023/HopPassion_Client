@@ -4,15 +4,20 @@ import { mapUserToUserInfo } from "../../../utils/UserUtils";
 import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
-import { updateUser } from "../../../redux/actions/actions";
-import { useDispatch } from "react-redux";
+import { udateUserToken, updateUser } from "../../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedInUser } from "../../../utils/UserUtils";
 
 const UserProfileProfile = () => {
+  useEffect(() => {
+    console.log("este es la info del token actual:");
+  }, []);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editableData, setEditableData] = useState({});
+  const user = useSelector((state) => state.user);
   const [userData, setUserData] = useState({
     name: "",
     lastName: "",
@@ -20,24 +25,19 @@ const UserProfileProfile = () => {
     password: "",
   });
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
-  async function getUserInfo() {
-    setIsLoading(true);
-    try {
-      const response = await HopPassionClient.get(`/users/${id}`);
-      setUserData(mapUserToUserInfo(response.data));
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error al obtener los datos del usuario", error);
-    }
-  }
-
   function handleEditClick(editing) {
     setIsEditing(editing);
   }
+
+  useEffect(() => {
+    const getInfo = async () => {
+      
+      await dispatch(getUserInfo(id));
+      
+    }
+    getInfo();
+  },[])
+
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -48,7 +48,6 @@ const UserProfileProfile = () => {
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
     try {
       setIsLoading(true);
       dispatch(updateUser(id, editableData));
@@ -69,11 +68,11 @@ const UserProfileProfile = () => {
         <div className={styles.rowContainer}>
           <div>
             <h4>Nombre</h4>
-            <p>{userData.name}</p>
+            <p>{user.name}</p>
           </div>
           <div>
             <h4>Apellido</h4>
-            <p>{userData.lastName}</p>
+            <p>{user.lastName}</p>
           </div>
         </div>
         <div className={styles.rowContainer}>
@@ -81,7 +80,7 @@ const UserProfileProfile = () => {
             <h4>Contraseña</h4> <p>********</p>
           </div>
           <div>
-            <h4>Número de teléfono</h4> <p>{userData.phone}</p>
+            <h4>Número de teléfono</h4> <p>{user?.phone}</p>
           </div>
         </div>
         <button

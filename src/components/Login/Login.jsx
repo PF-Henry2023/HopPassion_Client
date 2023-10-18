@@ -65,7 +65,7 @@ export default function Login() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Error iniciando sesión, verifica tus credenciales.",
+      text: "Error iniciando sesión, verifica tus credenciales o crea una cuenta!",
     });
     setData({
       email: "",

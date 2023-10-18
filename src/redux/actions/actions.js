@@ -36,6 +36,7 @@ import {
   REVIEW_PROCESSED,
   DELETE_REVIEW,
   GET_USER_BY_NAME,
+  UPDATE_USER_STATE,
 } from "./actions-type";
 
 export const deleteReview = (idReview) => {
@@ -430,7 +431,6 @@ export const updateUser = (id, userData) => {
         console.error("Los datos del usuario son inválidos.");
         return;
       }
-
       console.log("Datos a enviar:", userData);
 
       const response = await HopPassionClient.put(
@@ -438,9 +438,8 @@ export const updateUser = (id, userData) => {
         userData
       );
       console.log("Respuesta del servidor:", response.data);
-
       if (response.status === 200) {
-        dispatch({ type: UPDATE_USER, payload: response.data });
+        dispatch({ type: UPDATE_USER, payload: response.data.data });
         return response.data;
       } else {
         console.error("Error al actualizar el usuario:", response);
@@ -569,3 +568,11 @@ export const getUserByName = (name) => {
       }
   }
 };
+
+
+export const udateUserToken = (userData) => {
+  return {
+    type: UPDATE_USER_STATE,
+    payload: userData,
+  }
+}
