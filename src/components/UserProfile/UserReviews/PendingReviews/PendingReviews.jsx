@@ -8,20 +8,20 @@ import Swal from "sweetalert2";
 
 function PendingReviews() {
   const [pendingProducts, setPendingProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Agregamos el estado de carga
+  const [isLoading, setIsLoading] = useState(true);
   const [expandedProducts, setExpandedProducts] = useState({});
   const [productRatings, setProductRatings] = useState({});
-  const [userComment, setUserComment] = useState(""); // Agregamos el estado para el comentario
+  const [userComment, setUserComment] = useState("");
   const { id } = useParams();
 
   const fetchPendingProducts = async () => {
     try {
       const response = await HopPassionClient.get(`/product/qualify/${id}`);
       setPendingProducts(response.data);
-      setIsLoading(false); // Cambiamos isLoading a falso cuando se completó la carga
+      setIsLoading(false);
     } catch (error) {
       console.error("Error al obtener productos pendientes", error);
-      setIsLoading(false); // Aseguramos que isLoading sea falso en caso de error
+      setIsLoading(false);
     }
   };
 
@@ -79,9 +79,9 @@ function PendingReviews() {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoading(false); // Aseguramos que isLoading sea falso después de realizar la acción
+      setIsLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     fetchPendingProducts();
@@ -127,12 +127,18 @@ function PendingReviews() {
                   onChange={(e) => setUserComment(e.target.value)}
                 />
                 <button
-                className={styles.button}
+                  className={styles.button}
                   onClick={() =>
                     saveProductDescription(product.id, userComment)
                   }
                 >
                   Guardar
+                </button>
+                <button
+                  className={styles.cancelButton}
+                  onClick={() => productAccordion(product.id)}
+                >
+                  Cancelar
                 </button>
               </div>
             )}

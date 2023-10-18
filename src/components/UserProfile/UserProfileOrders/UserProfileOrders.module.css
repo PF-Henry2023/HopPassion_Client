@@ -1,9 +1,11 @@
 .mainContainer h1 {
+  text-align: left;
   font-size: 18pt;
   color: #6a7346;
   font-weight: 700;
   margin-left: 110px;
-  margin-top: 116px;
+  margin-top: 134px;
+  margin-bottom: 5px;
 }
 
 .totalOrders {

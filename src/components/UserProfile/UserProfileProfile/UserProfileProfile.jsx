@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "./UserProfileProfile.module.css";
-import { mapUserToUserInfo } from "../../../utils/UserUtils";
-import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
-import { udateUserToken, updateUser } from "../../../redux/actions/actions";
+import { updateUser } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedInUser } from "../../../utils/UserUtils";
 
 const UserProfileProfile = () => {
   useEffect(() => {
@@ -28,15 +25,6 @@ const UserProfileProfile = () => {
   function handleEditClick(editing) {
     setIsEditing(editing);
   }
-
-  useEffect(() => {
-    const getInfo = async () => {
-      
-      await dispatch(getUserInfo(id));
-      
-    }
-    getInfo();
-  },[])
 
 
   function handleInputChange(event) {
@@ -63,8 +51,8 @@ const UserProfileProfile = () => {
 
   function drawDefault() {
     return (
-      <>
-        <h1>Mi perfil</h1>
+      <div className={styles.mainContainer}>
+        <h1 className={styles.title}>Mi perfil</h1>
         <div className={styles.rowContainer}>
           <div>
             <h4>Nombre</h4>
@@ -89,7 +77,7 @@ const UserProfileProfile = () => {
         >
           Editar
         </button>
-      </>
+      </div>
     );
   }
 
@@ -121,8 +109,8 @@ const UserProfileProfile = () => {
               <input type="text" name="phone" onChange={handleInputChange} />
             </div>
           </div>
-          <input type="submit" value="Guardar" />
-          <button onClick={() => handleEditClick(false)}>Cancelar</button>
+          <input className={styles.saveButton} type="submit" value="Guardar" />
+          <button className={styles.cancelButton} onClick={() => handleEditClick(false)}>Cancelar</button>
         </form>
       </>
     );

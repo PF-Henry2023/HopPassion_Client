@@ -4,10 +4,14 @@
 }
 
 .leftContent {
+  position: sticky;
+  height: 690px;
+  top: 0; 
+  width: 600px; 
   padding-top: 100px;
   align-content: initial;
   display: grid;
-  padding:80px;
+  padding: 80px;
   box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
 }
 
@@ -41,3 +45,4 @@
     font-weight: 700;
   }
 }
+

@@ -15,6 +15,7 @@ import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
 import Protected from "./components/Protected/Protected";
 import { useEffect } from "react";
+import About from "./components/About/About"
 import NotFound from "./components/Not_found/NotFound";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/about" element={<About />}></Route>
 
         {/* user-only routes */}
         <Route path="/profile/:id" element={
