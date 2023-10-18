@@ -1,8 +1,13 @@
 .mainContainer {
   background-color: #97a663;
-  display: flex;
-  padding: 0 20px;
   justify-content: center;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 0 20px;
   width: 100%;
 }
 
