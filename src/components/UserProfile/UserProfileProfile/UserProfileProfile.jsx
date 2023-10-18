@@ -64,8 +64,8 @@ const UserProfileProfile = () => {
 
   function drawDefault() {
     return (
-      <>
-        <h1>Mi perfil</h1>
+      <div className={styles.mainContainer}>
+        <h1 className={styles.title}>Mi perfil</h1>
         <div className={styles.rowContainer}>
           <div>
             <h4>Nombre</h4>
@@ -90,7 +90,7 @@ const UserProfileProfile = () => {
         >
           Editar
         </button>
-      </>
+      </div>
     );
   }
 
@@ -122,8 +122,8 @@ const UserProfileProfile = () => {
               <input type="text" name="phone" onChange={handleInputChange} />
             </div>
           </div>
-          <input type="submit" value="Guardar" />
-          <button onClick={() => handleEditClick(false)}>Cancelar</button>
+          <input className={styles.saveButton} type="submit" value="Guardar" />
+          <button className={styles.cancelButton} onClick={() => handleEditClick(false)}>Cancelar</button>
         </form>
       </>
     );

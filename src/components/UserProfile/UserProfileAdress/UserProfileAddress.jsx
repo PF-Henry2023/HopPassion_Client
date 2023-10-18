@@ -67,15 +67,18 @@ const UserProfileAddress = () => {
 
   function drawDefault() {
     return (
-      <>
-        <h1>Mi dirección</h1>
+      <div className={styles.mainContainer}>
+        <h1 className={styles.title}>Mi dirección</h1>
         <div className={styles.rowContainer}>
           <div>
             <h4>Dirección</h4>
             <p>{userData.address}</p>
           </div>
+          <div>
+            <h4>Código Postal</h4>
+            <p>{userData.postalCode}</p>
+          </div>
         </div>
-        <h4>Código Postal</h4> <p>{userData.postalCode}</p>
         <div className={styles.rowContainer}>
           <div>
             <h4>Ciudad</h4> <p>{userData.city}</p>
@@ -90,7 +93,7 @@ const UserProfileAddress = () => {
         >
           Editar
         </button>
-      </>
+      </div>
     );
   }
 
@@ -107,9 +110,15 @@ const UserProfileAddress = () => {
               <h4>Calle</h4>
               <input type="text" name="address" onChange={handleInputChange} />
             </div>
+            <div>
+              <h4>Código Postal</h4>{" "}
+              <input
+                type="text"
+                name="postalCode"
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-          <h4>Código Postal</h4>{" "}
-          <input type="text" name="postalCode" onChange={handleInputChange} />
           <div className={styles.rowContainer}>
             <div>
               <h4>Ciudad</h4>{" "}
@@ -118,6 +127,7 @@ const UserProfileAddress = () => {
             <div>
               <h4>País</h4>{" "}
               <Select
+              className={styles.country}
                 options={countryoptions}
                 placeholder="Selecciona el país que corresponde"
                 value={{
@@ -132,8 +142,8 @@ const UserProfileAddress = () => {
           <button className={styles.saveButton} type="submit" value="Guardar">
             Guardar
           </button>
+          <button className={styles.cancelButton} onClick={() => handleEditClick(false)}>Cancelar</button>
         </form>
-        <button onClick={() => handleEditClick(false)}>Cancelar</button>
       </>
     );
   }

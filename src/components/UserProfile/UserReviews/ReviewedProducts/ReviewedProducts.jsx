@@ -62,9 +62,11 @@ function ReviewedProducts() {
                 <p className={styles.productReview}>{review.comment}</p>
               </div>
             ))}
+            <hr></hr>
           </div>
         ))
       )}
+      
     </div>
   );
 }
