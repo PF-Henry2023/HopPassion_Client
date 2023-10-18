@@ -45,7 +45,7 @@ const AddToCartButton = ({ productId, stock, quantity = 1 }) => {
         icon: "success",
         title: "Producto agregado exitosamente!",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
     }
   };
