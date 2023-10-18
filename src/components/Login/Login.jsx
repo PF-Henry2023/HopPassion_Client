@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { login, getUsers} from "../../redux/actions/actions";
+import { login, getUsers } from "../../redux/actions/actions";
 import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
@@ -22,7 +22,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const allUsers = useSelector((state) => state.users)
   const [errors, setErrors] = useState({});
   const [userData, setData] = useState({
     email: "",
@@ -80,13 +79,7 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userToLogin = allUsers.find((user) => user.email === userData.email);
-    console.log(userToLogin);
-    if (userToLogin.isActive) {
-      dispatch(login(userData, () => handleLoginError()));
-    } else{
-      alert("The user is blocked.");
-    } 
+    dispatch(login(userData, () => handleLoginError()));
   };
 
   return (
