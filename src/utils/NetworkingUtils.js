@@ -4,8 +4,7 @@ import store from "../redux/store/store";
 import { navigate } from "./NavigationUtils";
 
 const HopPassionClient = axios.create({
-  baseURL: "https://hoppassion-server.1.ie-1.fl0.io/",
-  // baseURL: "http://hoppassion-server.1.ie-1.fl0.io/",
+  baseURL: "https://hoppassion-server.1.ie-1.fl0.io",
 });
 
 //otra forma mas corta seria:
