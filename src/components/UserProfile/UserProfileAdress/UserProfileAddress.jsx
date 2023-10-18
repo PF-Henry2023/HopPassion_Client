@@ -118,13 +118,16 @@ const UserProfileAddress = () => {
                 onChange={(value) => handleInputChange("address", value)}
               />
             </div>
+            <div>
+              <h4>Código Postal</h4>
+              <input
+                type="text"
+                name="postalCode"
+                onChange={(value) => handleInputChange("postalCode", value)}
+              />
+            </div>
           </div>
-          <h4>Código Postal</h4>{" "}
-          <input
-            type="text"
-            name="postalCode"
-            onChange={(value) => handleInputChange("postalCode", value)}
-          />
+
           <div className={styles.rowContainer}>
             <div>
               <h4>Ciudad</h4>{" "}

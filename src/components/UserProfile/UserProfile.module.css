@@ -6,8 +6,8 @@
 .leftContent {
   position: sticky;
   height: 690px;
-  top: 0; /* La parte izquierda estará fija en la parte superior de la pantalla */
-  width: 600px; /* Ajusta el ancho según tus necesidades */
+  top: 0; 
+  width: 600px; 
   padding-top: 100px;
   align-content: initial;
   display: grid;

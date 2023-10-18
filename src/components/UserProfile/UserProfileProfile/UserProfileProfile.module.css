@@ -6,7 +6,7 @@
   margin-right: 60px;
   margin-left: 60px;
   margin-top: 60px;
-  padding-top: 56px;
+  padding-top: 26px;
   padding-bottom: 56px;
   padding-left: 100px;
   padding-right: 100px;
@@ -20,6 +20,8 @@
   font-size: 18pt;
   color: #6a7346;
   font-weight: 700;
+  text-align: left;
+  margin-left: 0;
 }
 
 .editButton {
@@ -89,4 +91,10 @@
 input[type="text"] {
   border-radius: 4px;
   border: 1px solid #818181;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
