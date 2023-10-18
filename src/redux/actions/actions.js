@@ -35,6 +35,7 @@ import {
   GET_REVIEWS_UNREVIEWED,
   REVIEW_PROCESSED,
   DELETE_REVIEW,
+  GET_USER_BY_NAME,
 } from "./actions-type";
 
 export const deleteReview = (idReview) => {
@@ -551,4 +552,20 @@ export const updateProduct = (id, productData) => {
       console.error("Error al actualizar el producto:", error);
     }
   };
+};
+
+export const getUserByName = (name) => {
+  return async function(dispatch) {
+      try {
+          const info = await HopPassionClient.get(`users/allUsers?name=${name}`);
+          const userName = info.data;
+          if(!userName.length) throw Error(`No hay usuarios asociados con el nombre: ${name}`);
+          return dispatch({
+              type: GET_USER_BY_NAME,
+              payload: userName,
+          })
+      } catch (error) {
+          alert(error.message);
+      }
+  }
 };

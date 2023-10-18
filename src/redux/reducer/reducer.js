@@ -35,6 +35,7 @@ import {
   REVIEW_PROCESSED,
   DELETE_REVIEW,
   UPDATE_USER,
+  GET_USER_BY_NAME,
 } from "../actions/actions-type";
 
 const initialState = {
@@ -247,6 +248,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: updateProducts,
       };
+    case GET_USER_BY_NAME:
+      return{
+          ...state,
+          users: action.payload,
+    };
     default:
       return { ...state };
   }
