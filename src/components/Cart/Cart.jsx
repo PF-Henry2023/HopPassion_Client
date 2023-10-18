@@ -22,7 +22,7 @@ const Cart = () => {
   const syncing = useSelector((state) => state.cart.syncing);
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
-  const user = getLoggedInUser();
+  const user = useSelector(e => e.user);
   useEffect(() => {
     if (!user.postalCode && !user.city && !user.country) {
       Swal.fire({
