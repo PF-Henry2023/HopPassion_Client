@@ -37,6 +37,7 @@ import {
   UPDATE_USER,
   GET_USER_BY_NAME,
   UPDATE_USER_STATE,
+  CHANGE_PASSWORD,
 } from "../actions/actions-type";
 
 import { getLoggedInUser } from "../../utils/UserUtils";
@@ -64,6 +65,10 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CHANGE_PASSWORD:
+      return {
+        ...state,
+      };
     case DELETE_REVIEW: {
       const updatedReviewList = state.reviewList.filter(
         (review) => review.id !== action.payload
@@ -252,15 +257,15 @@ const rootReducer = (state = initialState, action) => {
         products: updateProducts,
       };
     case GET_USER_BY_NAME:
-      return{
-          ...state,
-          users: action.payload,
-    };
-    case UPDATE_USER_STATE: 
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case UPDATE_USER_STATE:
       return {
         ...state,
         user: action.payload,
-      }
+      };
     default:
       return { ...state };
   }

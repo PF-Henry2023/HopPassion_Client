@@ -17,6 +17,7 @@ import { createContext } from "react";
 import ReviewManagement from "./ReviewManagment/ReviewManagment";
 export const TotalUsersStadistics = createContext(null);
 import UsersTable from "./UsersTable/UsersTable";
+import ChangePassword from "./ChangePassword/ChangePassword";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -169,7 +170,7 @@ const AdminProfile = () => {
             )}
             {activeOption === "Usuarios" && <UsersTable />}
             {activeOption === "Reseñas" && <ReviewManagement />}
-            {activeOption === "Contraseña" && <h1>Contraseña</h1>}
+            {activeOption === "Contraseña" && <ChangePassword user={user} />}
           </div>
         </div>
       )}

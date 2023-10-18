@@ -37,7 +37,21 @@ import {
   DELETE_REVIEW,
   GET_USER_BY_NAME,
   UPDATE_USER_STATE,
+  CHANGE_PASSWORD,
 } from "./actions-type";
+
+export const changePassword = (id, password) => {
+  return async function (dispatch) {
+    try {
+      await HopPassionClient.delete(`users/password/${id}`, password);
+      return dispatch({
+        type: CHANGE_PASSWORD,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const deleteReview = (idReview) => {
   return async function (dispatch) {
@@ -554,25 +568,25 @@ export const updateProduct = (id, productData) => {
 };
 
 export const getUserByName = (name) => {
-  return async function(dispatch) {
-      try {
-          const info = await HopPassionClient.get(`users/allUsers?name=${name}`);
-          const userName = info.data;
-          if(!userName.length) throw Error(`No hay usuarios asociados con el nombre: ${name}`);
-          return dispatch({
-              type: GET_USER_BY_NAME,
-              payload: userName,
-          })
-      } catch (error) {
-          alert(error.message);
-      }
-  }
+  return async function (dispatch) {
+    try {
+      const info = await HopPassionClient.get(`users/allUsers?name=${name}`);
+      const userName = info.data;
+      if (!userName.length)
+        throw Error(`No hay usuarios asociados con el nombre: ${name}`);
+      return dispatch({
+        type: GET_USER_BY_NAME,
+        payload: userName,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 };
-
 
 export const udateUserToken = (userData) => {
   return {
     type: UPDATE_USER_STATE,
     payload: userData,
-  }
-}
+  };
+};

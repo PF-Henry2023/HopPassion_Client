@@ -7,9 +7,6 @@ const HopPassionClient = axios.create({
   baseURL: "https://hoppassion-server.1.ie-1.fl0.io",
 });
 
-//otra forma mas corta seria:
-//axios.defaults.BaseURL = "https://hoppassionserver-production.up.railway.app";
-
 HopPassionClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

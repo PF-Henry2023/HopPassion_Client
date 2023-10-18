@@ -10,6 +10,7 @@ const Borrado = ({ id }) => {
     try {
       z;
       if (isDelete) {
+
         Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -20,12 +21,13 @@ const Borrado = ({ id }) => {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            axios.delete(`http://localhost:3001/product/${id}`);
+            await axios.delete(`https://hoppassion-server.1.ie-1.fl0.io/product/${id}`);
             Swal.fire("Deleted!", "Your file has been deleted.", "success");
           }
         });
+
       } else {
-        await axios.post(`http://localhost:3001/product/${id}`);
+        await axios.post(`https://hoppassion-server.1.ie-1.fl0.io/${id}`);
       }
 
       setIsDelete(!isDelete);
