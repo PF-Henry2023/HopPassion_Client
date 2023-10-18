@@ -6,9 +6,11 @@ import Card from "../Card/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../Loading/Loading";
 import { createSelector } from "reselect";
+import { useNavigate } from "react-router";
 
 export default function CardContainer() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const selectProducts = (state) =>
     state.products ? state.products.products : [];
@@ -44,30 +46,38 @@ export default function CardContainer() {
   }
 
   return (
-   <>
-      <h2 className={style.subtitle}>Selección de las mejores cervezas</h2>
-      <InfiniteScroll
-        dataLength={products?.length}
-        next={handleNextPage}
-        hasMore={page.hasMore}
-        loader={<Loading />}
-        style={{ overflow: "hidden" }}
-      >
-        <div className={style.gridContainer}>
-          {products.map((product) => {
-            return (
-              <Card
-                key={product.id}
-                id={product.id}
-                title={product.name}
-                price={product.price}
-                image={product.image}
-                stock={product.stock}
-              />
-            );
-          })}
+    <>
+      {products.length === 0 ? (
+        <div className={style.noProductsMessage}>
+          No se encontraron productos con ese nombre.
         </div>
-      </InfiniteScroll>
-      </>
+      ) : (
+        <div>
+          <h2 className={style.subtitle}>Selección de las mejores cervezas</h2>
+          <InfiniteScroll
+            dataLength={products?.length}
+            next={handleNextPage}
+            hasMore={page.hasMore}
+            loader={<Loading />}
+            style={{ overflow: "hidden" }}
+          >
+            <div className={style.gridContainer}>
+              {products.map((product) => {
+                return (
+                  <Card
+                    key={product.id}
+                    id={product.id}
+                    title={product.name}
+                    price={product.price}
+                    image={product.image}
+                    stock={product.stock}
+                  />
+                );
+              })}
+            </div>
+          </InfiniteScroll>
+        </div>
+      )}
+    </>
   );
 }
