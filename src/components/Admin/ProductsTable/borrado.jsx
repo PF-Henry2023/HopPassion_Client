@@ -8,9 +8,9 @@ const Borrado = ({ id }) => {
   const handleAction = async () => {
     try {
       if (isDelete) {
-        await axios.delete(`http://localhost:3001/product/${id}`);
+        await axios.delete(`https://hoppassion-server.1.ie-1.fl0.io/product/${id}`);
       } else {
-        await axios.post(`http://localhost:3001/product/${id}`);
+        await axios.post(`https://hoppassion-server.1.ie-1.fl0.io/${id}`);
       }
 
       setIsDelete(!isDelete);
