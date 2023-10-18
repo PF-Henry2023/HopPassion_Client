@@ -1,7 +1,7 @@
 import GoogleLogin from "react-google-login";
 import { signupOauth2 } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import style from "./GoogleSignUp.module.css";
@@ -36,6 +36,12 @@ const GoogleSignUp = (props) => {
   const onSuccess = (response) => {
     const { tokenId } = response;
     dispatch(signupOauth2(tokenId, () => handleSignupError()));
+    Swal.fire({
+      icon: "success",
+      title: "Usuario creado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
