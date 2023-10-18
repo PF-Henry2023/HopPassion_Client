@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
+  /* padding: 20px; */
   background-color: white;
   width: 1000px; /* Ancho deseado */
   height: 90%; /* Alto deseado */

@@ -5,8 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import FormControl from "react-bootstrap/FormControl";
 import logo_light from "../../assets/logo_light.png";
-import profile from "../../assets/profile.png";
-import cartIcon from "../../assets/cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, logout } from "../../redux/actions/actions";
 import { useState } from "react";
@@ -41,6 +39,14 @@ export default function NavBar() {
     navigate("/");
   };
 
+  function profileLink() {
+    if (user.role == "admin") {
+      return `/adminprofile/${user.id}`
+    } else if (user.role == "user") {
+      return `/profile/${user.id}`
+    }
+  }
+
   function drawUserSection() {
     if (user) {
       return (
@@ -54,7 +60,7 @@ export default function NavBar() {
             </p>
           </Link>
 
-          <Link to={`/profile/${user.id}`} className={style.text}>
+          <Link to={profileLink()} className={style.text}>
             <PersonGear className={style.icon} />
             <p>{user.name}</p>
           </Link>

@@ -2,7 +2,6 @@ import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { setNavigate } from "./utils/NavigationUtils";
 import Home from "./components/Home/Home";
-import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Login from "./components/Login/Login";
 import UserProfile from "./components/UserProfile/UserProfile";
@@ -14,6 +13,7 @@ import PaymentGateway from "./components/PaymentGateway/PaymentGateway";
 import PaymentStatus from "./components/PaymentGateway/PaymentStatus";
 import Alert18 from "./components/Alerts/Alert18";
 import AdminProfile from "./components/Admin/AdminProfile";
+import Protected from "./components/Protected/Protected";
 import { useEffect } from "react";
 import NotFound from "./components/Not_found/NotFound";
 
@@ -30,16 +30,43 @@ function App() {
       <CartSessionManager />
       <UserSessionManager />
       <Routes>
+        {/* Routes for everyone */}
         <Route path="/" element={<Home />}></Route>
         <Route path="/product/:id" element={<Details />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/profile/:id" element={<UserProfile />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/adminprofile/:id" element={<AdminProfile />}></Route>
-        <Route path="/payment/start" element={<PaymentGateway />} />
-        <Route path="/payment/result" element={<PaymentStatus />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
+
+        {/* user-only routes */}
+        <Route path="/profile/:id" element={
+          <Protected requiredRole={"user"}>
+            <UserProfile />
+          </Protected>
+        } />
+        <Route path="/cart" element={
+          <Protected requiredRole={"user"}>
+            <Cart />
+          </Protected>
+        }></Route>
+        <Route path="/payment/start" element={
+          <Protected requiredRole={"user"}>
+            <PaymentGateway />
+          </Protected>
+        }/>
+        <Route path="/payment/result" element={
+          <Protected requiredRole={"user"}>
+            <PaymentStatus />
+          </Protected>
+        }></Route>
+
+        {/* admin-only routes */}
+        <Route path="/adminprofile/:id" element={
+          <Protected requiredRole={"admin"}>
+            <AdminProfile />
+          </Protected>
+        }/>
+
+        {/* If no routes match we default to Home */}
+        <Route element={<Home />}></Route>
       </Routes>
     </div>
   );

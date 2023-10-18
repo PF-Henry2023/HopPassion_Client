@@ -23,6 +23,29 @@ export function handleUserLogin(token) {
   window.localStorage.setItem("id", user.id);
 }
 
+export const updateUserLocal = (token) => {
+  console.log("entro a la funcion ");
+  window.localStorage.removeItem("user");
+  const decoded = jwtDecode(token);
+  console.log("token decodificado",decoded);
+  const user = {
+    id: decoded.id,
+    name: decoded.name,
+    lastName: decoded.lastName,
+    address: decoded.address,
+    email: decoded.email,
+    phone: decoded.phone,
+    role: decoded.role,
+    password: decoded.password,
+    postalCode: decoded.postalCode,
+    city: decoded.city,
+    country: decoded.country,
+  };
+  window.localStorage.setItem("user", JSON.stringify(user));
+  console.log("usuario actualizado", JSON.parse(window.localStorage.getItem("user")));
+  return;
+};
+
 export function handleUserLogout() {
   window.localStorage.removeItem("token");
   window.localStorage.removeItem("user");

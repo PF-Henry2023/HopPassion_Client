@@ -34,13 +34,17 @@ import {
   GET_REVIEWS_UNREVIEWED,
   REVIEW_PROCESSED,
   DELETE_REVIEW,
+  UPDATE_USER,
+  UPDATE_USER_STATE,
 } from "../actions/actions-type";
+
+import { getLoggedInUser } from "../../utils/UserUtils";
 
 const initialState = {
   //user: getLoggedInUser(),
   users: [],
-  user: null,
-  //user: getLoggedInUser(),
+  //user: null,
+  user: getLoggedInUser(),
   productDetails: {},
   products: null,
   isLoading: false,
@@ -227,6 +231,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         totalUsers: action.payload,
       };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case UPDATE_PRODUCT:
       const updateProduct = action.payload; // Los nuevos datos del producto a actualizar
       const updateProducts = state.products.map((product) => {
@@ -241,6 +250,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: updateProducts,
       };
+    case UPDATE_USER_STATE: 
+      return {
+        ...state,
+        user: action.payload,
+      }
     default:
       return { ...state };
   }

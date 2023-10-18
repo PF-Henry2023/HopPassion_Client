@@ -66,9 +66,13 @@ const PaymentGateway = () => {
   const [ isLoading, setIsLoading ] = useState(false)
 
   useEffect(() => {
+    reloadCart()
+  }, []);
+
+  function reloadCart() {
     dispatch(getCartRequest());
     dispatch(getCart());
-  }, []);
+  }
 
   function drawPaymentComponent() {
     if (syncing || !cart.total) {
@@ -102,12 +106,10 @@ const PaymentGateway = () => {
     setIsLoading(true)
     try {
       const data = await window.cardPaymentBrickController.getFormData()
+      const filterIdProducts = cart.products.map(e => e.id);
       const response = await HopPassionClient.post("/pay/process_payment", data);
-      const { products } = cart;
-      console.log("products", products);
-      const filterIdProducts = products.map(e => e.id);
-      console.log("id de productos:", filterIdProducts);
-      const saveBuys = await HopPassionClient.post("/buy/createBuy", {
+      reloadCart()
+      HopPassionClient.post("/buy/createBuy", {
         amount: cart.total,
         payment_id: user.id,
         userId: user.id ,

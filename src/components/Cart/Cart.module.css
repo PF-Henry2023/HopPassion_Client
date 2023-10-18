@@ -1,11 +1,12 @@
 .cartTitle {
-  margin-top: 60px; /* Espacio inferior */
+  margin-top: 60px; 
   margin-left: 60px;
   color: #6a7346;
   margin-bottom: 0px;
   display: flex;
   align-items: center;
 }
+
 .title {
   margin-left: 10px;
   font-size: 18pt;
