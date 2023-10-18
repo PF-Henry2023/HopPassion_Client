@@ -56,8 +56,19 @@
     gap: 10px;
 }
 .buttonEdit{
-    background-color: #EDF2DB;
-    color: #97A663;
+    background-color: #97a663;
+    border: none;
+    color: #edf2db;
+    border-radius: 4px;
+    padding: 6px 20px;
+    font-weight: 400;
+    font-size: 12pt;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #ddf391;
+      color: #97a663;
+    }
 }
 .buttonDesactivar{
     background-color: rgb(240, 183, 183);
