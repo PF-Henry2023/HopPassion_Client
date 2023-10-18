@@ -7,7 +7,7 @@ import HopPassionClient from "../../../utils/NetworkingUtils";
 const UsersTable = () => {
     const dispatch = useDispatch();
     const users = useSelector((state) => state.users);
-    const [activeUsers, setActiveUsers] = useState([]);
+    // const [activeUsers, setActiveUsers] = useState([]);
     const [inactiveUsers, setInactiveUsers] = useState([]);
     const [searchName, setSearchName ] = useState("");
     
@@ -46,30 +46,21 @@ const UsersTable = () => {
         pageNumbers.push(i);
     }
     const activateUser = async (id) => {
-        try {
+      try {
           const currentUser = await HopPassionClient.get(`/users/${id}`);
           const userState = currentUser.data.isActive;
-        //   console.log("Estado del usuario activado: ", userState);
-    
+  
           if (!userState) {
-            await HopPassionClient.put(`/users/activate/${id}`);
-            // Actualizar las listas de usuarios
-            const updatedInactiveUser = inactiveUsers.filter(
-              (user) => user.id !== id
-            );
-            const userToRestore = inactiveUsers.find((user) => user.id === id);
-            setActiveUsers((prevActiveUsers) => [
-              ...prevActiveUsers,
-              userToRestore,
-            ]);
-            setInactiveUsers(updatedInactiveUser);
+              await HopPassionClient.put(`/users/activate/${id}`);
+              // Actualiza el estado global en Redux después de activar al usuario
+              dispatch(getUsers());
           } else {
-            alert("El user esta activado");
+              alert("El usuario está activado");
           }
-        } catch (error) {
+      } catch (error) {
           console.error("Error al restaurar el usuario:", error);
-        }
-      };
+      }
+  }
     const token = window.localStorage.getItem("token");
     const requestOptions = {
         headers: {
@@ -77,30 +68,22 @@ const UsersTable = () => {
           'Content-Type': 'application/json', // Puedes ajustar los encabezados según tus necesidades
         },
       };
-    const deleteUser = async (id) => {
+      const deleteUser = async (id) => {
         try {
-          // Eliminar el usuario
-          const currentUser = await HopPassionClient.get(`/users/${id}`);
-          const userState = currentUser.data.isActive;
-        //   console.log("H Estado del usuario eliminado: ", userState);
+            const currentUser = await HopPassionClient.get(`/users/${id}`);
+            const userState = currentUser.data.isActive;
     
-          if (userState) {
-            await HopPassionClient.delete(`/users/delete/${id}`, requestOptions);
-            // Actualizar las listas de usuarios
-            const updatedActiveUser = activeUsers.filter((user) => user.id !== id);
-            const userToBlock = activeUsers.find((user) => user.id === id);
-            setInactiveUsers((prevInactiveUsers) => [
-              ...prevInactiveUsers,
-              userToBlock,
-            ]);
-            setActiveUsers(updatedActiveUser);
-          } else {
-            alert("El user esta desactivado");
-          }
+            if (userState) {
+                await HopPassionClient.delete(`/users/delete/${id}`, requestOptions);
+                // Actualiza el estado global en Redux después de eliminar al usuario
+                dispatch(getUsers());
+            } else {
+                alert("El usuario está desactivado");
+            }
         } catch (error) {
-          console.error("Error al bloquear el usuario:", error);
+            console.error("Error al bloquear el usuario:", error);
         }
-      };
+    };
 
     const handleInput = (event) => { // funcion que setea el searchName, me lo setea a lo que sea el target value del input de busqueda
         event.preventDefault();
@@ -153,11 +136,30 @@ const UsersTable = () => {
                                     <span>{user.name}</span>
                                     <span>{user.email}</span>
                                     <span>{user.id}</span>
-                                    <span>{user.isActive ? "Usuario Activo" : "Usuario Inactivo"}</span>
+                                    <span style={{ color: user.isActive ? "#97a663" : "#a66363" }}
+                                    >{user.isActive ? "Usuario Activo" : "Usuario Inactivo"}</span>
                                     <button 
                                         onClick={user.isActive 
                                         ? (() => deleteUser(user.id)) 
                                         : (() => activateUser(user.id))}
+                                        style={{ 
+                                          backgroundColor: user.isActive ? "#f2dcdb" : "#edf2db",
+                                          color: user.isActive ? "#a66363" : "#97a663",
+                                          borderRadius: "4px",
+                                          border: "none",
+                                          padding: "6px 20px",
+                                          fontWeight: "400",
+                                          fontSize: "12pt",
+                                          transition: "background-color 0.3s",
+                                        }}
+                                        onMouseEnter={e => { // Estilo al hacer hover
+                                          e.target.style.backgroundColor = user.isActive ? "#a66363" : "#edf2db";
+                                          e.target.style.color = user.isActive ? "#f2dcdb" : "#97a663";
+                                        }}
+                                        onMouseLeave={e => { // Restablece el estilo al salir del hover
+                                            e.target.style.backgroundColor = user.isActive ? "#f2dcdb" : "#97a663";
+                                            e.target.style.color = user.isActive ? "#a66363" : "#edf2db";
+                                        }}
                                     >{user.isActive ? "Desactivar" : "Activar"}
                                     </button>
                                 </li>
@@ -171,3 +173,6 @@ const UsersTable = () => {
 }
 
 export default UsersTable;
+
+
+// ********++ cambieos
