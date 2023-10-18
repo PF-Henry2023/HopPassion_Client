@@ -76,10 +76,10 @@
   
 
 .rowContainer {
-  margin-top: 20px;
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .rowContainer h4 {

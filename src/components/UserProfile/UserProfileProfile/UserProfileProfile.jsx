@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import styles from "./UserProfileProfile.module.css";
+import { mapUserToUserInfo } from "../../../utils/UserUtils";
+import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
-import { updateUser } from "../../../redux/actions/actions";
+import { useParams } from "react-router-dom";
+import { udateUserToken, updateUser } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";;
-import { validation, isButtonDisabled } from "./validations";
+import { getLoggedInUser } from "../../../utils/UserUtils";
 
 const UserProfileProfile = () => {
   useEffect(() => {
@@ -22,40 +24,17 @@ const UserProfileProfile = () => {
     phone: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
 
   function handleEditClick(editing) {
     setIsEditing(editing);
   }
 
-  // useEffect(() => {
-  //   const getInfo = async () => {
-
-  //     await dispatch(getUserInfo(id));
-
-  //   }
-  //   getInfo();
-  // },[])
 
   function handleInputChange(event) {
     const { name, value } = event.target;
     if (!["name", "lastName", "phone", "password"].includes(name)) {
       return;
     }
-
-    if (value.trim() !== "") {
-      const input = { [name]: value };
-      const inputErrors = validation(input);
-
-      if (inputErrors[name]) {
-        setErrors({ ...errors, [name]: inputErrors[name] });
-      } else {
-        setErrors({ ...errors, [name]: undefined });
-      }
-    } else {
-      setErrors({ ...errors, [name]: undefined });
-    }
-
     setEditableData({ ...editableData, [name]: value });
   }
 
@@ -117,60 +96,24 @@ const UserProfileProfile = () => {
             <div>
               <h4>Nombre</h4>
               <input type="text" name="name" onChange={handleInputChange} />
-              {errors.name && (
-                <p className={styles.error}>
-                  El nombre debe contener solo letras y tener al menos 2
-                  caracteres.
-                </p>
-              )}
             </div>
             <div>
               <h4>Apellido</h4>
               <input type="text" name="lastName" onChange={handleInputChange} />
-              {errors.lastName && (
-                <p className={styles.error}>
-                  {" "}
-                  El apellido debe contener solo letras y tener al menos 2
-                  caracteres.
-                </p>
-              )}
             </div>
           </div>
           <div className={styles.rowContainer}>
             <div>
               <h4>Contraseña</h4>{" "}
               <input type="text" name="password" onChange={handleInputChange} />
-              {errors.password && (
-                <p className={styles.error}>
-                  La contraseña debe tener al menos 8 caracteres y contener al
-                  menos una letra mayúscula, una letra minúscula y un número.
-                </p>
-              )}
             </div>
             <div>
               <h4>Número de teléfono</h4>{" "}
               <input type="text" name="phone" onChange={handleInputChange} />
-              {errors.phone && (
-                <p className={styles.error}>
-                  El número de teléfono debe tener exactamente 10 dígitos
-                  numéricos.
-                </p>
-              )}
             </div>
           </div>
-          <input
-            className={styles.saveButton}
-            type="submit"
-            value="Guardar"
-            disabled={isButtonDisabled}
-          />
-
-          <button
-            className={styles.cancelButton}
-            onClick={() => handleEditClick(false)}
-          >
-            Cancelar
-          </button>
+          <input className={styles.saveButton} type="submit" value="Guardar" />
+          <button className={styles.cancelButton} onClick={() => handleEditClick(false)}>Cancelar</button>
         </form>
       </>
     );

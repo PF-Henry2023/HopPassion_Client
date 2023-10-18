@@ -35,11 +35,8 @@ function validation(input) {
   return errors;
 }
 
-function isButtonDisabled(errors, input) {
-  return (
-    Object.values(errors).some((value) => value === true) ||
-    (!input.name && !input.lastName && !input.password && !input.phone)
-  );
+function isButtonDisabled(errors) {
+  return Object.values(errors).some((value) => value === true);
 }
 
 export { validation, isButtonDisabled };
