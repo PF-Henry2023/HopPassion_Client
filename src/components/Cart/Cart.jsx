@@ -4,6 +4,7 @@ import {
   removeFromCart,
   getCart,
   getCartRequest,
+  addToCart,
 } from "../../redux/actions/actions";
 import styles from "./Cart.module.css";
 import Return from "../Return/Return";
@@ -11,8 +12,8 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
 import MercadoPagoComponent from "./MercadoPagoButtom/Buttom";
+import TimedCounter from "../Counter/TimedCounter";
 import { Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +23,7 @@ const Cart = () => {
   const syncing = useSelector((state) => state.cart.syncing);
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const [ updating, setUpdating ] = useState({})
 
   useEffect(() => {
     dispatch(getCartRequest());
@@ -52,6 +54,18 @@ const Cart = () => {
     } else {
       return "Eliminar";
     }
+  }
+
+  function handleQuantityChange(productId, newQuantity) {
+    const u = { ...updating }
+    u[productId] = true
+    setUpdating(u)
+    dispatch(addToCart(productId, newQuantity, (result) => {
+      const u = { ...updating }
+      u[productId] = false
+      setUpdating(u)
+    }))
+    console.log(`id: ${productId}, new quantity: ${newQuantity}`)
   }
 
   const handleNavigate = () => {
@@ -101,7 +115,14 @@ const Cart = () => {
                 stock={product.stock}
                 onQuantityChange={(newQuantity) => {}}
               /> */}
-                {cart.quantities[product.id]}
+                {/* cart.quantities[product.id] */}
+                <TimedCounter
+                initialQuantity={cart.quantities[product.id]}
+                productId={product.id}
+                stock={product.stock}
+                loading={updating[product.id]}
+                onQuantityChange={(nq) => handleQuantityChange(product.id, nq)}
+                />
                 <button
                   className={styles.cartItemButton}
                   onClick={() => handleRemoveFromCart(product.id)}
