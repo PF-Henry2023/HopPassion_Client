@@ -5,17 +5,9 @@ export default function Favorites(props) {
   const { favorites } = props;
   return (
     <div className={style.container}>
-      {
-        favorites?.map(e => (
-          <Card
-            key={e.id}
-            id={e.id}
-            title={e.name}
-            price={e.price}
-            image={e.image}
-          />
-        ))
-      }
+      {favorites.map((e, i) => (
+        <Card key={i} id={e.id} title={e.name} price={e.price} image={e.image} />
+      ))}
     </div>
   );
 }

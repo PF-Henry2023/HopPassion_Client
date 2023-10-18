@@ -23,6 +23,8 @@ const UserProfileAddress = () => {
     country: "",
   });
 
+  console.log(editableData);
+
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -46,8 +48,10 @@ const UserProfileAddress = () => {
     let fieldValue = value;
     if (typeof value === "object" && value.label) {
       fieldValue = value.label;
+      setEditableData({ ...editableData, [field]: fieldValue });
+    } else {
+      setEditableData({ ...editableData, [field]: event.target.value });
     }
-    setEditableData({ ...editableData, [field]: fieldValue });
   }
 
   async function handleSubmit(event) {
@@ -105,15 +109,27 @@ const UserProfileAddress = () => {
           <div className={styles.rowContainer}>
             <div>
               <h4>Calle</h4>
-              <input type="text" name="address" onChange={handleInputChange} />
+              <input
+                type="text"
+                name="address"
+                onChange={(value) => handleInputChange("address", value)}
+              />
             </div>
           </div>
           <h4>Código Postal</h4>{" "}
-          <input type="text" name="postalCode" onChange={handleInputChange} />
+          <input
+            type="text"
+            name="postalCode"
+            onChange={(value) => handleInputChange("postalCode", value)}
+          />
           <div className={styles.rowContainer}>
             <div>
               <h4>Ciudad</h4>{" "}
-              <input type="text" name="city" onChange={handleInputChange} />
+              <input
+                type="text"
+                name="city"
+                onChange={(value) => handleInputChange("city", value)}
+              />
             </div>
             <div>
               <h4>País</h4>{" "}

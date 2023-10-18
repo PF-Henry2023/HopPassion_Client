@@ -23,24 +23,26 @@ export function handleUserLogin(token) {
   window.localStorage.setItem("id", user.id);
 }
 
-export const updateUserLocal = (input) => {
+export const updateUserLocal = (token) => {
   console.log("entro a la funcion ");
   window.localStorage.removeItem("user");
+  const decoded = jwtDecode(token);
+  console.log("token decodificado",decoded);
   const user = {
-    id: input.id,
-    name: input.name,
-    lastName: input.lastName,
-    address: input.address,
-    email: input.email,
-    phone: input.phone,
-    role: input.role,
-    password: input.password,
-    postalCode: input.postalCode,
-    city: input.city,
-    country: input.country,
+    id: decoded.id,
+    name: decoded.name,
+    lastName: decoded.lastName,
+    address: decoded.address,
+    email: decoded.email,
+    phone: decoded.phone,
+    role: decoded.role,
+    password: decoded.password,
+    postalCode: decoded.postalCode,
+    city: decoded.city,
+    country: decoded.country,
   };
   window.localStorage.setItem("user", JSON.stringify(user));
-  console.log(user);
+  console.log("usuario actualizado", JSON.parse(window.localStorage.getItem("user")));
   return;
 };
 
