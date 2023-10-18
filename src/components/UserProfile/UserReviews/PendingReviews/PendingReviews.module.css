@@ -39,15 +39,15 @@
 }
 
 .button {
-  margin-top: 10px;
-  color: #ffffff;
+  margin-top:10px;
+  border: none;
+  color: #edf2db;
   background-color: #97a663;
-  border: 0px;
-  padding: 5px 30px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 20px;
   border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  font-size: 12pt;
+  transition: background-color 0.3s;
   &:hover {
     background-color: #ddf391;
     color: #97a663;
@@ -60,4 +60,21 @@
 
 .starOutline {
   color: #b1b5a4;
+}
+
+.cancelButton{
+  margin-top:10px;
+  background-color: #f2dcdb;
+  border: none;
+  color: #a66363;
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  font-size: 12pt;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #a66363;
+    color: #f2dcdb;
+  }
 }
