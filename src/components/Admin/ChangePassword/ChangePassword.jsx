@@ -15,12 +15,12 @@ const ChangePassword = ({ user }) => {
   const handleEditClick = () => {
     if (!error.contraseña && isEditing) {
       console.log(user.id, input);
-      // dispatch(changePassword(user.id, input));
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Contraseña cambiada",
-      //   text: "La contraseña se ha cambiado exitosamente.",
-      // });
+      dispatch(changePassword(user.id, input));
+      Swal.fire({
+         icon: "success",
+         title: "Contraseña cambiada",
+         text: "La contraseña se ha cambiado exitosamente.",
+       });
     }
     setIsEditing(!isEditing);
   };
