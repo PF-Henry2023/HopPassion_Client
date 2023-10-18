@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "./UserProfileProfile.module.css";
-import { mapUserToUserInfo } from "../../../utils/UserUtils";
-import HopPassionClient from "../../../utils/NetworkingUtils";
 import Loading from "../../Loading/Loading";
 import { useParams } from "react-router-dom";
-import { udateUserToken, updateUser } from "../../../redux/actions/actions";
+import { updateUser } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedInUser } from "../../../utils/UserUtils";
 
 const UserProfileProfile = () => {
   useEffect(() => {

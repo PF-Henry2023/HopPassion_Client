@@ -28,9 +28,12 @@
   }
 
 .mainContainer h1 {
+  text-align: left;
+  margin-left: 0;
   font-size: 18pt;
   color: #6a7346;
   font-weight: 700;
+  margin-bottom: 5px;
 }
 
 .id {

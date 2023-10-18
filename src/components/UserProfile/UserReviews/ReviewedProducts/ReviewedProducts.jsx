@@ -4,6 +4,7 @@ import HopPassionClient from "../../../../utils/NetworkingUtils";
 import { useParams } from "react-router-dom";
 import { Star, StarFill } from "react-bootstrap-icons";
 import { Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ReviewedProducts() {
   const [reviewedProducts, setReviewedProducts] = useState({});
@@ -43,20 +44,22 @@ function ReviewedProducts() {
       ) : (
         reviewedProducts.map((product) => (
           <div key={product.id} className={styles.product}>
-            <div className={styles.productHeader}>
-              <h2 className={styles.productName}>{product.name}</h2>
-              <div className={styles.rating}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star}>
-                    {star <= calculateAverageRating(product.Reviews) ? (
-                      <StarFill className={styles.starFill} />
-                    ) : (
-                      <Star className={styles.starOutline} />
-                    )}
-                  </span>
-                ))}
+            <Link className={styles.link} to={`/product/${product.id}`}>
+              <div className={styles.productHeader}>
+                <h2 className={styles.productName}>{product.name}</h2>
+                <div className={styles.rating}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span key={star}>
+                      {star <= calculateAverageRating(product.Reviews) ? (
+                        <StarFill className={styles.starFill} />
+                      ) : (
+                        <Star className={styles.starOutline} />
+                      )}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            </Link>
             {product.Reviews.map((review, index) => (
               <div key={index} className={styles.reviewItem}>
                 <p className={styles.productReview}>{review.comment}</p>
@@ -66,7 +69,6 @@ function ReviewedProducts() {
           </div>
         ))
       )}
-      
     </div>
   );
 }

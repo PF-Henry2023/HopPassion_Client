@@ -14,6 +14,18 @@
   justify-content: space-between;
 }
 
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  color: #97a663;
+  font-weight: 700;
+}
+
+
+
 .productName {
   margin-top: 15px;
   font-size: 12pt;

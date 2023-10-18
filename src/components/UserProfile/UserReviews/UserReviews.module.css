@@ -19,11 +19,14 @@
 }
 
 .title{
+  margin-left: 60px; 
   font-size: 18pt;
   color: #6a7346;
   font-weight: 700;
   margin-left: 60px;
-  margin-top: 16px;}
+  margin-top: 16px;
+  text-align: left;
+}
 
 .tabs button {
   background-color: #97a663;
