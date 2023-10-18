@@ -15,9 +15,6 @@ const HopPassionClient = axios.create({
 >>>>>>> userProfile
 });
 
-//otra forma mas corta seria:
-//axios.defaults.BaseURL = "https://hoppassionserver-production.up.railway.app";
-
 HopPassionClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

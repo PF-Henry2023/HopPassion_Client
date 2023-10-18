@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./Borrado.module.css"
+import style from "./Borrado.module.css";
 import axios from "axios";
 
 const Borrado = ({ id }) => {
@@ -16,16 +16,14 @@ const Borrado = ({ id }) => {
       setIsDelete(!isDelete);
     } catch (error) {
       console.error(
-        `Error al ${
-          isDelete ? "desactivar" : "activar"
-        } el producto: ${error}`
+        `Error al ${isDelete ? "desactivar" : "activar"} el producto: ${error}`
       );
     }
   };
 
   return (
     <div>
-   <button
+      <button
         onClick={handleAction}
         className={isDelete ? style.desactivar : style.activar}
       >

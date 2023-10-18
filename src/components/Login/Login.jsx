@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate, isButtonDisabled } from "./validate";
-import { login } from "../../redux/actions/actions";
+import { login, getUsers } from "../../redux/actions/actions";
 import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
@@ -27,6 +27,10 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
   useEffect(() => {
     if (user == null) {
