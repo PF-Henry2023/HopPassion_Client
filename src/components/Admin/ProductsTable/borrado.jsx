@@ -3,9 +3,23 @@ import style from "./Borrado.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import HopPassionClient from "../../../utils/NetworkingUtils";
+import { useEffect } from "react";
 
 const Borrado = ({ id }) => {
   const [isDelete, setIsDelete] = useState(true);
+
+  useEffect(() => {
+    const petition = async () => {
+      const response = await HopPassionClient.get(`/product/${id}`)
+      console.log(id);
+      if(response.data.isDeleted){
+        setIsDelete(true);
+      } else {
+        setIsDelete(false)
+      }
+    } 
+    petition();
+  },[])
 
   const handleAction = async () => {
     try {
