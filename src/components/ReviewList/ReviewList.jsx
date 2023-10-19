@@ -4,13 +4,15 @@ import StaticRating from "../Rating/StaticRating";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
+// Selector para obtener la lista de reseñas desde el estado
 const selectReviewList = (state) => state.reviewList;
 
+// Selector memoizado para mejorar el rendimiento
 const getMemoizedReviewList = createSelector(
   [selectReviewList],
   (reviewList) => reviewList
 );
-//const rev = useSelector(getMemoizedReviewList);
+
 const ReviewList = ({ isLoading }) => {
   const rev = useSelector(getMemoizedReviewList);
 
@@ -34,14 +36,15 @@ const ReviewList = ({ isLoading }) => {
   } else {
     signo = "?";
   }
+
   return (
     !isLoading && (
       <div className={style.mainContainer}>
         <div name="title" className={style.title}>
-          {`Feedback From Our Customers${signo}`}
+          {`Opiniones de Nuestros Clientes${signo}`}
         </div>
         {rev.length === 0 ? (
-          <div className={style.noReviewsYet}>No reviews yet.</div>
+          <div className={style.noReviewsYet}>Aún no hay opiniones.</div>
         ) : (
           <div>
             <div className={style.totalRating}>
@@ -52,9 +55,9 @@ const ReviewList = ({ isLoading }) => {
                   starSpacing={0.1}
                 />
               </div>
-              <div className={style.outOf}>{`${promedio} out of 5 stars`}</div>
+              <div className={style.outOf}>{`${promedio} de 5 estrellas`}</div>
             </div>
-            <div className={style.totalReviews}>{rev.length} reviews</div>
+            <div className={style.totalReviews}>{rev.length} opiniones</div>
             <div className={style.listContainer}>
               {rev.map((review) => (
                 <ReviewCard key={review.id} review={review} />

@@ -1,7 +1,7 @@
 import style from "./ReviewCard.module.css";
 import StaticRating from "../../Rating/StaticRating";
+
 const ReviewCard = ({ review }) => {
-  console.log(review);
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
 
@@ -52,7 +52,11 @@ const ReviewCard = ({ review }) => {
       </div>
       <div className={style.commentContainer}>
         {title ? <div className={style.name}>{title}</div> : <> </>}
-        {comment ? <div className={style.comment}>{comment}</div> : <> </>}
+        {comment ? (
+          <div className={style.comment}>{comment}</div>
+        ) : (
+          <div className={style.noComment}>Actualmente sin comentarios.</div>
+        )}
       </div>
     </div>
   );

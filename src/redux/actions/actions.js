@@ -150,7 +150,7 @@ export const signup = ({
   city,
   postalCode,
   country,
-}) => {
+}, callback) => {
   return async function (dispatch) {
     try {
       const response = await HopPassionClient.post("/users/signup", {
@@ -165,6 +165,7 @@ export const signup = ({
         country,
       });
       handleUserLogin(response.data);
+      callback()
       dispatch({
         type: SIGNUP,
         payload: getLoggedInUser(),
