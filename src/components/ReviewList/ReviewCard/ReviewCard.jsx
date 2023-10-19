@@ -52,7 +52,11 @@ const ReviewCard = ({ review }) => {
       </div>
       <div className={style.commentContainer}>
         {title ? <div className={style.name}>{title}</div> : <> </>}
-        {comment ? <div className={style.comment}>{comment}</div> : <> </>}
+        {comment ? (
+          <div className={style.comment}>{comment}</div>
+        ) : (
+          <div className={style.noComment}>Actualmente sin comentarios.</div>
+        )}
       </div>
     </div>
   );
