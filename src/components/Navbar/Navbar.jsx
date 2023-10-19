@@ -24,10 +24,11 @@ export default function NavBar() {
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
 
-  const [input, setInput] = useState(null);
+  const [input, setInput] = useState("");
 
-  function handleSearch(event) {
+  function handleSearch() {
     dispatch(setSearchQuery(input));
+    setInput("");
   }
 
   function handleInputChange(event) {
@@ -106,12 +107,12 @@ export default function NavBar() {
                 className={style.searchField}
                 type="text"
                 placeholder="Busca tu cerveza favorita"
-                defaultValue={query}
+                value={input} // Use the 'input' state as the input field's value
                 onChange={handleInputChange}
               />
               <button
                 className={style.searchButton}
-                type="submit"
+                type="button" // Use type="button" to prevent form submission
                 onClick={handleSearch}
               >
                 Buscar

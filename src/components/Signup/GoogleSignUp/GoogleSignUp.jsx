@@ -48,7 +48,7 @@ const GoogleSignUp = (props) => {
     <>
       <GoogleLogin
         clientId={clientId}
-        buttonText="Ingresar con Google"
+        buttonText="Registar con Google"
         className={style.button}
         onSuccess={onSuccess}
         onFailure={onFailure}

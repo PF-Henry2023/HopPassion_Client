@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { getLoggedInUser } from "../../utils/UserUtils";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../redux/actions/actions";
 import Create from "../Create/Create";
@@ -21,7 +21,7 @@ import ChangePassword from "./ChangePassword/ChangePassword";
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const user = getLoggedInUser();
+  const user = useSelector((state) => state.user);
   const { id } = useParams();
   const token = localStorage.getItem("authToken");
   const navigate = useNavigate();
@@ -42,10 +42,10 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
-    /* if (user.id !== Number(id)) {
+    if (user.id !== Number(id)) {
       navigate("/adminprofile");
       return;
-    } */
+    }
     const fetchData = async () => {
       try {
         const userDataResponse = await dispatch(
