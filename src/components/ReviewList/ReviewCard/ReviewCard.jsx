@@ -1,17 +1,36 @@
 import style from "./ReviewCard.module.css";
 import StaticRating from "../../Rating/StaticRating";
+import { useEffect, useState } from "react";
+import HopPassionClient from "../../../utils/NetworkingUtils";
 
 const ReviewCard = ({ review }) => {
+  console.log(review);
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
 
-    // Obtén los componentes de la fecha
     const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Los meses en JavaScript son base 0
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear().toString();
 
     return `${month} - ${day} - ${year}`;
   };
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await HopPassionClient.get(
+          `/product/${review.ProductId}`
+        );
+        setData(data);
+      } catch (error) {
+        console.error("Error al obtener datos:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const splitByBackticks = (str) => {
     if (str === null || str === undefined) {
@@ -30,7 +49,7 @@ const ReviewCard = ({ review }) => {
   };
 
   const commentData = splitByBackticks(review.comment);
-  const title = commentData[0];
+  const title = data.name;
   const comment = commentData[1];
 
   return (
