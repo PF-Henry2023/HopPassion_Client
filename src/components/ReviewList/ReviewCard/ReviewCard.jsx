@@ -1,7 +1,7 @@
 import style from "./ReviewCard.module.css";
 import StaticRating from "../../Rating/StaticRating";
+
 const ReviewCard = ({ review }) => {
-  console.log(review);
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
 

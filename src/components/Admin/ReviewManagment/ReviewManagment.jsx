@@ -84,7 +84,7 @@ const ReviewManagement = () => {
       ))}
     </div>
   ) : (
-    <div>No more reviews to process!</div>
+    <div>No quedan reviews por porcesar!</div>
   );
 };
 
