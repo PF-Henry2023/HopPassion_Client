@@ -135,6 +135,9 @@ const EditProduct = ({id, setEditing}) => {
       }
     });
   };
+  const handleCancel = () => {
+    setEditing(false);
+  }
 
   return (
     <div className={style.container}>
@@ -281,6 +284,7 @@ const EditProduct = ({id, setEditing}) => {
           >
             Modificar
           </Button>
+          <Button className={style.buttonDanger} variant="danger" onClick={handleCancel}>Cancelar</Button>
         </Form>
       </div>
     </div>

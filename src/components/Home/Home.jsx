@@ -38,6 +38,7 @@ const Home = () => {
     const petition = async () => {
       const { data } = await HopPassionClient.get("/stadistics/getTenProduct");
       setFavorites(data.top3)
+      console.log(data.top3);
     }
     petition();
   },[])
