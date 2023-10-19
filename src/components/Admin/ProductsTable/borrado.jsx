@@ -2,15 +2,26 @@ import { useState } from "react";
 import style from "./Borrado.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const Borrado = ({ id }) => {
   const [isDelete, setIsDelete] = useState(true);
+  useEffect(() => {
+    const petition = async () => {
+      const response = await axios.get(`https://hoppassion-server.1.ie-1.fl0.io/product/${id}`)
+      console.log("estado del producto",response);
+      if(response.data.isDeleted) {
+        setIsDelete(true);
+      } else {
+        setIsDelete(false);
+      }
+    }
+    petition();
+  })
 
   const handleAction = async () => {
     try {
-      z;
       if (isDelete) {
-
         Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -21,7 +32,12 @@ const Borrado = ({ id }) => {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            await axios.delete(`https://hoppassion-server.1.ie-1.fl0.io/product/${id}`);
+            axios.delete(`https://hoppassion-server.1.ie-1.fl0.io/product/${id}`)
+            .then((response) => {
+              if(response.status === 200){
+
+              }
+            })
             Swal.fire("Deleted!", "Your file has been deleted.", "success");
           }
         });

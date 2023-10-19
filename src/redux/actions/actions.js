@@ -38,6 +38,7 @@ import {
   GET_USER_BY_NAME,
   UPDATE_USER_STATE,
   CHANGE_PASSWORD,
+  GET_PRODUCTS_TABLE,
 } from "./actions-type";
 
 export const changePassword = (id, password) => {
@@ -232,6 +233,18 @@ export const getProducts = (filters, query) => {
     }
   };
 };
+
+export const getProductsTable = (page) => {
+  return async (dispatch) => {
+    try {
+      const result = await HopPassionClient.get(`/product/qualify/0?page=${page}`)
+      console.log("products table ///", result,);
+      dispatch({ type:  GET_PRODUCTS_TABLE, payload: result.data.products});
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 export const getNextProductPage = (filters, query, page) => {
   return async (dispatch) => {

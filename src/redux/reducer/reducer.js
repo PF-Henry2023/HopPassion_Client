@@ -38,6 +38,7 @@ import {
   GET_USER_BY_NAME,
   UPDATE_USER_STATE,
   CHANGE_PASSWORD,
+  GET_PRODUCTS_TABLE,
 } from "../actions/actions-type";
 
 import { getLoggedInUser } from "../../utils/UserUtils";
@@ -49,6 +50,7 @@ const initialState = {
   user: getLoggedInUser(),
   productDetails: {},
   products: null,
+  productsTable: null,
   isLoading: false,
   quantity: 1,
   categories: {},
@@ -266,6 +268,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case GET_PRODUCTS_TABLE:
+      return {
+        ...state,
+        productsTable: action.payload,
+      }
     default:
       return { ...state };
   }

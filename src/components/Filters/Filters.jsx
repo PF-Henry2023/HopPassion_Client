@@ -25,7 +25,7 @@ export default function NavBar() {
 
   function handleCountry(country) {
     dispatch(
-      setFilters({ country, order: selectedOrder, category: selectedCategory })
+      setFilters({ country, order: selectedOrder, category: selectedCategory, })
     );
   }
 
