@@ -21,14 +21,7 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const users = useSelector((state) => state.users);
   const countryoptions = useMemo(() => CountryList().getData(), []);
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
-
-  console.log(users);
 
   const [userData, setData] = useState({
     name: "",
@@ -68,27 +61,7 @@ export default function SignUp() {
 
   const handleSignup = async (event) => {
     event.preventDefault();
-    const emailExists = users.some((user) => user.email === userData.email);
-    if (emailExists) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Este e-mail ya esta registrado!",
-      });
-      setData({
-        name: "",
-        lastName: "",
-        address: "",
-        email: "",
-        phone: "",
-        password: "",
-        postalCode: "",
-        city: "",
-        country: "",
-      });
-      return;
-    } else {
-      dispatch(signup(userData));
+    dispatch(signup(userData, () => {
       Swal.fire({
         icon: "success",
         title: "Usuario creado correctamente",
@@ -97,7 +70,7 @@ export default function SignUp() {
       }).then(() => {
         navigate("/");
       });
-    }
+    }));
   };
 
   useEffect(() => {
