@@ -121,12 +121,14 @@ export default function SignUp() {
             <h2 className={style.title}>Registro</h2>
             <div className={style.divider}></div>
             <div className={style.button}>
-            <GoogleSignUp clientId={clientId} />
+              <GoogleSignUp clientId={clientId} />
             </div>
             <div className={style.divider}></div>
             <Form onSubmit={handleSignup}>
               <Form.Group className="mb-3" controlId="name">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Nombre:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Nombre:
+                </Form.Label>
                 <Form.Control
                   value={userData.name}
                   type="text"
@@ -147,7 +149,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="lastName">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Apellido:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Apellido:
+                </Form.Label>
                 <Form.Control
                   value={userData.lastName}
                   type="text"
@@ -168,7 +172,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="email">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Correo electrónico:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Correo electrónico:
+                </Form.Label>
                 <Form.Control
                   value={userData.email}
                   type="email"
@@ -186,7 +192,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="country">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>País de origen</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  País de origen
+                </Form.Label>
                 <Select
                   options={countryoptions}
                   placeholder="Selecciona el país que corresponde"
@@ -205,7 +213,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="city">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Ciudad:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Ciudad:
+                </Form.Label>
                 <Form.Control
                   value={userData.city}
                   type="text"
@@ -223,7 +233,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="address">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Domicilio:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Domicilio:
+                </Form.Label>
                 <Form.Control
                   value={userData.address}
                   type="text"
@@ -241,7 +253,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="postalCode">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Codigo postal:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Codigo postal:
+                </Form.Label>
                 <Form.Control
                   value={userData.postalCode}
                   type="text"
@@ -259,11 +273,13 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="phone">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Telefono:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Telefono:
+                </Form.Label>
                 <Form.Control
                   value={userData.phone}
                   type="text"
-                  placeholder="Ingresa tu domicilio"
+                  placeholder="Ingresa tu telefono"
                   className={style.formControl}
                   onChange={(event) => {
                     handleChange("phone", event.target.value);
@@ -277,7 +293,9 @@ export default function SignUp() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="password">
-                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>Contraseña:</Form.Label>
+                <Form.Label style={{ fontSize: "12pt", color: "#818181" }}>
+                  Contraseña:
+                </Form.Label>
                 <Form.Control
                   value={userData.password}
                   type="password"
@@ -290,8 +308,8 @@ export default function SignUp() {
                   isValid={userData.password && !errors.password}
                 />
                 <Form.Control.Feedback type="invalid">
-                  La contraseña debe contener 6 caracteres o más, una mayúscula
-                  y un caracter especial.
+                  La contraseña debe contener 6 caracteres o más, una mayúscula,
+                  un número y un caracter especial.
                 </Form.Control.Feedback>
               </Form.Group>
 

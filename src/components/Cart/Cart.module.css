@@ -1,5 +1,5 @@
 .cartTitle {
-  margin-top: 60px; 
+  margin-top: 60px;
   margin-left: 60px;
   color: #6a7346;
   margin-bottom: 0px;
@@ -88,20 +88,20 @@
   }
 }
 
-.resume{
-  margin-top:10px;
+.resume {
+  margin-top: 10px;
   padding: 50px;
   box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
   border-radius: 6px;
 }
-.subtotal{
-  color: #818181
+.subtotal {
+  color: #818181;
 }
 
 .divider {
-  border: none; 
+  border: none;
   height: 1px;
-  background-color: #ccc; 
+  background-color: #ccc;
   margin: 10px 0;
 }
 
@@ -140,4 +140,33 @@
     background-color: #ddf391;
     color: #97a663;
   }
+}
+
+.nocartContainer {
+  display: grid;
+  grid-template-columns: auto 1fr 0.5fr;
+  gap: 60px;
+  padding: 20px;
+  margin: 150px;
+}
+
+.button {
+  background-color: #97a663;
+  border: none;
+  color: #edf2db;
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 400;
+  font-size: 14pt;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #ddf391;
+    color: #97a663;
+  }
+}
+
+.button:hover {
+  background-color: #ddf391;
+  color: #97a663;
 }
