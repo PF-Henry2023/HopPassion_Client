@@ -44,6 +44,15 @@
   color: #6a7346;
 }
 
+.noComment {
+  padding-left: 2%;
+  margin-right: 4.5%;
+  font-size: 15px;
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+}
+
 .date {
   font-family: "Acme", sans-serif;
   letter-spacing: -0.03em;
