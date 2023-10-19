@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import "./Card.css";
 import axios from "axios";
+import styles from "./Card.module.css"
+import { CurrencyDollar } from "react-bootstrap-icons";
 
 export default function CardTotalAmount() {
   const [total, setTotal] = useState();
@@ -20,15 +21,15 @@ export default function CardTotalAmount() {
   console.log("card Total,", total);
 
   return (
-    <div className="containerCard">
-      <img
-        src="https://res.cloudinary.com/dkwvnp3ut/image/upload/v1697244833/pila-de-billetes-de-dolar_bez69k.png"
-        alt="Dolar"
-      />
-      <div className="container_strings">
-        <span className="amount">$| {total}</span>
-        <span className="span_generic">Total de ventas</span>
+    <div className={styles.mainContainer}>
+      <div className={styles.column1}>
+        <p>$</p>
+      </div>
+      <div className={styles.column2}>
+        <span className={styles.amount}>{total}</span>
+        <span className={styles.span_generic}>Total de ventas</span>
       </div>
     </div>
   );
 }
+

@@ -2,7 +2,7 @@
     display: flex;
     background-color: #97A663;
     color: #EDF2DB;
-    padding: 10px 10px;
+    padding: 10px 0px;
     position: relative;
 }
 .barraDatos {
@@ -85,3 +85,4 @@
 .product span {
     margin: 2px 0; 
 }
+

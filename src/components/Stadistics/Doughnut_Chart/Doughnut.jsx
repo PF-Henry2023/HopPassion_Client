@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import "./Doughnut.css";
+import styles from "./Doughnut.module.css";
 import axios from "axios";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,15 +13,15 @@ function MyDoughnut() {
       try {
         const donutChart = await axios.get(
           "https://hoppassion-server.1.ie-1.fl0.io/stadistics/totalUsers"
-        )
+        );
         setDonut(donutChart.data.data);
       } catch (error) {
-        throw error
+        throw error;
       }
-    }
+    };
     getInfoChart();
-  },[])
-  
+  }, []);
+
   console.log("donut", donut);
   const doughnutOptions = {
     cutout: 38,
@@ -49,19 +49,15 @@ function MyDoughnut() {
     ],
   };
   return (
-    <div className="containerStyle">
-      <div className="containerFlex">
-        <div className="userTotal">
-          <img
-            src="https://res.cloudinary.com/dkwvnp3ut/image/upload/v1697227013/user_zyjpeq.png"
-            alt=""
-          />
-          <span>Usuarios totales</span>
-          <span className="totalUsers">{donut?.totalUsers}</span>
-        </div>
-        <div className="dona">
+    <div className={styles.container}>
+      <div className={styles.column1}>
+        <div className={styles.dona}>
           <Doughnut data={data} options={doughnutOptions} />
         </div>
+      </div>
+      <div className={styles.column2}>
+        <span className={styles.totalUsers}>{donut?.totalUsers}</span>
+        <span className={styles.span_generic}>Usuarios totales</span>
       </div>
     </div>
   );

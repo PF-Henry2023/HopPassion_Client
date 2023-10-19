@@ -51,7 +51,9 @@ export default function ProductsTable({setEditing}) {
 
   return (
     <div className={style.container}>
-        <Filters />
+      
+        <Filters className={style.filter}/>
+        
         <div className={style.contpagination}>
           <div className={style.barraDatos}>
               <h6>Producto</h6>
@@ -59,23 +61,7 @@ export default function ProductsTable({setEditing}) {
               <h6>Precio Unitario</h6>
               <h6>Stock</h6>
           </div>
-          <div className={style.pagination}>
-            <button onClick={() => setCurrentPage(currentPage -1)}
-            disabled={currentPage === 1}>Ant</button>
-            <div className={style.pageNumbers}>
-              {pageNumbers.map((number) => (
-                <div
-                  key={number}
-                  className={number === currentPage ? style.activePage : null}
-                  onClick={() => setCurrentPage(number)}
-                >
-                  {number}
-                </div>
-              ))}
-            </div>
-            <button onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentProducts.length < productsPerPage}>Next</button>
-          </div>
+         
         </div>
         <div className={style.gridContainer}>
           {currentProducts.map((product) => {
@@ -107,6 +93,23 @@ export default function ProductsTable({setEditing}) {
             );
           })}
         </div>
+        <div className={style.pagination}>
+            <button onClick={() => setCurrentPage(currentPage -1)}
+            disabled={currentPage === 1}>Ant</button>
+            <div className={style.pageNumbers}>
+              {pageNumbers.map((number) => (
+                <div
+                  key={number}
+                  className={number === currentPage ? style.activePage : null}
+                  onClick={() => setCurrentPage(number)}
+                >
+                  {number}
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentProducts.length < productsPerPage}>Next</button>
+          </div>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+.check{
+    background-color:#97a663;
+    text-align: center;
+    width: 90px;
+    height: 42px;
+    margin-top: 30px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: none;
+    color: #edf2db;
+    border-radius: 4px;
+    padding: 6px 20px;
+    font-weight: 400;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #a66363;
+      color: #f2dcdb;
+    }
+}
+
+.delete{ background-color: #f2dcdb;
+    align-items: center;
+    text-align: center;
+    width: 110px;
+    height: 42px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border: none;
+    color: #a66363;
+    border-radius: 4px;
+    padding: 6px 20px;
+    font-weight: 400;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #a66363;
+      color: #f2dcdb;
+    }
+  }

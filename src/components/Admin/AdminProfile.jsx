@@ -1,8 +1,7 @@
-import styles from "./AdminProfile.module.css";
+import React, { useState, useEffect, createContext } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { getLoggedInUser } from "../../utils/UserUtils";
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../redux/actions/actions";
@@ -13,11 +12,12 @@ import MyDoughnut from "../Stadistics/Doughnut_Chart/Doughnut";
 import TopProducts from "../Stadistics/Doughnut_Chart/DoughunutTop";
 import AreaChart from "../Stadistics/Area_Chart/Areachart";
 import { Container } from "react-bootstrap";
-import { createContext } from "react";
 import ReviewManagement from "./ReviewManagment/ReviewManagment";
-export const TotalUsersStadistics = createContext(null);
 import UsersTable from "./UsersTable/UsersTable";
 import ChangePassword from "./ChangePassword/ChangePassword";
+import styles from "./AdminProfile.module.css";
+
+export const TotalUsersStadistics = createContext(null);
 
 const AdminProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +80,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Estadísticas" ? "active" : ""
+                    activeOption === "Estadisticas" ? "active" : styles.active
                   }`}
                   aria-current="page"
                   href="#"
@@ -92,7 +92,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Crear Producto" ? "active" : ""
+                    activeOption === "Crear Producto" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Crear Producto")}
@@ -103,7 +103,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Productos" ? "active" : ""
+                    activeOption === "Productos" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Productos")}
@@ -114,7 +114,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Usuarios" ? "active" : ""
+                    activeOption === "Usuarios" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Usuarios")}
@@ -125,7 +125,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Reseñas" ? "active" : ""
+                    activeOption === "Reseñas" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Reseñas")}
@@ -136,7 +136,7 @@ const AdminProfile = () => {
               <li className="nav-item">
                 <a
                   className={`nav-link ${
-                    activeOption === "Contraseña" ? "active" : ""
+                    activeOption === "Contraseña" ? "active" : styles.active
                   }`}
                   href="#"
                   onClick={() => setActiveOption("Contraseña")}
@@ -151,15 +151,19 @@ const AdminProfile = () => {
             {activeOption === "Estadisticas" && (
               <div>
                 <span className={styles.text}>Estadísticas</span>
-                <hr />
-                <Container className={styles.continer_graphics}>
-                  <CardTotalAmount />
-                  <MyDoughnut />
-
-                  <hr />
-                </Container>
-                <hr />
-                <TopProducts />
+                <div className={styles.row}>
+                  <div className={styles.container_graphics}>
+                    <div>
+                      <CardTotalAmount />
+                    </div>
+                    <div>
+                      <MyDoughnut />
+                    </div>
+                  </div>
+                  <div className={styles.column2}>
+                    <TopProducts />
+                  </div>
+                </div>
                 <hr />
                 <AreaChart />
               </div>

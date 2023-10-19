@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
 import ReviewCard from "../../ReviewList/ReviewCard/ReviewCard";
 import { createSelector } from "reselect";
 import { useSelector } from "react-redux";
@@ -31,7 +30,7 @@ const ReviewManagement = () => {
   }, [dispatch]);
 
   const reviews = useSelector(getMemoizedReviewList);
-
+console.log(reviews)
   const handleAcceptClick = (idRev) => {
     dispatch(reviewProcessed(idRev));
   };
@@ -44,26 +43,28 @@ const ReviewManagement = () => {
     <div className={style.mainContainer}>
       {reviews.map((review) => (
         <div key={review.id}>
+          <ReviewCard key={review.id} review={review} />
           <div className={style.buttons}>
-            <Button
+            <button
+              className={style.check}
               variant="success"
               onClick={() => handleAcceptClick(review.id)}
             >
-              Aceptar
-            </Button>
-            <Button
+              Leído
+            </button>
+            <button
+              className={style.delete}
               variant="danger"
               onClick={() => handleDeleteClick(review.id)}
             >
               Eliminar
-            </Button>
+            </button>
           </div>
-          <ReviewCard key={review.id} review={review} />
         </div>
       ))}
     </div>
   ) : (
-    <div>No more reviews to process!</div>
+    <div>Cargando reseñas...</div>
   );
 };
 

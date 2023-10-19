@@ -1,48 +1,71 @@
-/* Estilos para el contenedor principal */
 .mainContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px; /* Espacio entre las columnas */
+  gap: 20px;
+  background-color: #ffffff;
 }
 
-/* Estilos para la columna izquierda */
 .leftContent {
-  margin: 60px;
-  padding: 20px;
-  width: 30%;
-  height: 90%;
+  position: sticky;
+  height: 690px;
+  top: 0;
+  width: 350px;
+  padding-top: 100px;
+  align-content: initial;
+  display: grid;
+  padding: 80px;
+  box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
+  background-color: white;
+}
+
+.leftContent p {
+  margin-bottom: 10px;
+  margin-top: 100px;
+  margin-left: 15px;
+  font-size: 10pt;
+}
+
+.leftContent h2 {
+  margin-bottom: 5px;
+  margin-left: 15px;
+  font-size: 18pt;
+  color: #97a663;
+  font-weight: 500;
+}
+
+.leftContent a {
+  font-weight: 600;
+  color: #97a663;
+  font-size: 12pt;
+  &:hover {
+    color: #97a663;
+    font-weight: 700;
+  }
+}
+
+.leftContent a.active {
+  color: #818181;
+  font-weight: 400;
+  &:hover {
+    color: #97a663;
+    font-weight: 700;
+  }
 }
 
 .rightContent {
-  margin: 60px;
-  margin-left: -400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /* padding: 20px; */
-  background-color: white;
-  width: 1000px; /* Ancho deseado */
-  height: 90%; /* Alto deseado */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con valores de desplazamiento, color y opacidad */
-}
-
-/* Estilos para los elementos de nombre y apellido */
-.rowContainer {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 10px;
-}
-
-.editButton {
-  color: #ffffff;
-  background-color: #97a663;
-  border: 0px;
-  margin: 0px;
-  padding: 5px 30px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  border-radius: 4px;
+  background-color: #ffffff;
+  margin-bottom: 30px;
+  margin-right: 50px;
+  margin-left: 30px;
+  margin-top: 150px;
+  padding-top: 26px;
+  padding-bottom: 56px;
+  padding-left: 60px;
+  padding-right: 160px;
+  width: 900px;
+  height: auto;
+  box-shadow: 4px 4px 24px rgba(139, 167, 178, 0.16);
+  border-radius: 6px;
 }
 
 .dona {
@@ -51,14 +74,41 @@
 }
 
 .text {
-  font-weight: bold;
-  font-size: 40px;
+  font-size: 18pt;
+  color: #6a7346;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 90px;
 }
 
-.continer_graphics {
+.column {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  /* Alinea los componentes en el centro verticalmente */
+}
+
+.row {
+  display: grid;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  /* Alinea los componentes en el centro horizontalmente */
+}
+
+.container_graphics {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 50px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+  /* Ocupar todo el espacio vertical disponible */
+}
+
+.column2 {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }

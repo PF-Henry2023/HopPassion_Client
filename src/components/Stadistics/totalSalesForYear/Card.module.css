@@ -1,0 +1,43 @@
+.mainContainer {
+  border-radius: 6px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.column1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column2 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-left: 20px; 
+}
+
+.column1 p {
+  font-weight: 600;
+  font-size: 35pt; /* Tamaño grande para el símbolo "$" en la primera columna */
+  color: #97a663;
+}
+
+.amount {
+  text-align: left;
+  font-weight: bold;
+  font-size: 18pt; /* Tamaño del precio en la segunda columna */
+}
+
+.span_generic {
+  font-size: 10pt; 
+  color: #6a7346;
+}

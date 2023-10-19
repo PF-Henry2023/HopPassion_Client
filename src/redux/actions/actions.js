@@ -39,6 +39,7 @@ import {
   UPDATE_USER_STATE,
   CHANGE_PASSWORD,
 } from "./actions-type";
+import Swal from "sweetalert2";
 
 export const changePassword = (id, password) => {
   return async function (dispatch) {
@@ -140,40 +141,69 @@ export const getUsers = () => {
   };
 };
 
-export const signup = ({
-  name,
-  lastName,
-  address,
-  email,
-  phone,
-  password,
-  city,
-  postalCode,
-  country,
-}) => {
-  return async function (dispatch) {
-    try {
-      const response = await HopPassionClient.post("/users/signup", {
-        name,
-        lastName,
-        address,
-        email,
-        phone,
-        password,
-        city,
-        postalCode,
-        country,
+export const signup = (userData) => async (dispatch) => {
+  try {
+    // Realiza la solicitud para crear el usuario en el servidor
+    const response = await HopPassionClient.post("/users/signup", userData);
+    console.log(response.data);
+    if (response.data.emailExists) {
+      // Si el correo ya existe, muestra una notificación Swal
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Este correo ya está registrado.",
       });
-      handleUserLogin(response.data);
-      dispatch({
-        type: SIGNUP,
-        payload: getLoggedInUser(),
+    } else {
+      // Si el correo no existe, muestra una notificación de éxito
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate("/");
       });
-    } catch (error) {
-      alert(error.message);
     }
-  };
+  } catch (error) {
+    // Maneja cualquier error que pueda ocurrir
+    console.error("Error al registrar el usuario", error);
+  }
 };
+
+// export const signup = ({
+//   name,
+//   lastName,
+//   address,
+//   email,
+//   phone,
+//   password,
+//   city,
+//   postalCode,
+//   country,
+// }) => {
+//   return async function (dispatch) {
+//     try {
+//       const response = await HopPassionClient.post("/users/signup", {
+//         name,
+//         lastName,
+//         address,
+//         email,
+//         phone,
+//         password,
+//         city,
+//         postalCode,
+//         country,
+//       });
+//       handleUserLogin(response.data);
+//       dispatch({
+//         type: SIGNUP,
+//         payload: getLoggedInUser(),
+//       });
+//     } catch (error) {
+//       alert(error.message);
+//     }
+//   };
+// };
 
 export const login = (userData, handleLoginError) => {
   return async function (dispatch) {

@@ -24,11 +24,11 @@ export default function SignUp() {
   const users = useSelector((state) => state.users);
   const countryoptions = useMemo(() => CountryList().getData(), []);
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUsers());
+  // }, [dispatch]);
 
-  console.log(users);
+  // console.log(users);
 
   const [userData, setData] = useState({
     name: "",
