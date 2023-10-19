@@ -24,10 +24,11 @@ export default function NavBar() {
   const query = useSelector((state) => state.query);
   const cart = useSelector((state) => state.cart);
 
-  const [input, setInput] = useState(null);
+  const [input, setInput] = useState("");
 
-  function handleSearch(event) {
+  function handleSearch() {
     dispatch(setSearchQuery(input));
+    setInput("");
   }
 
   function handleInputChange(event) {
@@ -41,9 +42,9 @@ export default function NavBar() {
 
   function profileLink() {
     if (user.role == "admin") {
-      return `/adminprofile/${user.id}`
+      return `/adminprofile/${user.id}`;
     } else if (user.role == "user") {
-      return `/profile/${user.id}`
+      return `/profile/${user.id}`;
     }
   }
 
@@ -74,7 +75,7 @@ export default function NavBar() {
       );
     } else {
       return (
-        <div className={style.mainContainer}>
+        <>
           <Link to="/login" className={style.text}>
             <Person className={style.icon} />
             <p>Iniciar Sesión</p>
@@ -83,7 +84,7 @@ export default function NavBar() {
             <PersonPlus className={style.icon} />
             <p>Registrarse</p>
           </Link>
-        </div>
+        </>
       );
     }
   }
@@ -106,12 +107,12 @@ export default function NavBar() {
                 className={style.searchField}
                 type="text"
                 placeholder="Busca tu cerveza favorita"
-                defaultValue={query}
+                value={input} // Use the 'input' state as the input field's value
                 onChange={handleInputChange}
               />
               <button
                 className={style.searchButton}
-                type="submit"
+                type="button" // Use type="button" to prevent form submission
                 onClick={handleSearch}
               >
                 Buscar

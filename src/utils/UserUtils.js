@@ -1,7 +1,6 @@
 import jwtDecode from "jwt-decode";
 
 export function handleUserLogin(token) {
-  console.log(token);
   const decoded = jwtDecode(token);
 
   const user = {
@@ -24,10 +23,8 @@ export function handleUserLogin(token) {
 }
 
 export const updateUserLocal = (token) => {
-  console.log("entro a la funcion ");
   window.localStorage.removeItem("user");
   const decoded = jwtDecode(token);
-  console.log("token decodificado",decoded);
   const user = {
     id: decoded.id,
     name: decoded.name,
@@ -42,8 +39,6 @@ export const updateUserLocal = (token) => {
     country: decoded.country,
   };
   window.localStorage.setItem("user", JSON.stringify(user));
-  console.log("usuario actualizado", JSON.parse(window.localStorage.getItem("user")));
-  return;
 };
 
 export function handleUserLogout() {
