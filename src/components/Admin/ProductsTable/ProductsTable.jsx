@@ -1,84 +1,86 @@
-import React, { useEffect, useState  } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./ProductsTable.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../redux/actions/actions";
+import {
+  getProducts,
+  getNextProductPage,
+} from "../../../redux/actions/actions";
 import Filters from "../../Filters/Filters";
 import EditProduct from "./EditProduct";
 import Borrado from "./borrado";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from "../../Loading/Loading";
+import { createSelector } from "reselect";
 
-export default function ProductsTable({setEditing}) {
+export default function ProductsTable({ setEditing }) {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products ? state.products.products : []);
-  const selectFilters = (state) => state.filters;
-  const selectSearchQuery = (state) => state.filters.searchQuery;
+  const [editProductId, setEditProductId] = useState(null);
+  const selectProducts = (state) =>
+    state.products ? state.products.products : [];
 
-  const filters = useSelector(selectFilters);
-  const searchQuery = useSelector(selectSearchQuery);
+  const getMemoizedProducts = createSelector([selectProducts], (products) => {
+    return products;
+  });
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 5;
+  const products = useSelector(getMemoizedProducts);
 
-   // Nuevo estado para controlar la visibilidad de EditProduct
-   const [editProductId, setEditProductId] = useState(null);
+  const selectPage = (state) =>
+    state.products ? state.products.page : { page: 1, hasMore: true };
+  const filters = useSelector((state) => state.filters);
+  const searchQuery = useSelector((state) => state.query);
+
+  // Aplica memoización al selector usando createSelector
+  const getPageInfo = createSelector([selectPage], (page) => {
+    if (page) {
+      return page;
+    }
+    return { page: 1, hasMore: true };
+  });
+
+  // Luego, usa getPageInfo en tu componente
+  const page = useSelector(getPageInfo);
 
   useEffect(() => {
     dispatch(getProducts(filters, searchQuery));
   }, [filters, searchQuery]);
 
-  // Calcular la cantidad total de páginas:
-  const totalPages = Math.ceil(products.length / productsPerPage);
-
-  // Función para dividir los productos en páginas
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
-  // Generar un array de números de página:
-  const pageNumbers = [];
-  for(let i = 1; i <= totalPages; i++){
-    pageNumbers.push(i);
+  function handleNextPage() {
+    dispatch(getNextProductPage(filters, searchQuery, page.page));
   }
 
-    // Función para manejar la edición del producto
-    const handleEditProduct = (productId) => {
+  const handleEditProduct = (productId) => {
+    if (editProductId) {
       setEditProductId(productId);
-    };
-  
-    // Función para cancelar la edición
-    const handleCancelEdit = () => {
-      setEditProductId(null);
-    };
+    } else {
+      setEditProductId(true);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditProductId(null);
+  };
 
   return (
     <div className={style.container}>
-        <Filters />
-        <div className={style.contpagination}>
-          <div className={style.barraDatos}>
-              <h6>Producto</h6>
-              <h6>Graduación</h6>
-              <h6>Precio Unitario</h6>
-              <h6>Stock</h6>
-          </div>
-          <div className={style.pagination}>
-            <button onClick={() => setCurrentPage(currentPage -1)}
-            disabled={currentPage === 1}>Ant</button>
-            <div className={style.pageNumbers}>
-              {pageNumbers.map((number) => (
-                <div
-                  key={number}
-                  className={number === currentPage ? style.activePage : null}
-                  onClick={() => setCurrentPage(number)}
-                >
-                  {number}
-                </div>
-              ))}
-            </div>
-            <button onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentProducts.length < productsPerPage}>Next</button>
-          </div>
+      <Filters />
+      <div className={style.contpagination}>
+        <div className={style.barraDatos}>
+          <h6>Producto</h6>
+          <h6>Graduación</h6>
+          <h6>Precio Unitario</h6>
+          <h6>Stock</h6>
         </div>
-        <div className={style.gridContainer}>
-          {currentProducts.map((product) => {
+        <div className={style.pagination}></div>
+      </div>
+      <div className={style.gridContainer}>
+        <InfiniteScroll
+          dataLength={products?.length}
+          next={handleNextPage}
+          hasMore={page.hasMore}
+          loader={<Loading />}
+          style={{ overflow: "hidden" }}
+        >
+          {products.map((product) => {
             return (
               <div className={style.productStyle} key={product.id}>
                 <ul className={style.contentProduct}>
@@ -90,23 +92,32 @@ export default function ProductsTable({setEditing}) {
                       <span>{product.stock}</span>
                     </div>
                     <div className={style.buttons}>
-                      <button className={style.buttonEdit} onClick={() => handleEditProduct(product.id)}>
+                      <button
+                        className={style.buttonEdit}
+                        onClick={() => handleEditProduct(product.id)}
+                      >
                         Editar
                       </button>
-                     {/*  <button className={style.buttonDesactivar}>Desactivar</button> */}
-                     <Borrado id={product.id} /> {/* Pasa el id del producto aquí */}
+                      {/*  <button className={style.buttonDesactivar}>Desactivar</button> */}
+                      <Borrado id={product.id} />{" "}
+                      {/* Pasa el id del producto aquí */}
                     </div>
                   </li>
                   {editProductId === product.id && (
                     <li className={style.productInfo}>
-                      <EditProduct id={product.id} setEditing={setEditProductId} onCancel={handleCancelEdit} />
+                      <EditProduct
+                        id={product.id}
+                        setEditing={setEditProductId}
+                        onCancel={handleCancelEdit}
+                      />
                     </li>
                   )}
                 </ul>
               </div>
             );
           })}
-        </div>
+        </InfiniteScroll>
+      </div>
     </div>
   );
 }

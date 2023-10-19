@@ -10,42 +10,75 @@ const Borrado = ({ id }) => {
 
   useEffect(() => {
     const petition = async () => {
-      const response = await HopPassionClient.get(`/product/${id}`)
-      console.log(id);
-      if(response.data.isDeleted){
+      const response = await HopPassionClient.get(`/product/${id}`);
+      console.log(response.data.isDeleted);
+      if (response.data.isDeleted) {
         setIsDelete(true);
       } else {
-        setIsDelete(false)
+        setIsDelete(false);
       }
-    } 
+    };
     petition();
-  },[])
+  }, []);
 
   const handleAction = async () => {
-    try {
-      if (isDelete) {
-        const result = Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
+    if (isDelete) {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "Estas seguro?",
+          text: "Este producto sera inhabilitado!",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Si bloquear!",
+          cancelButtonText: "No cancelar",
+          reverseButtons: true,
         })
-        if (result.isConfirmed) {
-          await HopPassionClient.delete(`/product/${id}`);
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        }
+        .then((result) => {
+          if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+              "Bloqueado!",
+              "El producto fue bloqueado.",
+              "success"
+            );
+            console.log("esta activado");
+            HopPassionClient.delete(`/product/${id}`).then((response) => {
+              console.log("se bloqueo");
+              console.log("respuesta", response.data);
+              if (response.status === 200) {
+                setIsDelete(false);
+              } else {
+                console.log("algo fallo");
+              }
+            });
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              "Cancelado",
+              "Tu producto esta a salvo",
+              "error"
+            );
+          }
+        });
+    } else {
+      console.log("esta bloqueado");
+      const response = await HopPassionClient.post(`/product/${id}`);
+      if (response.status === 200) {
+        console.log("se activo");
+        console.log("respuesta", response.data);
+        setIsDelete(true);
       } else {
-        // await HopPassionClient.post(`https://hoppassion-server.1.ie-1.fl0.io/${id}`);
+        console.log("algo fallo");
       }
-
-      setIsDelete(!isDelete);
-    } catch (error) {
-      console.error(
-        `Error al ${isDelete ? "desactivar" : "activar"} el producto: ${error}`
-      );
     }
   };
 
