@@ -79,7 +79,7 @@ export default function SignUp() {
     });
   }, []);
 
-  console.log(userData);
+
 
   return (
     <Container className={style.container} fluid={true}>
@@ -201,7 +201,7 @@ export default function SignUp() {
                   isValid={userData.city && !errors.city}
                 />
                 <Form.Control.Feedback type="invalid">
-                  <div>Ingrese una ciudad</div>
+                  <div>Solo se permiten letras</div>
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -212,7 +212,7 @@ export default function SignUp() {
                 <Form.Control
                   value={userData.address}
                   type="text"
-                  placeholder="Ingresa tu domicilio"
+                  placeholder="Ingresa calle y número"
                   className={style.formControl}
                   onChange={(event) => {
                     handleChange("address", event.target.value);
@@ -221,7 +221,7 @@ export default function SignUp() {
                   isValid={userData.address && !errors.address}
                 />
                 <Form.Control.Feedback type="invalid">
-                  <div>Ingrese un domicilio válido</div>
+                  <div>Ingrese el domicilio en formato alfanumérico válido</div>
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -281,7 +281,7 @@ export default function SignUp() {
                   isValid={userData.password && !errors.password}
                 />
                 <Form.Control.Feedback type="invalid">
-                  La contraseña debe contener 6 caracteres o más, una mayúscula,
+                  La contraseña debe contener 6 carácteres o más, una mayúscula,
                   un número y un caracter especial.
                 </Form.Control.Feedback>
               </Form.Group>

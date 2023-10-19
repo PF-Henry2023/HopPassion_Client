@@ -2,7 +2,6 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{6,}$/;
 const numberRegex = /^[1-9]\d{9}$/;
 const wordRegex = /^[A-Za-z\s]+$/;
-const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 const postalCodeRegex = /^\d{4,8}$/;
 
 function validate(input) {
